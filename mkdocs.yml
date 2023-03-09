@@ -1,0 +1,19 @@
+---
+site_name: "pfhub-schema"
+theme:
+  name: material
+  # palette:
+  #  scheme: slate
+  #  primary: cyan
+  features:
+    - content.tabs.link
+plugins:
+  - search
+  - mermaid2
+nav:
+  - Index: index.md
+  - About: about.md
+
+site_url: https://usnistgov.github.io/pfhub-schema
+repo_url: https://github.com/usnistgov/pfhub-schema
+remote-branch: nist-pages

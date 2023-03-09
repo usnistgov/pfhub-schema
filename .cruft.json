@@ -1,0 +1,27 @@
+{
+  "template": "https://github.com/tkphd/linkml-project-cookiecutter",
+  "commit": "812c835687f711745393560868cf66c5cb368ef4",
+  "checkout": "linting",
+  "context": {
+    "cookiecutter": {
+      "project_name": "pfhub-schema",
+      "__project_slug": "pfhub_schema",
+      "github_org": "usnistgov",
+      "__source_path": "src/pfhub_schema/schema/pfhub_schema.yaml",
+      "project_description": "Phase-field simulation and benchmark schema in LinkML.",
+      "full_name": "Trevor Keller",
+      "email": "trevor.keller@nist.gov",
+      "__author": "Trevor Keller <trevor.keller@nist.gov>",
+      "license": "MIT",
+      "main_schema_class": "Dataset",
+      "create_python_classes": "Yes",
+      "use_schemasheets": "No",
+      "google_sheet_id": "1wVoaiFg47aT9YWNeRfTZ8tYHN8s8PAuDx5i2HUcDpvQ",
+      "google_sheet_tabs": "personinfo enums",
+      "__google_sheet_module": "personinfo_enums",
+      "github_token_for_pypi_deployment": "PYPI_PASSWORD",
+      "_template": "https://github.com/tkphd/linkml-project-cookiecutter"
+    }
+  },
+  "directory": null
+}
