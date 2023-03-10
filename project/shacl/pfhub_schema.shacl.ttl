@@ -1,71 +1,135 @@
-@prefix PATO: <http://purl.obolibrary.org/obo/PATO_> .
-@prefix pfhub_schema: <https://w3id.org/usnistgov/pfhub-schema/> .
+@prefix pfhub: <https://w3id.org/usnistgov/pfhub-schema/> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix schema: <http://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-schema:Thing a sh:NodeShape ;
-    sh:closed true ;
-    sh:description "A generic grouping for any identifiable entity" ;
+schema:MediaObject a sh:NodeShape ;
+    sh:closed false ;
+    sh:description "A generic electronic information container." ;
     sh:ignoredProperties ( rdf:type ) ;
-    sh:property [ sh:description "A unique identifier for a thing" ;
+    sh:property [ sh:description "Unique identifier that must not collide with any other." ;
             sh:maxCount 1 ;
+            sh:minCount 1 ;
             sh:order 0 ;
             sh:path schema:identifier ],
-        [ sh:description "A human-readable description for a thing" ;
+        [ sh:description "Informal or human-memorable identifier that may collide with others." ;
             sh:maxCount 1 ;
-            sh:order 2 ;
-            sh:path schema:description ],
-        [ sh:description "A human-readable name for a thing" ;
-            sh:maxCount 1 ;
+            sh:minCount 1 ;
             sh:order 1 ;
-            sh:path schema:name ] ;
-    sh:targetClass schema:Thing .
-
-pfhub_schema:DatasetCollection a sh:NodeShape ;
-    sh:closed true ;
-    sh:description "A holder for Dataset objects" ;
-    sh:ignoredProperties ( rdf:type ) ;
-    sh:property [ sh:class pfhub_schema:Dataset ;
-            sh:nodeKind sh:IRI ;
-            sh:order 0 ;
-            sh:path pfhub_schema:entries ] ;
-    sh:targetClass pfhub_schema:DatasetCollection .
-
-pfhub_schema:Dataset a sh:NodeShape ;
-    sh:closed true ;
-    sh:description "Represents a Dataset" ;
-    sh:ignoredProperties ( rdf:type ) ;
-    sh:property [ sh:description "The main email address of a person" ;
-            sh:maxCount 1 ;
-            sh:order 0 ;
-            sh:path schema:email ;
-            sh:pattern "^\\S+@[\\S+\\.]+\\S+" ],
-        [ sh:description "Number of years since birth" ;
+            sh:path schema:name ],
+        [ sh:description "Format of data contained in a file." ;
             sh:maxCount 1 ;
             sh:order 2 ;
-            sh:path pfhub_schema:age_in_years ],
-        [ sh:description "living or dead status" ;
-            sh:in ( PATO:0001421 PATO:0001422 "UNKNOWN" ) ;
-            sh:maxCount 1 ;
-            sh:order 3 ;
-            sh:path pfhub_schema:vital_status ],
-        [ sh:description "A unique identifier for a thing" ;
+            sh:path schema:encodingFormat ] ;
+    sh:targetClass schema:MediaObject .
+
+pfhub:BenchmarkResult a sh:NodeShape ;
+    sh:closed true ;
+    sh:description "Root and context for this Benchmark Problem solution." ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:description "A computer program or library" ;
             sh:maxCount 1 ;
             sh:order 4 ;
-            sh:path schema:identifier ],
-        [ sh:description "A human-readable description for a thing" ;
+            sh:path schema:SoftwareApplication ],
+        [ sh:description "Informal or human-memorable identifier that may collide with others." ;
             sh:maxCount 1 ;
-            sh:order 6 ;
-            sh:path schema:description ],
-        [ sh:description "Date on which a person is born" ;
-            sh:maxCount 1 ;
+            sh:minCount 1 ;
             sh:order 1 ;
-            sh:path schema:birthDate ],
-        [ sh:description "A human-readable name for a thing" ;
+            sh:path schema:name ],
+        [ sh:class pfhub:Contributor ;
+            sh:description "Collection of people who worked on this solution." ;
+            sh:nodeKind sh:IRI ;
+            sh:order 2 ;
+            sh:path schema:contributor ],
+        [ sh:description "Unique identifier that must not collide with any other." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:order 0 ;
+            sh:path schema:identifier ],
+        [ sh:class schema:codeRepository ;
+            sh:description "Source code implementing the solution." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:IRI ;
+            sh:order 6 ;
+            sh:path pfhub:implementation ],
+        [ sh:class pfhub:Benchmark ;
+            sh:description "Details of the Benchmark Problem." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:IRI ;
+            sh:order 3 ;
+            sh:path pfhub:benchmark ],
+        [ sh:description "Computer hardware used to run the simulation." ;
             sh:maxCount 1 ;
             sh:order 5 ;
-            sh:path schema:name ] ;
-    sh:targetClass pfhub_schema:Dataset .
+            sh:path pfhub:hardware ] ;
+    sh:targetClass pfhub:BenchmarkResult .
+
+schema:codeRepository a sh:NodeShape ;
+    sh:closed true ;
+    sh:description "Link to the authors' implementation of the benchmark problem" ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:description "Unique identifier that must not collide with any other." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:order 0 ;
+            sh:path schema:identifier ],
+        [ sh:description "Informal or human-memorable identifier that may collide with others." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:order 1 ;
+            sh:path schema:name ],
+        [ sh:description "A repository of source code." ;
+            sh:maxCount 1 ;
+            sh:order 2 ;
+            sh:path pfhub:repository ] ;
+    sh:targetClass schema:codeRepository .
+
+pfhub:Benchmark a sh:NodeShape ;
+    sh:closed true ;
+    sh:description "Information about the specific Benchmark solved." ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:description "Unique identifier that must not collide with any other." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:order 0 ;
+            sh:path schema:identifier ],
+        [ sh:description "Informal or human-memorable identifier that may collide with others." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:order 1 ;
+            sh:path schema:name ],
+        [ sh:description "Semantic version of a software project." ;
+            sh:maxCount 1 ;
+            sh:order 2 ;
+            sh:path pfhub:version ] ;
+    sh:targetClass pfhub:Benchmark .
+
+pfhub:Contributor a sh:NodeShape ;
+    sh:closed true ;
+    sh:description "Someone who contributed to this solution." ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:description "A person's electronic mailing address." ;
+            sh:maxCount 1 ;
+            sh:order 4 ;
+            sh:path schema:email ;
+            sh:pattern "^\\S+@[\\S+\\.]+\\S+" ],
+        [ sh:description "A person's identifier on a website, without the \"at\" symbol" ;
+            sh:maxCount 1 ;
+            sh:order 2 ;
+            sh:path schema:identifier ],
+        [ sh:description "Informal or human-memorable identifier that may collide with others." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:order 1 ;
+            sh:path schema:name ],
+        [ sh:description "Institution, company, or agency a person works with." ;
+            sh:order 3 ;
+            sh:path pfhub:affiliation ],
+        [ sh:description "Unique identifier that must not collide with any other." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:order 0 ;
+            sh:path schema:identifier ] ;
+    sh:targetClass pfhub:Contributor .
 

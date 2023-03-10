@@ -1,23 +1,34 @@
-// Represents a Dataset
-message Dataset
+// Information about the specific Benchmark solved.
+message Benchmark
  {
   uriorcurie id = 0
   string name = 0
-  string description = 0
-  string primaryEmail = 0
-  date birthDate = 0
-  integer ageInYears = 0
-  personStatus vitalStatus = 0
+  string version = 0
  }
-// A holder for Dataset objects
-message DatasetCollection
- {
- repeated  dataset entries = 0
- }
-// A generic grouping for any identifiable entity
-message NamedThing
+// Root and context for this Benchmark Problem solution.
+message BenchmarkResult
  {
   uriorcurie id = 0
   string name = 0
-  string description = 0
+ repeated  contributor contributors = 0
+  benchmark benchmark = 0
+  string framework = 0
+  string hardware = 0
+  implementation implementation = 0
+ }
+// Someone who contributed to this solution.
+message Contributor
+ {
+  uriorcurie id = 0
+  string name = 0
+  uriorcurie handle = 0
+ repeated  string affiliation = 0
+  string email = 0
+ }
+// Link to the authors' implementation of the benchmark problem
+message Implementation
+ {
+  uriorcurie id = 0
+  string name = 0
+  uriorcurie repository = 0
  }

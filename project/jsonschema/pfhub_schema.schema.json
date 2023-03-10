@@ -1,131 +1,131 @@
 {
     "$defs": {
-        "Dataset": {
+        "Benchmark": {
             "additionalProperties": false,
-            "description": "Represents a Dataset",
+            "description": "Information about the specific Benchmark solved.",
             "properties": {
-                "age_in_years": {
-                    "description": "Number of years since birth",
-                    "type": "integer"
-                },
-                "birth_date": {
-                    "description": "Date on which a person is born",
-                    "format": "date",
-                    "type": "string"
-                },
-                "description": {
-                    "description": "A human-readable description for a thing",
-                    "type": "string"
-                },
                 "id": {
-                    "description": "A unique identifier for a thing",
+                    "description": "Unique identifier that must not collide with any other.",
                     "type": "string"
                 },
                 "name": {
-                    "description": "A human-readable name for a thing",
+                    "description": "Informal or human-memorable identifier that may collide with others.",
                     "type": "string"
                 },
-                "primary_email": {
-                    "description": "The main email address of a person",
-                    "pattern": "^\\S+@[\\S+\\.]+\\S+",
+                "version": {
+                    "description": "Semantic version of a software project.",
                     "type": "string"
-                },
-                "vital_status": {
-                    "$ref": "#/$defs/PersonStatus",
-                    "description": "living or dead status"
                 }
             },
             "required": [
-                "id"
+                "id",
+                "name"
             ],
-            "title": "Dataset",
+            "title": "Benchmark",
             "type": "object"
         },
-        "DatasetCollection": {
+        "BenchmarkResult": {
             "additionalProperties": false,
-            "description": "A holder for Dataset objects",
+            "description": "Root and context for this Benchmark Problem solution.",
             "properties": {
-                "entries": {
-                    "additionalProperties": {
-                        "$ref": "#/$defs/Dataset__identifier_optional"
+                "benchmark": {
+                    "description": "Details of the Benchmark Problem.",
+                    "type": "string"
+                },
+                "contributors": {
+                    "description": "Collection of people who worked on this solution.",
+                    "items": {
+                        "$ref": "#/$defs/Contributor"
                     },
-                    "type": "object"
-                }
-            },
-            "title": "DatasetCollection",
-            "type": "object"
-        },
-        "Dataset__identifier_optional": {
-            "additionalProperties": false,
-            "description": "Represents a Dataset",
-            "properties": {
-                "age_in_years": {
-                    "description": "Number of years since birth",
-                    "type": "integer"
+                    "type": "array"
                 },
-                "birth_date": {
-                    "description": "Date on which a person is born",
-                    "format": "date",
+                "framework": {
+                    "description": "A computer program or library",
                     "type": "string"
                 },
-                "description": {
-                    "description": "A human-readable description for a thing",
+                "hardware": {
+                    "description": "Computer hardware used to run the simulation.",
                     "type": "string"
                 },
                 "id": {
-                    "description": "A unique identifier for a thing",
+                    "description": "Unique identifier that must not collide with any other.",
+                    "type": "string"
+                },
+                "implementation": {
+                    "description": "Source code implementing the solution.",
                     "type": "string"
                 },
                 "name": {
-                    "description": "A human-readable name for a thing",
-                    "type": "string"
-                },
-                "primary_email": {
-                    "description": "The main email address of a person",
-                    "pattern": "^\\S+@[\\S+\\.]+\\S+",
-                    "type": "string"
-                },
-                "vital_status": {
-                    "$ref": "#/$defs/PersonStatus",
-                    "description": "living or dead status"
-                }
-            },
-            "required": [],
-            "title": "Dataset",
-            "type": "object"
-        },
-        "NamedThing": {
-            "additionalProperties": false,
-            "description": "A generic grouping for any identifiable entity",
-            "properties": {
-                "description": {
-                    "description": "A human-readable description for a thing",
-                    "type": "string"
-                },
-                "id": {
-                    "description": "A unique identifier for a thing",
-                    "type": "string"
-                },
-                "name": {
-                    "description": "A human-readable name for a thing",
+                    "description": "Informal or human-memorable identifier that may collide with others.",
                     "type": "string"
                 }
             },
             "required": [
-                "id"
+                "id",
+                "name"
             ],
-            "title": "NamedThing",
+            "title": "BenchmarkResult",
             "type": "object"
         },
-        "PersonStatus": {
-            "description": "",
-            "enum": [
-                "ALIVE",
-                "DEAD",
-                "UNKNOWN"
+        "Contributor": {
+            "additionalProperties": false,
+            "description": "Someone who contributed to this solution.",
+            "properties": {
+                "affiliation": {
+                    "description": "Institution, company, or agency a person works with.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "email": {
+                    "description": "A person's electronic mailing address.",
+                    "pattern": "^\\S+@[\\S+\\.]+\\S+",
+                    "type": "string"
+                },
+                "handle": {
+                    "description": "A person's identifier on a website, without the \"at\" symbol",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "Unique identifier that must not collide with any other.",
+                    "type": "string"
+                },
+                "name": {
+                    "description": "Informal or human-memorable identifier that may collide with others.",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "id",
+                "name"
             ],
-            "title": "PersonStatus",
-            "type": "string"
+            "title": "Contributor",
+            "type": "object"
+        },
+        "Implementation": {
+            "additionalProperties": false,
+            "description": "Link to the authors' implementation of the benchmark problem",
+            "properties": {
+                "id": {
+                    "description": "Unique identifier that must not collide with any other.",
+                    "type": "string"
+                },
+                "name": {
+                    "description": "Informal or human-memorable identifier that may collide with others.",
+                    "type": "string"
+                },
+                "repository": {
+                    "description": "A repository of source code.",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "id",
+                "name"
+            ],
+            "title": "Implementation",
+            "type": "object"
         }
     },
     "$id": "https://w3id.org/usnistgov/pfhub-schema",
@@ -133,13 +133,42 @@
     "additionalProperties": true,
     "metamodel_version": "1.7.0",
     "properties": {
-        "entries": {
-            "additionalProperties": {
-                "$ref": "#/$defs/Dataset__identifier_optional"
+        "benchmark": {
+            "description": "Details of the Benchmark Problem.",
+            "type": "string"
+        },
+        "contributors": {
+            "description": "Collection of people who worked on this solution.",
+            "items": {
+                "$ref": "#/$defs/Contributor"
             },
-            "type": "object"
+            "type": "array"
+        },
+        "framework": {
+            "description": "A computer program or library",
+            "type": "string"
+        },
+        "hardware": {
+            "description": "Computer hardware used to run the simulation.",
+            "type": "string"
+        },
+        "id": {
+            "description": "Unique identifier that must not collide with any other.",
+            "type": "string"
+        },
+        "implementation": {
+            "description": "Source code implementing the solution.",
+            "type": "string"
+        },
+        "name": {
+            "description": "Informal or human-memorable identifier that may collide with others.",
+            "type": "string"
         }
     },
+    "required": [
+        "id",
+        "name"
+    ],
     "title": "pfhub-schema",
     "type": "object",
     "version": null

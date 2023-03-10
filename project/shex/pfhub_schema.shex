@@ -37,32 +37,50 @@ linkml:Objectidentifier IRI
 
 linkml:Nodeidentifier NONLITERAL
 
-<Dataset> CLOSED {
-    (  $<Dataset_tes> (  &<NamedThing_tes> ;
-          rdf:type [ schema:Thing ] ? ;
-          schema:email @linkml:String ? ;
-          schema:birthDate @linkml:Date ? ;
-          <age_in_years> @linkml:Integer ? ;
-          <vital_status> @<PersonStatus> ?
+<Benchmark> CLOSED {
+    (  $<Benchmark_tes> (  schema:name @linkml:String ;
+          <version> @linkml:String ?
        ) ;
-       rdf:type [ <Dataset> ]
+       rdf:type [ <Benchmark> ]
     )
 }
 
-<DatasetCollection> CLOSED {
-    (  $<DatasetCollection_tes> <entries> @<Dataset> * ;
-       rdf:type [ <DatasetCollection> ] ?
+<BenchmarkResult> CLOSED {
+    (  $<BenchmarkResult_tes> (  schema:name @linkml:String ;
+          schema:contributor @<Contributor> * ;
+          <benchmark> @<Benchmark> ? ;
+          schema:SoftwareApplication @linkml:String ? ;
+          <hardware> @linkml:String ? ;
+          <implementation> @<Implementation> ?
+       ) ;
+       rdf:type [ <BenchmarkResult> ]
     )
 }
 
-<NamedThing>  (
-    CLOSED {
-       (  $<NamedThing_tes> (  schema:name @linkml:String ? ;
-             schema:description @linkml:String ?
-          ) ;
-          rdf:type [ schema:Thing ]
-       )
-    } OR @<Dataset>
-)
+<Contributor> CLOSED {
+    (  $<Contributor_tes> (  schema:name @linkml:String ;
+          schema:identifier @linkml:Uriorcurie ? ;
+          <affiliation> @linkml:String * ;
+          schema:email @linkml:String ?
+       ) ;
+       rdf:type [ <Contributor> ]
+    )
+}
+
+<File> {
+    (  $<File_tes> (  schema:name @linkml:String ;
+          schema:encodingFormat @linkml:String ?
+       ) ;
+       rdf:type [ schema:MediaObject ]
+    )
+}
+
+<Implementation> CLOSED {
+    (  $<Implementation_tes> (  schema:name @linkml:String ;
+          <repository> @linkml:Uriorcurie ?
+       ) ;
+       rdf:type [ schema:codeRepository ]
+    )
+}
 
 

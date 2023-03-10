@@ -1,11 +1,16 @@
 {
-   "PATO": "http://purl.obolibrary.org/obo/PATO_",
-   "biolink": "https://w3id.org/biolink/",
-   "example": "https://example.org/",
+   "dcterms": "http://purl.org/dc/terms/",
+   "iana_app": "https://www.iana.org/assignments/media-types/application/",
+   "iana_text": "https://www.iana.org/assignments/media-types/text/",
    "linkml": "https://w3id.org/linkml/",
-   "pfhub_schema": "https://w3id.org/usnistgov/pfhub-schema/",
+   "orcid": "https://orcid.org/",
+   "pfhub": "https://w3id.org/usnistgov/pfhub-schema/",
+   "qudt": "http://qudt.org/2.1/schema/qudt/",
    "schema": "http://schema.org/",
-   "NamedThing": {
-      "@id": "schema:Thing"
+   "File": {
+      "@id": "schema:MediaObject"
+   },
+   "Implementation": {
+      "@id": "schema:codeRepository"
    }
 }

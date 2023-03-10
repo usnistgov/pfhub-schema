@@ -1,96 +1,188 @@
+# This schema describes a dataset produced by phase-field methods
+# in response to a PFHub Benchmark Problem. It should capture:
+#
+# * Point of contact: email.
+# * Which benchmark problem? Part, version, spec.
+# * How was the solution implemented? Framework, repo, container?
+# * Who contributed to the code? GitHub, OrcIDs, affiliations.
+# * Requirements to run the code: CPU, GPU, parallel model.
+# * Runtime details: RAM, runtime, cores/threads.
+# * Simulation data: endpoint, CSV file, CSV fields.
 ---
 id: https://w3id.org/usnistgov/pfhub-schema
 name: pfhub-schema
 title: pfhub-schema
-description: |-
+description: >-
   Phase-field simulation and benchmark schema in LinkML.
-license: MIT
+license: NIST
 see_also:
-  - https://usnistgov.github.io/pfhub-schema
+  - https://pages.nist.gov/pfhub
+  - https://pages.nist.gov/pfhub-schema
 
 prefixes:
-  pfhub_schema: https://w3id.org/usnistgov/pfhub-schema/
-  linkml: https://w3id.org/linkml/
-  biolink: https://w3id.org/biolink/
-  schema: http://schema.org/
-  PATO: http://purl.obolibrary.org/obo/PATO_
-  example: https://example.org/
-default_prefix: pfhub_schema
+  pfhub: https://w3id.org/usnistgov/pfhub-schema/
+  linkml: https://w3id.org/linkml/  # LinkML itself
+  dcterms: http://purl.org/dc/terms/  # Dublin Core Metadata Terms
+  iana_text: https://www.iana.org/assignments/media-types/text/  # MIME types
+  iana_app: https://www.iana.org/assignments/media-types/application/
+  orcid: https://orcid.org/  # Open Researcher & Contributor ID
+  qudt: http://qudt.org/2.1/schema/qudt/  # Quantities, Units, Dimensions, Types
+  schema: http://schema.org/  # a schema so broad they just call it "schema"
+
+default_prefix: pfhub
 default_range: string
 
 imports:
   - linkml:types
 
 classes:
-
-  NamedThing:
+  BenchmarkResult:
     description: >-
-      A generic grouping for any identifiable entity
+      Root and context for this Benchmark Problem solution.
     slots:
       - id
       - name
-      - description
-    class_uri: schema:Thing
-
-  Dataset:
-    is_a: NamedThing
-    description: >-
-      Represents a Dataset
-    slots:
-      - primary_email
-      - birth_date
-      - age_in_years
-      - vital_status
-    slot_usage:
-      primary_email:
-        pattern: "^\\S+@[\\S+\\.]+\\S+"
-
-  DatasetCollection:
+      - contributors
+      - benchmark
+      - framework
+      - hardware
+      - implementation
     tree_root: true
+
+  Benchmark:
     description: >-
-      A holder for Dataset objects
-    attributes:
-      entries:
-        range: Dataset
-        multivalued: true
-        inlined: true
+      Information about the specific Benchmark solved.
+    slots:
+      - id
+      - name
+      - version
+
+  Contributor:
+    description: >-
+      Someone who contributed to this solution.
+    slots:
+      - id
+      - name
+      - handle
+      - affiliation
+      - email
+
+  Implementation:
+    description: >-
+      Link to the authors' implementation of the benchmark problem
+    class_uri: schema:codeRepository
+    slots:
+      - id
+      - name
+      - repository
+
+
+  File:
+    abstract: true
+    class_uri: schema:MediaObject
+    description: >-
+      A generic electronic information container.
+    slots:
+      - id
+      - name
+      - format
+
 
 slots:
+  # ~~ universal ~~
   id:
+    description: >-
+      Unique identifier that must not collide with any other.
     identifier: true
-    slot_uri: schema:identifier
+    multivalued: false
     range: uriorcurie
-    description: A unique identifier for a thing
+    required: true
+    slot_uri: schema:identifier
+
   name:
+    description: >-
+      Informal or human-memorable identifier that may collide with others.
+    multivalued: false
+    range: string
+    required: true
     slot_uri: schema:name
-    description: A human-readable name for a thing
-  description:
-    slot_uri: schema:description
-    description: A human-readable description for a thing
-  primary_email:
-    slot_uri: schema:email
-    description: The main email address of a person
-  birth_date:
-    slot_uri: schema:birthDate
+
+  # ~~ context-dependent ~~
+  affiliation:
+    description: >-
+      Institution, company, or agency a person works with.
+    inlined_as_list: true
+    multivalued: true
+
+  benchmark:
+    description: >-
+      Details of the Benchmark Problem.
+    range: Benchmark
+
+  contributors:
+    description: >-
+      Collection of people who worked on this solution.
+    inlined_as_list: true
+    multivalued: true
+    range: Contributor
+    slot_uri: schema:contributor
+
+  date:
+    description: >-
+      Day when an item was uploaded, released, or published.
     range: date
-    description: Date on which a person is born
-  age_in_years:
-    range: integer
-    description: Number of years since birth
-  vital_status:
-    range: PersonStatus
-    description: living or dead status
+    slot_uri: schema:datePublished
+
+  email:
+    description: >-
+      A person's electronic mailing address.
+    pattern: "^\\S+@[\\S+\\.]+\\S+"
+    range: string
+    slot_uri: schema:email
+
+  format:
+    description: >-
+      Format of data contained in a file.
+    slot_uri: schema:encodingFormat
+
+  framework:
+    description: >-
+      A computer program or library
+    slot_uri: schema:SoftwareApplication
+
+  handle:
+    description: >-
+      A person's identifier on a website, without the "at" symbol
+    range: uriorcurie
+    slot_uri: schema:identifier
+
+  hardware:
+    description: >-
+      Computer hardware used to run the simulation.
+    range: string
+
+  implementation:
+    description: >-
+      Source code implementing the solution.
+    range: Implementation
+
+  repository:
+    description: >-
+      A repository of source code.
+    range: uriorcurie
+
+  summary:
+    description: >-
+      Text description, abstract, or narrative
+    multivalued: false
+    range: string
+    slot_uri: schema:abstract
+
+  version:
+    description: >-
+      Semantic version of a software project.
+    range: string
+
+# === Enums ===
 
 enums:
-  PersonStatus:
-    permissible_values:
-      ALIVE:
-        description: the person is living
-        meaning: PATO:0001421
-      DEAD:
-        description: the person is deceased
-        meaning: PATO:0001422
-      UNKNOWN:
-        description: the vital status is not known
-        todos:
-          - map this to an ontology

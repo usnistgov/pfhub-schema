@@ -1,23 +1,41 @@
-type Dataset
+type Benchmark
   {
     id: Uriorcurie!
-    name: String
-    description: String
-    primaryEmail: String
-    birthDate: Date
-    ageInYears: Integer
-    vitalStatus: PersonStatus
+    name: String!
+    version: String
   }
 
-type DatasetCollection
-  {
-    entries: [Dataset]
-  }
-
-type NamedThing
+type BenchmarkResult
   {
     id: Uriorcurie!
-    name: String
-    description: String
+    name: String!
+    contributors: [Contributor]
+    benchmark: Benchmark
+    framework: String
+    hardware: String
+    implementation: Implementation
+  }
+
+type Contributor
+  {
+    id: Uriorcurie!
+    name: String!
+    handle: Uriorcurie
+    affiliation: [String]
+    email: String
+  }
+
+interface File
+  {
+    id: Uriorcurie!
+    name: String!
+    format: String
+  }
+
+type Implementation
+  {
+    id: Uriorcurie!
+    name: String!
+    repository: Uriorcurie
   }
 

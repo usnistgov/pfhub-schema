@@ -1,10 +1,10 @@
 # Auto generated from pfhub_schema.yaml by pythongen.py version: 0.9.0
-# Generation date: 2023-03-09T13:41:04
+# Generation date: 2023-03-10T15:58:56
 # Schema: pfhub-schema
 #
 # id: https://w3id.org/usnistgov/pfhub-schema
 # description: Phase-field simulation and benchmark schema in LinkML.
-# license: MIT
+# license: NIST
 
 import dataclasses
 import sys
@@ -22,7 +22,7 @@ from linkml_runtime.utils.formatutils import camelcase, underscore, sfx
 from linkml_runtime.utils.enumerations import EnumDefinitionImpl
 from rdflib import Namespace, URIRef
 from linkml_runtime.utils.curienamespace import CurieNamespace
-from linkml_runtime.linkml_model.types import Date, Integer, String, Uriorcurie
+from linkml_runtime.linkml_model.types import Date, String, Uriorcurie
 from linkml_runtime.utils.metamodelcore import URIorCURIE, XSDDate
 
 metamodel_version = "1.7.0"
@@ -32,160 +32,278 @@ version = None
 dataclasses._init_fn = dataclasses_init_fn_with_kwargs
 
 # Namespaces
-PATO = CurieNamespace('PATO', 'http://purl.obolibrary.org/obo/PATO_')
-BIOLINK = CurieNamespace('biolink', 'https://w3id.org/biolink/')
-EXAMPLE = CurieNamespace('example', 'https://example.org/')
+DCTERMS = CurieNamespace('dcterms', 'http://purl.org/dc/terms/')
+IANA_APP = CurieNamespace('iana_app', 'https://www.iana.org/assignments/media-types/application/')
+IANA_TEXT = CurieNamespace('iana_text', 'https://www.iana.org/assignments/media-types/text/')
 LINKML = CurieNamespace('linkml', 'https://w3id.org/linkml/')
-PFHUB_SCHEMA = CurieNamespace('pfhub_schema', 'https://w3id.org/usnistgov/pfhub-schema/')
+ORCID = CurieNamespace('orcid', 'https://orcid.org/')
+PFHUB = CurieNamespace('pfhub', 'https://w3id.org/usnistgov/pfhub-schema/')
+QUDT = CurieNamespace('qudt', 'http://qudt.org/2.1/schema/qudt/')
 SCHEMA = CurieNamespace('schema', 'http://schema.org/')
-DEFAULT_ = PFHUB_SCHEMA
+DEFAULT_ = PFHUB
 
 
 # Types
 
 # Class references
-class NamedThingId(URIorCURIE):
+class BenchmarkResultId(URIorCURIE):
     pass
 
 
-class DatasetId(NamedThingId):
+class BenchmarkId(URIorCURIE):
+    pass
+
+
+class ContributorId(URIorCURIE):
+    pass
+
+
+class ImplementationId(URIorCURIE):
+    pass
+
+
+class FileId(URIorCURIE):
     pass
 
 
 @dataclass
-class NamedThing(YAMLRoot):
+class BenchmarkResult(YAMLRoot):
     """
-    A generic grouping for any identifiable entity
+    Root and context for this Benchmark Problem solution.
     """
     _inherited_slots: ClassVar[List[str]] = []
 
-    class_class_uri: ClassVar[URIRef] = SCHEMA.Thing
-    class_class_curie: ClassVar[str] = "schema:Thing"
-    class_name: ClassVar[str] = "NamedThing"
-    class_model_uri: ClassVar[URIRef] = PFHUB_SCHEMA.NamedThing
+    class_class_uri: ClassVar[URIRef] = PFHUB.BenchmarkResult
+    class_class_curie: ClassVar[str] = "pfhub:BenchmarkResult"
+    class_name: ClassVar[str] = "BenchmarkResult"
+    class_model_uri: ClassVar[URIRef] = PFHUB.BenchmarkResult
 
-    id: Union[str, NamedThingId] = None
-    name: Optional[str] = None
-    description: Optional[str] = None
+    id: Union[str, BenchmarkResultId] = None
+    name: str = None
+    contributors: Optional[Union[Dict[Union[str, ContributorId], Union[dict, "Contributor"]], List[Union[dict, "Contributor"]]]] = empty_dict()
+    benchmark: Optional[Union[str, BenchmarkId]] = None
+    framework: Optional[str] = None
+    hardware: Optional[str] = None
+    implementation: Optional[Union[str, ImplementationId]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
             self.MissingRequiredField("id")
-        if not isinstance(self.id, NamedThingId):
-            self.id = NamedThingId(self.id)
+        if not isinstance(self.id, BenchmarkResultId):
+            self.id = BenchmarkResultId(self.id)
 
-        if self.name is not None and not isinstance(self.name, str):
+        if self._is_empty(self.name):
+            self.MissingRequiredField("name")
+        if not isinstance(self.name, str):
             self.name = str(self.name)
 
-        if self.description is not None and not isinstance(self.description, str):
-            self.description = str(self.description)
+        self._normalize_inlined_as_list(slot_name="contributors", slot_type=Contributor, key_name="id", keyed=True)
+
+        if self.benchmark is not None and not isinstance(self.benchmark, BenchmarkId):
+            self.benchmark = BenchmarkId(self.benchmark)
+
+        if self.framework is not None and not isinstance(self.framework, str):
+            self.framework = str(self.framework)
+
+        if self.hardware is not None and not isinstance(self.hardware, str):
+            self.hardware = str(self.hardware)
+
+        if self.implementation is not None and not isinstance(self.implementation, ImplementationId):
+            self.implementation = ImplementationId(self.implementation)
 
         super().__post_init__(**kwargs)
 
 
 @dataclass
-class Dataset(NamedThing):
+class Benchmark(YAMLRoot):
     """
-    Represents a Dataset
+    Information about the specific Benchmark solved.
     """
     _inherited_slots: ClassVar[List[str]] = []
 
-    class_class_uri: ClassVar[URIRef] = PFHUB_SCHEMA.Dataset
-    class_class_curie: ClassVar[str] = "pfhub_schema:Dataset"
-    class_name: ClassVar[str] = "Dataset"
-    class_model_uri: ClassVar[URIRef] = PFHUB_SCHEMA.Dataset
+    class_class_uri: ClassVar[URIRef] = PFHUB.Benchmark
+    class_class_curie: ClassVar[str] = "pfhub:Benchmark"
+    class_name: ClassVar[str] = "Benchmark"
+    class_model_uri: ClassVar[URIRef] = PFHUB.Benchmark
 
-    id: Union[str, DatasetId] = None
-    primary_email: Optional[str] = None
-    birth_date: Optional[Union[str, XSDDate]] = None
-    age_in_years: Optional[int] = None
-    vital_status: Optional[Union[str, "PersonStatus"]] = None
+    id: Union[str, BenchmarkId] = None
+    name: str = None
+    version: Optional[str] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
             self.MissingRequiredField("id")
-        if not isinstance(self.id, DatasetId):
-            self.id = DatasetId(self.id)
+        if not isinstance(self.id, BenchmarkId):
+            self.id = BenchmarkId(self.id)
 
-        if self.primary_email is not None and not isinstance(self.primary_email, str):
-            self.primary_email = str(self.primary_email)
+        if self._is_empty(self.name):
+            self.MissingRequiredField("name")
+        if not isinstance(self.name, str):
+            self.name = str(self.name)
 
-        if self.birth_date is not None and not isinstance(self.birth_date, XSDDate):
-            self.birth_date = XSDDate(self.birth_date)
-
-        if self.age_in_years is not None and not isinstance(self.age_in_years, int):
-            self.age_in_years = int(self.age_in_years)
-
-        if self.vital_status is not None and not isinstance(self.vital_status, PersonStatus):
-            self.vital_status = PersonStatus(self.vital_status)
+        if self.version is not None and not isinstance(self.version, str):
+            self.version = str(self.version)
 
         super().__post_init__(**kwargs)
 
 
 @dataclass
-class DatasetCollection(YAMLRoot):
+class Contributor(YAMLRoot):
     """
-    A holder for Dataset objects
+    Someone who contributed to this solution.
     """
     _inherited_slots: ClassVar[List[str]] = []
 
-    class_class_uri: ClassVar[URIRef] = PFHUB_SCHEMA.DatasetCollection
-    class_class_curie: ClassVar[str] = "pfhub_schema:DatasetCollection"
-    class_name: ClassVar[str] = "DatasetCollection"
-    class_model_uri: ClassVar[URIRef] = PFHUB_SCHEMA.DatasetCollection
+    class_class_uri: ClassVar[URIRef] = PFHUB.Contributor
+    class_class_curie: ClassVar[str] = "pfhub:Contributor"
+    class_name: ClassVar[str] = "Contributor"
+    class_model_uri: ClassVar[URIRef] = PFHUB.Contributor
 
-    entries: Optional[Union[Dict[Union[str, DatasetId], Union[dict, Dataset]], List[Union[dict, Dataset]]]] = empty_dict()
+    id: Union[str, ContributorId] = None
+    name: str = None
+    handle: Optional[Union[str, URIorCURIE]] = None
+    affiliation: Optional[Union[str, List[str]]] = empty_list()
+    email: Optional[str] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
-        self._normalize_inlined_as_dict(slot_name="entries", slot_type=Dataset, key_name="id", keyed=True)
+        if self._is_empty(self.id):
+            self.MissingRequiredField("id")
+        if not isinstance(self.id, ContributorId):
+            self.id = ContributorId(self.id)
+
+        if self._is_empty(self.name):
+            self.MissingRequiredField("name")
+        if not isinstance(self.name, str):
+            self.name = str(self.name)
+
+        if self.handle is not None and not isinstance(self.handle, URIorCURIE):
+            self.handle = URIorCURIE(self.handle)
+
+        if not isinstance(self.affiliation, list):
+            self.affiliation = [self.affiliation] if self.affiliation is not None else []
+        self.affiliation = [v if isinstance(v, str) else str(v) for v in self.affiliation]
+
+        if self.email is not None and not isinstance(self.email, str):
+            self.email = str(self.email)
+
+        super().__post_init__(**kwargs)
+
+
+@dataclass
+class Implementation(YAMLRoot):
+    """
+    Link to the authors' implementation of the benchmark problem
+    """
+    _inherited_slots: ClassVar[List[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = SCHEMA.codeRepository
+    class_class_curie: ClassVar[str] = "schema:codeRepository"
+    class_name: ClassVar[str] = "Implementation"
+    class_model_uri: ClassVar[URIRef] = PFHUB.Implementation
+
+    id: Union[str, ImplementationId] = None
+    name: str = None
+    repository: Optional[Union[str, URIorCURIE]] = None
+
+    def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
+        if self._is_empty(self.id):
+            self.MissingRequiredField("id")
+        if not isinstance(self.id, ImplementationId):
+            self.id = ImplementationId(self.id)
+
+        if self._is_empty(self.name):
+            self.MissingRequiredField("name")
+        if not isinstance(self.name, str):
+            self.name = str(self.name)
+
+        if self.repository is not None and not isinstance(self.repository, URIorCURIE):
+            self.repository = URIorCURIE(self.repository)
+
+        super().__post_init__(**kwargs)
+
+
+@dataclass
+class File(YAMLRoot):
+    """
+    A generic electronic information container.
+    """
+    _inherited_slots: ClassVar[List[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = SCHEMA.MediaObject
+    class_class_curie: ClassVar[str] = "schema:MediaObject"
+    class_name: ClassVar[str] = "File"
+    class_model_uri: ClassVar[URIRef] = PFHUB.File
+
+    id: Union[str, FileId] = None
+    name: str = None
+    format: Optional[str] = None
+
+    def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
+        if self._is_empty(self.id):
+            self.MissingRequiredField("id")
+        if not isinstance(self.id, FileId):
+            self.id = FileId(self.id)
+
+        if self._is_empty(self.name):
+            self.MissingRequiredField("name")
+        if not isinstance(self.name, str):
+            self.name = str(self.name)
+
+        if self.format is not None and not isinstance(self.format, str):
+            self.format = str(self.format)
 
         super().__post_init__(**kwargs)
 
 
 # Enumerations
-class PersonStatus(EnumDefinitionImpl):
 
-    ALIVE = PermissibleValue(text="ALIVE",
-                                 description="the person is living",
-                                 meaning=PATO["0001421"])
-    DEAD = PermissibleValue(text="DEAD",
-                               description="the person is deceased",
-                               meaning=PATO["0001422"])
-    UNKNOWN = PermissibleValue(text="UNKNOWN",
-                                     description="the vital status is not known")
-
-    _defn = EnumDefinition(
-        name="PersonStatus",
-    )
 
 # Slots
 class slots:
     pass
 
 slots.id = Slot(uri=SCHEMA.identifier, name="id", curie=SCHEMA.curie('identifier'),
-                   model_uri=PFHUB_SCHEMA.id, domain=None, range=URIRef)
+                   model_uri=PFHUB.id, domain=None, range=URIRef)
 
 slots.name = Slot(uri=SCHEMA.name, name="name", curie=SCHEMA.curie('name'),
-                   model_uri=PFHUB_SCHEMA.name, domain=None, range=Optional[str])
+                   model_uri=PFHUB.name, domain=None, range=str)
 
-slots.description = Slot(uri=SCHEMA.description, name="description", curie=SCHEMA.curie('description'),
-                   model_uri=PFHUB_SCHEMA.description, domain=None, range=Optional[str])
+slots.affiliation = Slot(uri=PFHUB.affiliation, name="affiliation", curie=PFHUB.curie('affiliation'),
+                   model_uri=PFHUB.affiliation, domain=None, range=Optional[Union[str, List[str]]])
 
-slots.primary_email = Slot(uri=SCHEMA.email, name="primary_email", curie=SCHEMA.curie('email'),
-                   model_uri=PFHUB_SCHEMA.primary_email, domain=None, range=Optional[str])
+slots.benchmark = Slot(uri=PFHUB.benchmark, name="benchmark", curie=PFHUB.curie('benchmark'),
+                   model_uri=PFHUB.benchmark, domain=None, range=Optional[Union[str, BenchmarkId]])
 
-slots.birth_date = Slot(uri=SCHEMA.birthDate, name="birth_date", curie=SCHEMA.curie('birthDate'),
-                   model_uri=PFHUB_SCHEMA.birth_date, domain=None, range=Optional[Union[str, XSDDate]])
+slots.contributors = Slot(uri=SCHEMA.contributor, name="contributors", curie=SCHEMA.curie('contributor'),
+                   model_uri=PFHUB.contributors, domain=None, range=Optional[Union[Dict[Union[str, ContributorId], Union[dict, Contributor]], List[Union[dict, Contributor]]]])
 
-slots.age_in_years = Slot(uri=PFHUB_SCHEMA.age_in_years, name="age_in_years", curie=PFHUB_SCHEMA.curie('age_in_years'),
-                   model_uri=PFHUB_SCHEMA.age_in_years, domain=None, range=Optional[int])
+slots.date = Slot(uri=SCHEMA.datePublished, name="date", curie=SCHEMA.curie('datePublished'),
+                   model_uri=PFHUB.date, domain=None, range=Optional[Union[str, XSDDate]])
 
-slots.vital_status = Slot(uri=PFHUB_SCHEMA.vital_status, name="vital_status", curie=PFHUB_SCHEMA.curie('vital_status'),
-                   model_uri=PFHUB_SCHEMA.vital_status, domain=None, range=Optional[Union[str, "PersonStatus"]])
-
-slots.datasetCollection__entries = Slot(uri=PFHUB_SCHEMA.entries, name="datasetCollection__entries", curie=PFHUB_SCHEMA.curie('entries'),
-                   model_uri=PFHUB_SCHEMA.datasetCollection__entries, domain=None, range=Optional[Union[Dict[Union[str, DatasetId], Union[dict, Dataset]], List[Union[dict, Dataset]]]])
-
-slots.Dataset_primary_email = Slot(uri=SCHEMA.email, name="Dataset_primary_email", curie=SCHEMA.curie('email'),
-                   model_uri=PFHUB_SCHEMA.Dataset_primary_email, domain=Dataset, range=Optional[str],
+slots.email = Slot(uri=SCHEMA.email, name="email", curie=SCHEMA.curie('email'),
+                   model_uri=PFHUB.email, domain=None, range=Optional[str],
                    pattern=re.compile(r'^\S+@[\S+\.]+\S+'))
+
+slots.format = Slot(uri=SCHEMA.encodingFormat, name="format", curie=SCHEMA.curie('encodingFormat'),
+                   model_uri=PFHUB.format, domain=None, range=Optional[str])
+
+slots.framework = Slot(uri=SCHEMA.SoftwareApplication, name="framework", curie=SCHEMA.curie('SoftwareApplication'),
+                   model_uri=PFHUB.framework, domain=None, range=Optional[str])
+
+slots.handle = Slot(uri=SCHEMA.identifier, name="handle", curie=SCHEMA.curie('identifier'),
+                   model_uri=PFHUB.handle, domain=None, range=Optional[Union[str, URIorCURIE]])
+
+slots.hardware = Slot(uri=PFHUB.hardware, name="hardware", curie=PFHUB.curie('hardware'),
+                   model_uri=PFHUB.hardware, domain=None, range=Optional[str])
+
+slots.implementation = Slot(uri=PFHUB.implementation, name="implementation", curie=PFHUB.curie('implementation'),
+                   model_uri=PFHUB.implementation, domain=None, range=Optional[Union[str, ImplementationId]])
+
+slots.repository = Slot(uri=PFHUB.repository, name="repository", curie=PFHUB.curie('repository'),
+                   model_uri=PFHUB.repository, domain=None, range=Optional[Union[str, URIorCURIE]])
+
+slots.summary = Slot(uri=SCHEMA.abstract, name="summary", curie=SCHEMA.curie('abstract'),
+                   model_uri=PFHUB.summary, domain=None, range=Optional[str])
+
+slots.version = Slot(uri=PFHUB.version, name="version", curie=PFHUB.curie('version'),
+                   model_uri=PFHUB.version, domain=None, range=Optional[str])

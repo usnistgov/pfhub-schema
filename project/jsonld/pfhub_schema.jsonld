@@ -3,16 +3,17 @@
   "description": "Phase-field simulation and benchmark schema in LinkML.",
   "title": "pfhub-schema",
   "see_also": [
-    "https://usnistgov.github.io/pfhub-schema"
+    "https://pages.nist.gov/pfhub",
+    "https://pages.nist.gov/pfhub-schema"
   ],
   "id": "https://w3id.org/usnistgov/pfhub-schema",
   "imports": [
     "linkml:types"
   ],
-  "license": "MIT",
+  "license": "NIST",
   "prefixes": [
     {
-      "prefix_prefix": "pfhub_schema",
+      "prefix_prefix": "pfhub",
       "prefix_reference": "https://w3id.org/usnistgov/pfhub-schema/"
     },
     {
@@ -20,23 +21,31 @@
       "prefix_reference": "https://w3id.org/linkml/"
     },
     {
-      "prefix_prefix": "biolink",
-      "prefix_reference": "https://w3id.org/biolink/"
+      "prefix_prefix": "dcterms",
+      "prefix_reference": "http://purl.org/dc/terms/"
+    },
+    {
+      "prefix_prefix": "iana_text",
+      "prefix_reference": "https://www.iana.org/assignments/media-types/text/"
+    },
+    {
+      "prefix_prefix": "iana_app",
+      "prefix_reference": "https://www.iana.org/assignments/media-types/application/"
+    },
+    {
+      "prefix_prefix": "orcid",
+      "prefix_reference": "https://orcid.org/"
+    },
+    {
+      "prefix_prefix": "qudt",
+      "prefix_reference": "http://qudt.org/2.1/schema/qudt/"
     },
     {
       "prefix_prefix": "schema",
       "prefix_reference": "http://schema.org/"
-    },
-    {
-      "prefix_prefix": "PATO",
-      "prefix_reference": "http://purl.obolibrary.org/obo/PATO_"
-    },
-    {
-      "prefix_prefix": "example",
-      "prefix_reference": "https://example.org/"
     }
   ],
-  "default_prefix": "pfhub_schema",
+  "default_prefix": "pfhub",
   "default_range": "string",
   "types": [
     {
@@ -259,46 +268,24 @@
       "@type": "TypeDefinition"
     }
   ],
-  "enums": [
-    {
-      "name": "PersonStatus",
-      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/PersonStatus",
-      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
-      "permissible_values": [
-        {
-          "text": "ALIVE",
-          "description": "the person is living",
-          "meaning": "PATO:0001421"
-        },
-        {
-          "text": "DEAD",
-          "description": "the person is deceased",
-          "meaning": "PATO:0001422"
-        },
-        {
-          "text": "UNKNOWN",
-          "description": "the vital status is not known",
-          "todos": [
-            "map this to an ontology"
-          ]
-        }
-      ]
-    }
-  ],
   "slots": [
     {
       "name": "id",
       "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/id",
-      "description": "A unique identifier for a thing",
+      "description": "Unique identifier that must not collide with any other.",
       "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
       "mappings": [
         "http://schema.org/identifier"
       ],
       "slot_uri": "http://schema.org/identifier",
       "identifier": true,
-      "owner": "NamedThing",
+      "owner": "File",
       "domain_of": [
-        "NamedThing"
+        "BenchmarkResult",
+        "Benchmark",
+        "Contributor",
+        "Implementation",
+        "File"
       ],
       "range": "uriorcurie",
       "required": true,
@@ -307,195 +294,304 @@
     {
       "name": "name",
       "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/name",
-      "description": "A human-readable name for a thing",
+      "description": "Informal or human-memorable identifier that may collide with others.",
       "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
       "mappings": [
         "http://schema.org/name"
       ],
       "slot_uri": "http://schema.org/name",
-      "owner": "NamedThing",
+      "owner": "File",
       "domain_of": [
-        "NamedThing"
+        "BenchmarkResult",
+        "Benchmark",
+        "Contributor",
+        "Implementation",
+        "File"
       ],
       "range": "string",
+      "required": true,
       "@type": "SlotDefinition"
     },
     {
-      "name": "description",
-      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/description",
-      "description": "A human-readable description for a thing",
+      "name": "affiliation",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/affiliation",
+      "description": "Institution, company, or agency a person works with.",
       "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
-      "mappings": [
-        "http://schema.org/description"
-      ],
-      "slot_uri": "http://schema.org/description",
-      "owner": "NamedThing",
+      "slot_uri": "https://w3id.org/usnistgov/pfhub-schema/affiliation",
+      "multivalued": true,
+      "owner": "Contributor",
       "domain_of": [
-        "NamedThing"
+        "Contributor"
       ],
       "range": "string",
+      "inlined_as_list": true,
       "@type": "SlotDefinition"
     },
     {
-      "name": "primary_email",
-      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/primary_email",
-      "description": "The main email address of a person",
+      "name": "benchmark",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/benchmark",
+      "description": "Details of the Benchmark Problem.",
       "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
-      "mappings": [
-        "http://schema.org/email"
-      ],
-      "slot_uri": "http://schema.org/email",
-      "owner": "Dataset",
+      "slot_uri": "https://w3id.org/usnistgov/pfhub-schema/benchmark",
+      "owner": "BenchmarkResult",
       "domain_of": [
-        "Dataset"
+        "BenchmarkResult"
       ],
-      "range": "string",
+      "range": "Benchmark",
       "@type": "SlotDefinition"
     },
     {
-      "name": "birth_date",
-      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/birth_date",
-      "description": "Date on which a person is born",
+      "name": "contributors",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/contributors",
+      "description": "Collection of people who worked on this solution.",
       "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
       "mappings": [
-        "http://schema.org/birthDate"
+        "http://schema.org/contributor"
       ],
-      "slot_uri": "http://schema.org/birthDate",
-      "owner": "Dataset",
+      "slot_uri": "http://schema.org/contributor",
+      "multivalued": true,
+      "owner": "BenchmarkResult",
       "domain_of": [
-        "Dataset"
+        "BenchmarkResult"
       ],
+      "range": "Contributor",
+      "inlined": true,
+      "inlined_as_list": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "date",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/date",
+      "description": "Day when an item was uploaded, released, or published.",
+      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
+      "mappings": [
+        "http://schema.org/datePublished"
+      ],
+      "slot_uri": "http://schema.org/datePublished",
       "range": "date",
       "@type": "SlotDefinition"
     },
     {
-      "name": "age_in_years",
-      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/age_in_years",
-      "description": "Number of years since birth",
-      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
-      "slot_uri": "https://w3id.org/usnistgov/pfhub-schema/age_in_years",
-      "owner": "Dataset",
-      "domain_of": [
-        "Dataset"
-      ],
-      "range": "integer",
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "vital_status",
-      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/vital_status",
-      "description": "living or dead status",
-      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
-      "slot_uri": "https://w3id.org/usnistgov/pfhub-schema/vital_status",
-      "owner": "Dataset",
-      "domain_of": [
-        "Dataset"
-      ],
-      "range": "PersonStatus",
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "datasetCollection__entries",
-      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
-      "slot_uri": "https://w3id.org/usnistgov/pfhub-schema/entries",
-      "multivalued": true,
-      "alias": "entries",
-      "owner": "DatasetCollection",
-      "domain_of": [
-        "DatasetCollection"
-      ],
-      "range": "Dataset",
-      "inlined": true,
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "Dataset_primary_email",
-      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/primary_email",
-      "description": "The main email address of a person",
+      "name": "email",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/email",
+      "description": "A person's electronic mailing address.",
       "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
       "mappings": [
         "http://schema.org/email"
       ],
-      "is_a": "primary_email",
-      "domain": "Dataset",
       "slot_uri": "http://schema.org/email",
-      "alias": "primary_email",
-      "owner": "Dataset",
+      "owner": "Contributor",
       "domain_of": [
-        "Dataset"
+        "Contributor"
       ],
-      "is_usage_slot": true,
-      "usage_slot_name": "primary_email",
       "range": "string",
       "pattern": "^\\S+@[\\S+\\.]+\\S+",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "format",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/format",
+      "description": "Format of data contained in a file.",
+      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
+      "mappings": [
+        "http://schema.org/encodingFormat"
+      ],
+      "slot_uri": "http://schema.org/encodingFormat",
+      "owner": "File",
+      "domain_of": [
+        "File"
+      ],
+      "range": "string",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "framework",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/framework",
+      "description": "A computer program or library",
+      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
+      "mappings": [
+        "http://schema.org/SoftwareApplication"
+      ],
+      "slot_uri": "http://schema.org/SoftwareApplication",
+      "owner": "BenchmarkResult",
+      "domain_of": [
+        "BenchmarkResult"
+      ],
+      "range": "string",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "handle",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/handle",
+      "description": "A person's identifier on a website, without the \"at\" symbol",
+      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
+      "mappings": [
+        "http://schema.org/identifier"
+      ],
+      "slot_uri": "http://schema.org/identifier",
+      "owner": "Contributor",
+      "domain_of": [
+        "Contributor"
+      ],
+      "range": "uriorcurie",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "hardware",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/hardware",
+      "description": "Computer hardware used to run the simulation.",
+      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
+      "slot_uri": "https://w3id.org/usnistgov/pfhub-schema/hardware",
+      "owner": "BenchmarkResult",
+      "domain_of": [
+        "BenchmarkResult"
+      ],
+      "range": "string",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "implementation",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/implementation",
+      "description": "Source code implementing the solution.",
+      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
+      "slot_uri": "https://w3id.org/usnistgov/pfhub-schema/implementation",
+      "owner": "BenchmarkResult",
+      "domain_of": [
+        "BenchmarkResult"
+      ],
+      "range": "Implementation",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "repository",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/repository",
+      "description": "A repository of source code.",
+      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
+      "slot_uri": "https://w3id.org/usnistgov/pfhub-schema/repository",
+      "owner": "Implementation",
+      "domain_of": [
+        "Implementation"
+      ],
+      "range": "uriorcurie",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "summary",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/summary",
+      "description": "Text description, abstract, or narrative",
+      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
+      "mappings": [
+        "http://schema.org/abstract"
+      ],
+      "slot_uri": "http://schema.org/abstract",
+      "range": "string",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "version",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/version",
+      "description": "Semantic version of a software project.",
+      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
+      "slot_uri": "https://w3id.org/usnistgov/pfhub-schema/version",
+      "owner": "Benchmark",
+      "domain_of": [
+        "Benchmark"
+      ],
+      "range": "string",
       "@type": "SlotDefinition"
     }
   ],
   "classes": [
     {
-      "name": "NamedThing",
-      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/NamedThing",
-      "description": "A generic grouping for any identifiable entity",
+      "name": "BenchmarkResult",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/BenchmarkResult",
+      "description": "Root and context for this Benchmark Problem solution.",
+      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
+      "slots": [
+        "id",
+        "name",
+        "contributors",
+        "benchmark",
+        "framework",
+        "hardware",
+        "implementation"
+      ],
+      "slot_usage": {},
+      "class_uri": "https://w3id.org/usnistgov/pfhub-schema/BenchmarkResult",
+      "tree_root": true,
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "Benchmark",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/Benchmark",
+      "description": "Information about the specific Benchmark solved.",
+      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
+      "slots": [
+        "id",
+        "name",
+        "version"
+      ],
+      "slot_usage": {},
+      "class_uri": "https://w3id.org/usnistgov/pfhub-schema/Benchmark",
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "Contributor",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/Contributor",
+      "description": "Someone who contributed to this solution.",
+      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
+      "slots": [
+        "id",
+        "name",
+        "handle",
+        "affiliation",
+        "email"
+      ],
+      "slot_usage": {},
+      "class_uri": "https://w3id.org/usnistgov/pfhub-schema/Contributor",
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "Implementation",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/Implementation",
+      "description": "Link to the authors' implementation of the benchmark problem",
       "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
       "mappings": [
-        "schema:Thing"
+        "schema:codeRepository"
       ],
       "slots": [
         "id",
         "name",
-        "description"
+        "repository"
       ],
       "slot_usage": {},
-      "class_uri": "http://schema.org/Thing",
+      "class_uri": "http://schema.org/codeRepository",
       "@type": "ClassDefinition"
     },
     {
-      "name": "Dataset",
-      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/Dataset",
-      "description": "Represents a Dataset",
+      "name": "File",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/File",
+      "description": "A generic electronic information container.",
       "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
-      "is_a": "NamedThing",
+      "mappings": [
+        "schema:MediaObject"
+      ],
+      "abstract": true,
       "slots": [
         "id",
         "name",
-        "description",
-        "Dataset_primary_email",
-        "birth_date",
-        "age_in_years",
-        "vital_status"
+        "format"
       ],
       "slot_usage": {},
-      "class_uri": "https://w3id.org/usnistgov/pfhub-schema/Dataset",
-      "@type": "ClassDefinition"
-    },
-    {
-      "name": "DatasetCollection",
-      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/DatasetCollection",
-      "description": "A holder for Dataset objects",
-      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
-      "slots": [
-        "datasetCollection__entries"
-      ],
-      "slot_usage": {},
-      "attributes": [
-        {
-          "name": "entries",
-          "multivalued": true,
-          "range": "Dataset",
-          "inlined": true,
-          "@type": "SlotDefinition"
-        }
-      ],
-      "class_uri": "https://w3id.org/usnistgov/pfhub-schema/DatasetCollection",
-      "tree_root": true,
+      "class_uri": "http://schema.org/MediaObject",
       "@type": "ClassDefinition"
     }
   ],
   "metamodel_version": "1.7.0",
   "source_file": "pfhub_schema.yaml",
-  "source_file_date": "2023-03-09T13:35:17",
-  "source_file_size": 2212,
-  "generation_date": "2023-03-09T13:40:59",
+  "source_file_date": "2023-03-10T15:58:45",
+  "source_file_size": 4461,
+  "generation_date": "2023-03-10T15:58:49",
   "@type": "SchemaDefinition",
   "@context": [
     "project/jsonld/pfhub_schema.context.jsonld",

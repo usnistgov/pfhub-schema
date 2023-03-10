@@ -1,10 +1,8 @@
 @prefix IAO: <http://purl.obolibrary.org/obo/IAO_> .
-@prefix PATO: <http://purl.obolibrary.org/obo/PATO_> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix linkml: <https://w3id.org/linkml/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
-@prefix pfhub_schema: <https://w3id.org/usnistgov/pfhub-schema/> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix pfhub: <https://w3id.org/usnistgov/pfhub-schema/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <http://schema.org/> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
@@ -21,139 +19,220 @@ linkml:topValue a owl:DatatypeProperty ;
 
 <https://w3id.org/usnistgov/pfhub-schema> a owl:Ontology ;
     rdfs:label "pfhub-schema" ;
-    IAO:0000700 pfhub_schema:DatasetCollection,
-        pfhub_schema:NamedThing ;
-    dcterms:license "MIT" ;
+    IAO:0000700 pfhub:Benchmark,
+        pfhub:BenchmarkResult,
+        pfhub:Contributor,
+        pfhub:File,
+        pfhub:Implementation ;
+    dcterms:license "NIST" ;
     dcterms:title "pfhub-schema" ;
-    rdfs:seeAlso "https://usnistgov.github.io/pfhub-schema" ;
-    linkml:generation_date "2023-03-09T13:41:02" ;
+    rdfs:seeAlso "https://pages.nist.gov/pfhub",
+        "https://pages.nist.gov/pfhub-schema" ;
+    linkml:generation_date "2023-03-10T15:58:54" ;
     linkml:metamodel_version "1.7.0" ;
     linkml:source_file "pfhub_schema.yaml" ;
-    linkml:source_file_date "2023-03-09T13:35:17" ;
-    linkml:source_file_size 2212 .
+    linkml:source_file_date "2023-03-10T15:58:45" ;
+    linkml:source_file_size 4461 .
 
-pfhub_schema:DatasetCollection a owl:Class,
-        linkml:ClassDefinition ;
-    rdfs:label "DatasetCollection" ;
-    rdfs:subClassOf [ a owl:Restriction ;
-            owl:allValuesFrom pfhub_schema:Dataset ;
-            owl:onProperty pfhub_schema:entries ] ;
-    skos:definition "A holder for Dataset objects" .
-
-pfhub_schema:age_in_years a owl:ObjectProperty,
+schema:abstract a owl:ObjectProperty,
         linkml:SlotDefinition ;
-    rdfs:label "age_in_years" ;
-    rdfs:range linkml:Integer ;
-    skos:definition "Number of years since birth" .
-
-pfhub_schema:entries a owl:ObjectProperty,
-        linkml:SlotDefinition ;
-    rdfs:label "entries" ;
-    rdfs:range pfhub_schema:Dataset .
-
-pfhub_schema:vital_status a owl:ObjectProperty,
-        linkml:SlotDefinition ;
-    rdfs:label "vital_status" ;
-    rdfs:range pfhub_schema:PersonStatus ;
-    skos:definition "living or dead status" .
-
-PATO:0001421 a owl:Class,
-        pfhub_schema:PersonStatus ;
-    rdfs:label "ALIVE" .
-
-PATO:0001422 a owl:Class,
-        pfhub_schema:PersonStatus ;
-    rdfs:label "DEAD" .
-
-schema:birthDate a owl:ObjectProperty,
-        linkml:SlotDefinition ;
-    rdfs:label "birth_date" ;
-    rdfs:range linkml:Date ;
-    skos:definition "Date on which a person is born" ;
-    skos:exactMatch schema:birthDate .
-
-schema:description a owl:ObjectProperty,
-        linkml:SlotDefinition ;
-    rdfs:label "description" ;
+    rdfs:label "summary" ;
     rdfs:range linkml:String ;
-    skos:definition "A human-readable description for a thing" ;
-    skos:exactMatch schema:description .
+    skos:definition "Text description, abstract, or narrative" ;
+    skos:exactMatch schema:abstract .
+
+schema:datePublished a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "date" ;
+    rdfs:range linkml:Date ;
+    skos:definition "Day when an item was uploaded, released, or published." ;
+    skos:exactMatch schema:datePublished .
+
+pfhub:BenchmarkResult a owl:Class,
+        linkml:ClassDefinition ;
+    rdfs:label "BenchmarkResult" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onClass linkml:Uriorcurie ;
+            owl:onProperty schema:identifier ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:onClass linkml:String ;
+            owl:onProperty schema:name ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
+            owl:onClass linkml:String ;
+            owl:onProperty pfhub:hardware ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom pfhub:Contributor ;
+            owl:onProperty schema:contributor ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
+            owl:onClass linkml:String ;
+            owl:onProperty schema:SoftwareApplication ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
+            owl:onClass pfhub:Benchmark ;
+            owl:onProperty pfhub:benchmark ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
+            owl:onClass pfhub:Implementation ;
+            owl:onProperty pfhub:implementation ] ;
+    skos:definition "Root and context for this Benchmark Problem solution." .
+
+pfhub:File a owl:Class,
+        linkml:ClassDefinition ;
+    rdfs:label "File" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onClass linkml:String ;
+            owl:onProperty schema:name ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
+            owl:onClass linkml:String ;
+            owl:onProperty schema:encodingFormat ],
+        [ a owl:Restriction ;
+            owl:onClass linkml:Uriorcurie ;
+            owl:onProperty schema:identifier ;
+            owl:qualifiedCardinality 1 ] ;
+    skos:definition "A generic electronic information container." ;
+    skos:exactMatch schema:MediaObject .
+
+pfhub:affiliation a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "affiliation" ;
+    rdfs:range linkml:String ;
+    skos:definition "Institution, company, or agency a person works with." .
+
+pfhub:benchmark a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "benchmark" ;
+    rdfs:range pfhub:Benchmark ;
+    skos:definition "Details of the Benchmark Problem." .
+
+pfhub:hardware a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "hardware" ;
+    rdfs:range linkml:String ;
+    skos:definition "Computer hardware used to run the simulation." .
+
+pfhub:implementation a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "implementation" ;
+    rdfs:range pfhub:Implementation ;
+    skos:definition "Source code implementing the solution." .
+
+pfhub:repository a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "repository" ;
+    rdfs:range linkml:Uriorcurie ;
+    skos:definition "A repository of source code." .
+
+pfhub:version a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "version" ;
+    rdfs:range linkml:String ;
+    skos:definition "Semantic version of a software project." .
+
+schema:SoftwareApplication a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "framework" ;
+    rdfs:range linkml:String ;
+    skos:definition "A computer program or library" ;
+    skos:exactMatch schema:SoftwareApplication .
+
+schema:contributor a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "contributors" ;
+    rdfs:range pfhub:Contributor ;
+    skos:definition "Collection of people who worked on this solution." ;
+    skos:exactMatch schema:contributor .
 
 schema:email a owl:ObjectProperty,
         linkml:SlotDefinition ;
-    rdfs:label "primary_email" ;
+    rdfs:label "email" ;
     rdfs:range linkml:String ;
-    skos:definition "The main email address of a person" ;
+    skos:definition "A person's electronic mailing address." ;
     skos:exactMatch schema:email .
 
-schema:identifier a owl:ObjectProperty,
+schema:encodingFormat a owl:ObjectProperty,
         linkml:SlotDefinition ;
-    rdfs:label "id" ;
-    rdfs:range linkml:Uriorcurie ;
-    skos:definition "A unique identifier for a thing" ;
-    skos:exactMatch schema:identifier .
+    rdfs:label "format" ;
+    rdfs:range linkml:String ;
+    skos:definition "Format of data contained in a file." ;
+    skos:exactMatch schema:encodingFormat .
+
+pfhub:Benchmark a owl:Class,
+        linkml:ClassDefinition ;
+    rdfs:label "Benchmark" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onClass linkml:Uriorcurie ;
+            owl:onProperty schema:identifier ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
+            owl:onClass linkml:String ;
+            owl:onProperty pfhub:version ],
+        [ a owl:Restriction ;
+            owl:onClass linkml:String ;
+            owl:onProperty schema:name ;
+            owl:qualifiedCardinality 1 ] ;
+    skos:definition "Information about the specific Benchmark solved." .
+
+pfhub:Contributor a owl:Class,
+        linkml:ClassDefinition ;
+    rdfs:label "Contributor" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
+            owl:onClass linkml:String ;
+            owl:onProperty schema:email ],
+        [ a owl:Restriction ;
+            owl:onClass linkml:Uriorcurie ;
+            owl:onProperty schema:identifier ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:onClass linkml:String ;
+            owl:onProperty schema:name ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
+            owl:onClass linkml:Uriorcurie ;
+            owl:onProperty schema:identifier ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom linkml:String ;
+            owl:onProperty pfhub:affiliation ] ;
+    skos:definition "Someone who contributed to this solution." .
+
+pfhub:Implementation a owl:Class,
+        linkml:ClassDefinition ;
+    rdfs:label "Implementation" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
+            owl:onClass linkml:Uriorcurie ;
+            owl:onProperty pfhub:repository ],
+        [ a owl:Restriction ;
+            owl:onClass linkml:String ;
+            owl:onProperty schema:name ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:onClass linkml:Uriorcurie ;
+            owl:onProperty schema:identifier ;
+            owl:qualifiedCardinality 1 ] ;
+    skos:definition "Link to the authors' implementation of the benchmark problem" ;
+    skos:exactMatch schema:codeRepository .
+
+linkml:ClassDefinition a owl:Class ;
+    rdfs:label "class_definition" .
+
+schema:identifier a owl:ObjectProperty,
+        linkml:SlotDefinition .
 
 schema:name a owl:ObjectProperty,
         linkml:SlotDefinition ;
     rdfs:label "name" ;
     rdfs:range linkml:String ;
-    skos:definition "A human-readable name for a thing" ;
+    skos:definition "Informal or human-memorable identifier that may collide with others." ;
     skos:exactMatch schema:name .
-
-pfhub_schema:Dataset a owl:Class,
-        linkml:ClassDefinition ;
-    rdfs:label "Dataset" ;
-    rdfs:subClassOf [ a owl:Restriction ;
-            owl:maxQualifiedCardinality 1 ;
-            owl:onClass pfhub_schema:PersonStatus ;
-            owl:onProperty pfhub_schema:vital_status ],
-        [ a owl:Restriction ;
-            owl:maxQualifiedCardinality 1 ;
-            owl:onClass linkml:Integer ;
-            owl:onProperty pfhub_schema:age_in_years ],
-        [ a owl:Restriction ;
-            owl:maxQualifiedCardinality 1 ;
-            owl:onClass linkml:Date ;
-            owl:onProperty schema:birthDate ],
-        [ a owl:Restriction ;
-            owl:maxQualifiedCardinality 1 ;
-            owl:onClass linkml:String ;
-            owl:onProperty schema:email ],
-        pfhub_schema:NamedThing ;
-    skos:definition "Represents a Dataset" .
-
-pfhub_schema:NamedThing a owl:Class,
-        linkml:ClassDefinition ;
-    rdfs:label "NamedThing" ;
-    rdfs:subClassOf [ a owl:Restriction ;
-            owl:maxQualifiedCardinality 1 ;
-            owl:onClass linkml:String ;
-            owl:onProperty schema:description ],
-        [ a owl:Restriction ;
-            owl:maxQualifiedCardinality 1 ;
-            owl:onClass linkml:String ;
-            owl:onProperty schema:name ],
-        [ a owl:Restriction ;
-            owl:onClass linkml:Uriorcurie ;
-            owl:onProperty schema:identifier ;
-            owl:qualifiedCardinality 1 ] ;
-    skos:definition "A generic grouping for any identifiable entity" ;
-    skos:exactMatch schema:Thing .
-
-<https://w3id.org/usnistgov/pfhub-schema/PersonStatus#UNKNOWN> a owl:Class,
-        pfhub_schema:PersonStatus ;
-    rdfs:label "UNKNOWN" .
-
-linkml:ClassDefinition a owl:Class ;
-    rdfs:label "class_definition" .
-
-pfhub_schema:PersonStatus a owl:Class,
-        linkml:EnumDefinition ;
-    rdfs:label "PersonStatus" ;
-    owl:unionOf ( PATO:0001421 PATO:0001422 <https://w3id.org/usnistgov/pfhub-schema/PersonStatus#UNKNOWN> ) ;
-    linkml:permissible_values PATO:0001421,
-        PATO:0001422,
-        <https://w3id.org/usnistgov/pfhub-schema/PersonStatus#UNKNOWN> .
 
 linkml:SlotDefinition a owl:Class ;
     rdfs:label "slot_definition" .
