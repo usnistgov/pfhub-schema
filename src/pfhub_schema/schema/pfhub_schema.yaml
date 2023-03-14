@@ -23,17 +23,25 @@ prefixes:
   pfhub: https://w3id.org/usnistgov/pfhub-schema/
   linkml: https://w3id.org/linkml/  # LinkML itself
   dcterms: http://purl.org/dc/terms/  # Dublin Core Metadata Terms
+  doi: https://doi.org/  # Digital Object Identifier
   iana_text: https://www.iana.org/assignments/media-types/text/  # MIME types
   iana_app: https://www.iana.org/assignments/media-types/application/
+  NCIT: http://purl.obolibrary.org/obo/NCIT_
   orcid: https://orcid.org/  # Open Researcher & Contributor ID
   qudt: http://qudt.org/2.1/schema/qudt/  # Quantities, Units, Dimensions, Types
   schema: http://schema.org/  # a schema so broad they just call it "schema"
+  UO: http://purl.obolibrary.org/obo/UO_  # Units of Measure Ontology
+  # social media
+  bitbucket: https://bitbucket.org/
+  github: https://github.com/
+  gitlab: https://gitlab.com/
 
 default_prefix: pfhub
 default_range: string
 
 imports:
   - linkml:types
+
 
 classes:
   BenchmarkResult:
@@ -42,11 +50,13 @@ classes:
     slots:
       - id
       - name
-      - contributors
       - benchmark
+      - contributors
+      - date_created
       - framework
-      - hardware
       - implementation
+      - results
+      - summary
     tree_root: true
 
   Benchmark:
@@ -55,9 +65,20 @@ classes:
     slots:
       - id
       - name
+      - number
       - version
 
+  ComputeResource:
+    class_uri: schema:softwareRequirements
+    description: >-
+      Summary of the hardware used to execute the simulation.
+    slots:
+      - architecture
+      - cores
+      - nodes
+
   Contributor:
+    class_uri: schema:Person
     description: >-
       Someone who contributed to this solution.
     slots:
@@ -67,29 +88,51 @@ classes:
       - affiliation
       - email
 
-  Implementation:
+  File:
+    abstract: true
+    class_uri: schema:DigitalDocument
     description: >-
-      Link to the authors' implementation of the benchmark problem
-    class_uri: schema:codeRepository
+      A generic electronic information container.
+    slots:
+      - id
+      - name
+      - columns
+      - format
+
+  Results:
+    class_uri: schema:Dataset
+    description: >-
+      Runtime information and output from a simulation.
+    slots:
+      - data_raw
+      - data_table
+      - data_visualization
+      - hardware
+      - memory_in_KB
+      - time_in_s
+
+  Software:
+    description: >-
+      A software product, download, or repository.
+    class_uri: schema:SoftwareApplication
+    slots:
+      - id
+      - name
+      - download
+      - repository
+      - version
+
+  SourceCode:
+    description: >-
+      Link to the authors' implementation of the benchmark problem.
+    class_uri: schema:SoftwareSourceCode
     slots:
       - id
       - name
       - repository
 
 
-  File:
-    abstract: true
-    class_uri: schema:MediaObject
-    description: >-
-      A generic electronic information container.
-    slots:
-      - id
-      - name
-      - format
-
-
 slots:
-  # ~~ universal ~~
   id:
     description: >-
       Unique identifier that must not collide with any other.
@@ -99,25 +142,31 @@ slots:
     required: true
     slot_uri: schema:identifier
 
-  name:
-    description: >-
-      Informal or human-memorable identifier that may collide with others.
-    multivalued: false
-    range: string
-    required: true
-    slot_uri: schema:name
-
-  # ~~ context-dependent ~~
   affiliation:
     description: >-
       Institution, company, or agency a person works with.
     inlined_as_list: true
     multivalued: true
 
+  architecture:
+    description: >-
+      Computer processor architecture required for this simulation.
+    inlined_as_list: true
+    multivalued: true
+    range: ComputeResource
+
   benchmark:
     description: >-
       Details of the Benchmark Problem.
     range: Benchmark
+
+  columns:
+    description: >-
+      Column names applied to tabular data.
+    inlined_as_list: true
+    multivalued: true
+    pattern: "^\\S+"  # no whitespace allowed
+    range: string
 
   contributors:
     description: >-
@@ -127,11 +176,24 @@ slots:
     range: Contributor
     slot_uri: schema:contributor
 
-  date:
+  cores:
+    description: >-
+      Number of parallel cores or threads of execution used by the
+      simulation on a CPU, GPU, or accelerator device.
+    range: integer
+    slot_uri: NCIT:C64194
+
+  date_created:
     description: >-
       Day when an item was uploaded, released, or published.
     range: date
     slot_uri: schema:datePublished
+
+  download:
+    description: >-
+      Link to a download URL.
+    range: uriorcurie
+    slot_uri: schema:downloadUrl
 
   email:
     description: >-
@@ -139,6 +201,28 @@ slots:
     pattern: "^\\S+@[\\S+\\.]+\\S+"
     range: string
     slot_uri: schema:email
+
+  data_raw:
+    description: >-
+      Raw data output from a simulation.
+    inlined_as_list: true
+    multivalued: true
+    range: File
+
+  data_table:
+    description: >-
+      Tabular output from a simulation.
+    inlined_as_list: true
+    multivalued: true
+    range: File
+    required: true
+
+  data_visualization:
+    description: >-
+      Visualization output from a simulation.
+    inlined_as_list: true
+    multivalued: true
+    range: File
 
   format:
     description: >-
@@ -148,32 +232,76 @@ slots:
   framework:
     description: >-
       A computer program or library
+    inlined_as_list: true
+    multivalued: true
+    range: Software
     slot_uri: schema:SoftwareApplication
 
   handle:
     description: >-
-      A person's identifier on a website, without the "at" symbol
+      A person's identifier on a website, without the "at" symbol.
+    inlined_as_list: true
+    multivalued: true
     range: uriorcurie
     slot_uri: schema:identifier
 
   hardware:
     description: >-
       Computer hardware used to run the simulation.
-    range: string
+    multivalued: true
+    range: ComputeResource
 
   implementation:
     description: >-
       Source code implementing the solution.
-    range: Implementation
+    range: SourceCode
+
+  memory_in_KB:
+    description: >-
+      Memory capacity required for this simulation.
+    range: integer
+    unit:
+      ucum_code: KIB*BY
+      has_quantity_kind: UO:0000245
+
+  name:
+    description: >-
+      Informal or human-memorable identifier that may collide with others.
+    multivalued: false
+    range: string
+    slot_uri: schema:name
+
+  nodes:
+    description: >-
+      Number of machines allocated for the simulation in a computer cluster
+      environment.
+    multivalued: false
+    range: integer
+    slot_uri: NCIT:C18132
+
+  number:
+    description: >-
+      Alphanumerical identifier for part of a Benchmark Problem.
+    multivalued: false
+    pattern: "^\\a\\d"
+    range: string
+    slot_uri: schema:identifier
 
   repository:
     description: >-
       A repository of source code.
     range: uriorcurie
+    slot_uri: schema:codeRepository
+
+  results:
+    description: >-
+      Collection of outputs and summary data from a simulation.
+    multivalued: false
+    range: Results
 
   summary:
     description: >-
-      Text description, abstract, or narrative
+      Text description, abstract, or narrative.
     multivalued: false
     range: string
     slot_uri: schema:abstract
@@ -182,7 +310,17 @@ slots:
     description: >-
       Semantic version of a software project.
     range: string
+    slot_uri: schema:softwareVersion
+
+  time_in_s:
+    description: >-
+      Amount of time required to execute the simulation.
+    range: integer
+    slot_uri: schema:Number
+    unit:
+      ucum_code: S
+      has_quantity_kind: NCIT:C42535
 
 # === Enums ===
 
-enums:
+# enums:

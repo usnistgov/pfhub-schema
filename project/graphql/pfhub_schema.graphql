@@ -1,26 +1,35 @@
 type Benchmark
   {
     id: Uriorcurie!
-    name: String!
+    name: String
+    number: String
     version: String
   }
 
 type BenchmarkResult
   {
     id: Uriorcurie!
-    name: String!
+    name: String
     contributors: [Contributor]
     benchmark: Benchmark
-    framework: String
-    hardware: String
-    implementation: Implementation
+    framework: [Software]
+    implementation: SourceCode
+    results: Results
+    summary: String
+  }
+
+type ComputeResource
+  {
+    architecture: [ComputeResource]
+    cores: Integer
+    nodes: Integer
   }
 
 type Contributor
   {
     id: Uriorcurie!
-    name: String!
-    handle: Uriorcurie
+    name: String
+    handle: [Uriorcurie]
     affiliation: [String]
     email: String
   }
@@ -28,14 +37,34 @@ type Contributor
 interface File
   {
     id: Uriorcurie!
-    name: String!
+    name: String
+    columns: [String]
     format: String
   }
 
-type Implementation
+type Results
+  {
+    dataRaw: [File]
+    dataTable: [File]!
+    dataVisualization: [File]
+    hardware: [ComputeResource]
+    memoryInKB: Integer
+    timeInS: Integer
+  }
+
+type Software
   {
     id: Uriorcurie!
-    name: String!
+    name: String
+    download: Uriorcurie
+    repository: Uriorcurie
+    version: String
+  }
+
+type SourceCode
+  {
+    id: Uriorcurie!
+    name: String
     repository: Uriorcurie
   }
 

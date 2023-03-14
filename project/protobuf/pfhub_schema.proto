@@ -3,6 +3,7 @@ message Benchmark
  {
   uriorcurie id = 0
   string name = 0
+  string number = 0
   string version = 0
  }
 // Root and context for this Benchmark Problem solution.
@@ -12,21 +13,48 @@ message BenchmarkResult
   string name = 0
  repeated  contributor contributors = 0
   benchmark benchmark = 0
-  string framework = 0
-  string hardware = 0
-  implementation implementation = 0
+ repeated  software framework = 0
+  sourceCode implementation = 0
+  results results = 0
+  string summary = 0
+ }
+// Summary of the hardware used to execute the simulation.
+message ComputeResource
+ {
+ repeated  computeResource architecture = 0
+  integer cores = 0
+  integer nodes = 0
  }
 // Someone who contributed to this solution.
 message Contributor
  {
   uriorcurie id = 0
   string name = 0
-  uriorcurie handle = 0
+ repeated  uriorcurie handle = 0
  repeated  string affiliation = 0
   string email = 0
  }
-// Link to the authors' implementation of the benchmark problem
-message Implementation
+// Runtime information and output from a simulation.
+message Results
+ {
+ repeated  file dataRaw = 0
+ repeated  file dataTable = 0
+ repeated  file dataVisualization = 0
+ repeated  computeResource hardware = 0
+  integer memoryInKB = 0
+  integer timeInS = 0
+ }
+// A software product, download, or repository.
+message Software
+ {
+  uriorcurie id = 0
+  string name = 0
+  uriorcurie download = 0
+  uriorcurie repository = 0
+  string version = 0
+ }
+// Link to the authors' implementation of the benchmark problem.
+message SourceCode
  {
   uriorcurie id = 0
   string name = 0

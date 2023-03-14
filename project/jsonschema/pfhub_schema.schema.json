@@ -12,14 +12,18 @@
                     "description": "Informal or human-memorable identifier that may collide with others.",
                     "type": "string"
                 },
+                "number": {
+                    "description": "Alphanumerical identifier for part of a Benchmark Problem.",
+                    "pattern": "^\\a\\d",
+                    "type": "string"
+                },
                 "version": {
                     "description": "Semantic version of a software project.",
                     "type": "string"
                 }
             },
             "required": [
-                "id",
-                "name"
+                "id"
             ],
             "title": "Benchmark",
             "type": "object"
@@ -41,11 +45,10 @@
                 },
                 "framework": {
                     "description": "A computer program or library",
-                    "type": "string"
-                },
-                "hardware": {
-                    "description": "Computer hardware used to run the simulation.",
-                    "type": "string"
+                    "items": {
+                        "$ref": "#/$defs/Software"
+                    },
+                    "type": "array"
                 },
                 "id": {
                     "description": "Unique identifier that must not collide with any other.",
@@ -58,13 +61,43 @@
                 "name": {
                     "description": "Informal or human-memorable identifier that may collide with others.",
                     "type": "string"
+                },
+                "results": {
+                    "$ref": "#/$defs/Results",
+                    "description": "Collection of outputs and summary data from a simulation."
+                },
+                "summary": {
+                    "description": "Text description, abstract, or narrative.",
+                    "type": "string"
                 }
             },
             "required": [
-                "id",
-                "name"
+                "id"
             ],
             "title": "BenchmarkResult",
+            "type": "object"
+        },
+        "ComputeResource": {
+            "additionalProperties": false,
+            "description": "Summary of the hardware used to execute the simulation.",
+            "properties": {
+                "architecture": {
+                    "description": "Computer processor architecture required for this simulation.",
+                    "items": {
+                        "$ref": "#/$defs/ComputeResource"
+                    },
+                    "type": "array"
+                },
+                "cores": {
+                    "description": "Number of parallel cores or threads of execution used by the simulation on a CPU, GPU, or accelerator device.",
+                    "type": "integer"
+                },
+                "nodes": {
+                    "description": "Number of machines allocated for the simulation in a computer cluster environment.",
+                    "type": "integer"
+                }
+            },
+            "title": "ComputeResource",
             "type": "object"
         },
         "Contributor": {
@@ -84,8 +117,11 @@
                     "type": "string"
                 },
                 "handle": {
-                    "description": "A person's identifier on a website, without the \"at\" symbol",
-                    "type": "string"
+                    "description": "A person's identifier on a website, without the \"at\" symbol.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
                 },
                 "id": {
                     "description": "Unique identifier that must not collide with any other.",
@@ -97,15 +133,92 @@
                 }
             },
             "required": [
-                "id",
-                "name"
+                "id"
             ],
             "title": "Contributor",
             "type": "object"
         },
-        "Implementation": {
+        "Results": {
             "additionalProperties": false,
-            "description": "Link to the authors' implementation of the benchmark problem",
+            "description": "Runtime information and output from a simulation.",
+            "properties": {
+                "data_raw": {
+                    "description": "Raw data output from a simulation.",
+                    "items": {
+                        "$ref": "#/$defs/File"
+                    },
+                    "type": "array"
+                },
+                "data_table": {
+                    "description": "Tabular output from a simulation.",
+                    "items": {
+                        "$ref": "#/$defs/File"
+                    },
+                    "type": "array"
+                },
+                "data_visualization": {
+                    "description": "Visualization output from a simulation.",
+                    "items": {
+                        "$ref": "#/$defs/File"
+                    },
+                    "type": "array"
+                },
+                "hardware": {
+                    "description": "Computer hardware used to run the simulation.",
+                    "items": {
+                        "$ref": "#/$defs/ComputeResource"
+                    },
+                    "type": "array"
+                },
+                "memory_in_KB": {
+                    "description": "Memory capacity required for this simulation.",
+                    "type": "integer"
+                },
+                "time_in_s": {
+                    "description": "Amount of time required to execute the simulation.",
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "data_table"
+            ],
+            "title": "Results",
+            "type": "object"
+        },
+        "Software": {
+            "additionalProperties": false,
+            "description": "A software product, download, or repository.",
+            "properties": {
+                "download": {
+                    "description": "Link to a download URL.",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "Unique identifier that must not collide with any other.",
+                    "type": "string"
+                },
+                "name": {
+                    "description": "Informal or human-memorable identifier that may collide with others.",
+                    "type": "string"
+                },
+                "repository": {
+                    "description": "A repository of source code.",
+                    "type": "string"
+                },
+                "version": {
+                    "description": "Semantic version of a software project.",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "id"
+            ],
+            "title": "Software",
+            "type": "object"
+        },
+        "SourceCode": {
+            "additionalProperties": false,
+            "description": "Link to the authors' implementation of the benchmark problem.",
             "properties": {
                 "id": {
                     "description": "Unique identifier that must not collide with any other.",
@@ -121,10 +234,9 @@
                 }
             },
             "required": [
-                "id",
-                "name"
+                "id"
             ],
-            "title": "Implementation",
+            "title": "SourceCode",
             "type": "object"
         }
     },
@@ -146,11 +258,10 @@
         },
         "framework": {
             "description": "A computer program or library",
-            "type": "string"
-        },
-        "hardware": {
-            "description": "Computer hardware used to run the simulation.",
-            "type": "string"
+            "items": {
+                "$ref": "#/$defs/Software"
+            },
+            "type": "array"
         },
         "id": {
             "description": "Unique identifier that must not collide with any other.",
@@ -163,11 +274,18 @@
         "name": {
             "description": "Informal or human-memorable identifier that may collide with others.",
             "type": "string"
+        },
+        "results": {
+            "$ref": "#/$defs/Results",
+            "description": "Collection of outputs and summary data from a simulation."
+        },
+        "summary": {
+            "description": "Text description, abstract, or narrative.",
+            "type": "string"
         }
     },
     "required": [
-        "id",
-        "name"
+        "id"
     ],
     "title": "pfhub-schema",
     "type": "object",

@@ -25,12 +25,20 @@
       "prefix_reference": "http://purl.org/dc/terms/"
     },
     {
+      "prefix_prefix": "doi",
+      "prefix_reference": "https://doi.org/"
+    },
+    {
       "prefix_prefix": "iana_text",
       "prefix_reference": "https://www.iana.org/assignments/media-types/text/"
     },
     {
       "prefix_prefix": "iana_app",
       "prefix_reference": "https://www.iana.org/assignments/media-types/application/"
+    },
+    {
+      "prefix_prefix": "NCIT",
+      "prefix_reference": "http://purl.obolibrary.org/obo/NCIT_"
     },
     {
       "prefix_prefix": "orcid",
@@ -43,6 +51,22 @@
     {
       "prefix_prefix": "schema",
       "prefix_reference": "http://schema.org/"
+    },
+    {
+      "prefix_prefix": "UO",
+      "prefix_reference": "http://purl.obolibrary.org/obo/UO_"
+    },
+    {
+      "prefix_prefix": "bitbucket",
+      "prefix_reference": "https://bitbucket.org/"
+    },
+    {
+      "prefix_prefix": "github",
+      "prefix_reference": "https://github.com/"
+    },
+    {
+      "prefix_prefix": "gitlab",
+      "prefix_reference": "https://gitlab.com/"
     }
   ],
   "default_prefix": "pfhub",
@@ -279,36 +303,16 @@
       ],
       "slot_uri": "http://schema.org/identifier",
       "identifier": true,
-      "owner": "File",
+      "owner": "SourceCode",
       "domain_of": [
         "BenchmarkResult",
         "Benchmark",
         "Contributor",
-        "Implementation",
-        "File"
+        "File",
+        "Software",
+        "SourceCode"
       ],
       "range": "uriorcurie",
-      "required": true,
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "name",
-      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/name",
-      "description": "Informal or human-memorable identifier that may collide with others.",
-      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
-      "mappings": [
-        "http://schema.org/name"
-      ],
-      "slot_uri": "http://schema.org/name",
-      "owner": "File",
-      "domain_of": [
-        "BenchmarkResult",
-        "Benchmark",
-        "Contributor",
-        "Implementation",
-        "File"
-      ],
-      "range": "string",
       "required": true,
       "@type": "SlotDefinition"
     },
@@ -328,6 +332,22 @@
       "@type": "SlotDefinition"
     },
     {
+      "name": "architecture",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/architecture",
+      "description": "Computer processor architecture required for this simulation.",
+      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
+      "slot_uri": "https://w3id.org/usnistgov/pfhub-schema/architecture",
+      "multivalued": true,
+      "owner": "ComputeResource",
+      "domain_of": [
+        "ComputeResource"
+      ],
+      "range": "ComputeResource",
+      "inlined": true,
+      "inlined_as_list": true,
+      "@type": "SlotDefinition"
+    },
+    {
       "name": "benchmark",
       "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/benchmark",
       "description": "Details of the Benchmark Problem.",
@@ -338,6 +358,22 @@
         "BenchmarkResult"
       ],
       "range": "Benchmark",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "columns",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/columns",
+      "description": "Column names applied to tabular data.",
+      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
+      "slot_uri": "https://w3id.org/usnistgov/pfhub-schema/columns",
+      "multivalued": true,
+      "owner": "File",
+      "domain_of": [
+        "File"
+      ],
+      "range": "string",
+      "inlined_as_list": true,
+      "pattern": "^\\S+",
       "@type": "SlotDefinition"
     },
     {
@@ -360,6 +396,22 @@
       "@type": "SlotDefinition"
     },
     {
+      "name": "cores",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/cores",
+      "description": "Number of parallel cores or threads of execution used by the simulation on a CPU, GPU, or accelerator device.",
+      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
+      "mappings": [
+        "http://purl.obolibrary.org/obo/NCIT_C64194"
+      ],
+      "slot_uri": "http://purl.obolibrary.org/obo/NCIT_C64194",
+      "owner": "ComputeResource",
+      "domain_of": [
+        "ComputeResource"
+      ],
+      "range": "integer",
+      "@type": "SlotDefinition"
+    },
+    {
       "name": "date",
       "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/date",
       "description": "Day when an item was uploaded, released, or published.",
@@ -369,6 +421,22 @@
       ],
       "slot_uri": "http://schema.org/datePublished",
       "range": "date",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "download",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/download",
+      "description": "Link to a download URL.",
+      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
+      "mappings": [
+        "http://schema.org/downloadUrl"
+      ],
+      "slot_uri": "http://schema.org/downloadUrl",
+      "owner": "Software",
+      "domain_of": [
+        "Software"
+      ],
+      "range": "uriorcurie",
       "@type": "SlotDefinition"
     },
     {
@@ -386,6 +454,55 @@
       ],
       "range": "string",
       "pattern": "^\\S+@[\\S+\\.]+\\S+",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "data_raw",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/data_raw",
+      "description": "Raw data output from a simulation.",
+      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
+      "slot_uri": "https://w3id.org/usnistgov/pfhub-schema/data_raw",
+      "multivalued": true,
+      "owner": "Results",
+      "domain_of": [
+        "Results"
+      ],
+      "range": "File",
+      "inlined": true,
+      "inlined_as_list": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "data_table",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/data_table",
+      "description": "Tabular output from a simulation.",
+      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
+      "slot_uri": "https://w3id.org/usnistgov/pfhub-schema/data_table",
+      "multivalued": true,
+      "owner": "Results",
+      "domain_of": [
+        "Results"
+      ],
+      "range": "File",
+      "required": true,
+      "inlined": true,
+      "inlined_as_list": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "data_visualization",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/data_visualization",
+      "description": "Visualization output from a simulation.",
+      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
+      "slot_uri": "https://w3id.org/usnistgov/pfhub-schema/data_visualization",
+      "multivalued": true,
+      "owner": "Results",
+      "domain_of": [
+        "Results"
+      ],
+      "range": "File",
+      "inlined": true,
+      "inlined_as_list": true,
       "@type": "SlotDefinition"
     },
     {
@@ -413,27 +530,32 @@
         "http://schema.org/SoftwareApplication"
       ],
       "slot_uri": "http://schema.org/SoftwareApplication",
+      "multivalued": true,
       "owner": "BenchmarkResult",
       "domain_of": [
         "BenchmarkResult"
       ],
-      "range": "string",
+      "range": "Software",
+      "inlined": true,
+      "inlined_as_list": true,
       "@type": "SlotDefinition"
     },
     {
       "name": "handle",
       "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/handle",
-      "description": "A person's identifier on a website, without the \"at\" symbol",
+      "description": "A person's identifier on a website, without the \"at\" symbol.",
       "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
       "mappings": [
         "http://schema.org/identifier"
       ],
       "slot_uri": "http://schema.org/identifier",
+      "multivalued": true,
       "owner": "Contributor",
       "domain_of": [
         "Contributor"
       ],
       "range": "uriorcurie",
+      "inlined_as_list": true,
       "@type": "SlotDefinition"
     },
     {
@@ -442,11 +564,13 @@
       "description": "Computer hardware used to run the simulation.",
       "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
       "slot_uri": "https://w3id.org/usnistgov/pfhub-schema/hardware",
-      "owner": "BenchmarkResult",
+      "multivalued": true,
+      "owner": "Results",
       "domain_of": [
-        "BenchmarkResult"
+        "Results"
       ],
-      "range": "string",
+      "range": "ComputeResource",
+      "inlined": true,
       "@type": "SlotDefinition"
     },
     {
@@ -459,7 +583,79 @@
       "domain_of": [
         "BenchmarkResult"
       ],
-      "range": "Implementation",
+      "range": "SourceCode",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "memory_in_KB",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/memory_in_KB",
+      "description": "Memory capacity required for this simulation.",
+      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
+      "slot_uri": "https://w3id.org/usnistgov/pfhub-schema/memory_in_KB",
+      "owner": "Results",
+      "domain_of": [
+        "Results"
+      ],
+      "range": "integer",
+      "unit": {
+        "ucum_code": "KIB*BY",
+        "has_quantity_kind": "UO:0000245",
+        "@type": "UnitOfMeasure"
+      },
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "name",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/name",
+      "description": "Informal or human-memorable identifier that may collide with others.",
+      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
+      "mappings": [
+        "http://schema.org/name"
+      ],
+      "slot_uri": "http://schema.org/name",
+      "owner": "SourceCode",
+      "domain_of": [
+        "BenchmarkResult",
+        "Benchmark",
+        "Contributor",
+        "File",
+        "Software",
+        "SourceCode"
+      ],
+      "range": "string",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "nodes",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/nodes",
+      "description": "Number of machines allocated for the simulation in a computer cluster environment.",
+      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
+      "mappings": [
+        "http://purl.obolibrary.org/obo/NCIT_C18132"
+      ],
+      "slot_uri": "http://purl.obolibrary.org/obo/NCIT_C18132",
+      "owner": "ComputeResource",
+      "domain_of": [
+        "ComputeResource"
+      ],
+      "range": "integer",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "number",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/number",
+      "description": "Alphanumerical identifier for part of a Benchmark Problem.",
+      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
+      "mappings": [
+        "http://schema.org/identifier"
+      ],
+      "slot_uri": "http://schema.org/identifier",
+      "owner": "Benchmark",
+      "domain_of": [
+        "Benchmark"
+      ],
+      "range": "string",
+      "pattern": "^\\a\\d",
       "@type": "SlotDefinition"
     },
     {
@@ -467,23 +663,45 @@
       "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/repository",
       "description": "A repository of source code.",
       "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
-      "slot_uri": "https://w3id.org/usnistgov/pfhub-schema/repository",
-      "owner": "Implementation",
+      "mappings": [
+        "http://schema.org/codeRepository"
+      ],
+      "slot_uri": "http://schema.org/codeRepository",
+      "owner": "SourceCode",
       "domain_of": [
-        "Implementation"
+        "Software",
+        "SourceCode"
       ],
       "range": "uriorcurie",
       "@type": "SlotDefinition"
     },
     {
+      "name": "results",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/results",
+      "description": "Collection of outputs and summary data from a simulation.",
+      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
+      "slot_uri": "https://w3id.org/usnistgov/pfhub-schema/results",
+      "owner": "BenchmarkResult",
+      "domain_of": [
+        "BenchmarkResult"
+      ],
+      "range": "Results",
+      "inlined": true,
+      "@type": "SlotDefinition"
+    },
+    {
       "name": "summary",
       "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/summary",
-      "description": "Text description, abstract, or narrative",
+      "description": "Text description, abstract, or narrative.",
       "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
       "mappings": [
         "http://schema.org/abstract"
       ],
       "slot_uri": "http://schema.org/abstract",
+      "owner": "BenchmarkResult",
+      "domain_of": [
+        "BenchmarkResult"
+      ],
       "range": "string",
       "@type": "SlotDefinition"
     },
@@ -492,12 +710,37 @@
       "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/version",
       "description": "Semantic version of a software project.",
       "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
-      "slot_uri": "https://w3id.org/usnistgov/pfhub-schema/version",
-      "owner": "Benchmark",
+      "mappings": [
+        "http://schema.org/softwareVersion"
+      ],
+      "slot_uri": "http://schema.org/softwareVersion",
+      "owner": "Software",
       "domain_of": [
-        "Benchmark"
+        "Benchmark",
+        "Software"
       ],
       "range": "string",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "time_in_s",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/time_in_s",
+      "description": "Amount of time required to execute the simulation.",
+      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
+      "mappings": [
+        "http://schema.org/Number"
+      ],
+      "slot_uri": "http://schema.org/Number",
+      "owner": "Results",
+      "domain_of": [
+        "Results"
+      ],
+      "range": "integer",
+      "unit": {
+        "ucum_code": "S",
+        "has_quantity_kind": "NCIT:C42535",
+        "@type": "UnitOfMeasure"
+      },
       "@type": "SlotDefinition"
     }
   ],
@@ -513,8 +756,9 @@
         "contributors",
         "benchmark",
         "framework",
-        "hardware",
-        "implementation"
+        "implementation",
+        "results",
+        "summary"
       ],
       "slot_usage": {},
       "class_uri": "https://w3id.org/usnistgov/pfhub-schema/BenchmarkResult",
@@ -529,6 +773,7 @@
       "slots": [
         "id",
         "name",
+        "number",
         "version"
       ],
       "slot_usage": {},
@@ -536,10 +781,30 @@
       "@type": "ClassDefinition"
     },
     {
+      "name": "ComputeResource",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/ComputeResource",
+      "description": "Summary of the hardware used to execute the simulation.",
+      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
+      "mappings": [
+        "schema:softwareRequirements"
+      ],
+      "slots": [
+        "architecture",
+        "cores",
+        "nodes"
+      ],
+      "slot_usage": {},
+      "class_uri": "http://schema.org/softwareRequirements",
+      "@type": "ClassDefinition"
+    },
+    {
       "name": "Contributor",
       "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/Contributor",
       "description": "Someone who contributed to this solution.",
       "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
+      "mappings": [
+        "schema:Person"
+      ],
       "slots": [
         "id",
         "name",
@@ -548,24 +813,7 @@
         "email"
       ],
       "slot_usage": {},
-      "class_uri": "https://w3id.org/usnistgov/pfhub-schema/Contributor",
-      "@type": "ClassDefinition"
-    },
-    {
-      "name": "Implementation",
-      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/Implementation",
-      "description": "Link to the authors' implementation of the benchmark problem",
-      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
-      "mappings": [
-        "schema:codeRepository"
-      ],
-      "slots": [
-        "id",
-        "name",
-        "repository"
-      ],
-      "slot_usage": {},
-      "class_uri": "http://schema.org/codeRepository",
+      "class_uri": "http://schema.org/Person",
       "@type": "ClassDefinition"
     },
     {
@@ -574,24 +822,81 @@
       "description": "A generic electronic information container.",
       "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
       "mappings": [
-        "schema:MediaObject"
+        "schema:DigitalDocument"
       ],
       "abstract": true,
       "slots": [
         "id",
         "name",
+        "columns",
         "format"
       ],
       "slot_usage": {},
-      "class_uri": "http://schema.org/MediaObject",
+      "class_uri": "http://schema.org/DigitalDocument",
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "Results",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/Results",
+      "description": "Runtime information and output from a simulation.",
+      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
+      "mappings": [
+        "schema:Dataset"
+      ],
+      "slots": [
+        "data_raw",
+        "data_table",
+        "data_visualization",
+        "hardware",
+        "memory_in_KB",
+        "time_in_s"
+      ],
+      "slot_usage": {},
+      "class_uri": "http://schema.org/Dataset",
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "Software",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/Software",
+      "description": "A software product, download, or repository.",
+      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
+      "mappings": [
+        "schema:SoftwareApplication"
+      ],
+      "slots": [
+        "id",
+        "name",
+        "download",
+        "repository",
+        "version"
+      ],
+      "slot_usage": {},
+      "class_uri": "http://schema.org/SoftwareApplication",
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "SourceCode",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/SourceCode",
+      "description": "Link to the authors' implementation of the benchmark problem.",
+      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
+      "mappings": [
+        "schema:SoftwareSourceCode"
+      ],
+      "slots": [
+        "id",
+        "name",
+        "repository"
+      ],
+      "slot_usage": {},
+      "class_uri": "http://schema.org/SoftwareSourceCode",
       "@type": "ClassDefinition"
     }
   ],
   "metamodel_version": "1.7.0",
   "source_file": "pfhub_schema.yaml",
-  "source_file_date": "2023-03-10T15:58:45",
-  "source_file_size": 4461,
-  "generation_date": "2023-03-10T15:58:49",
+  "source_file_date": "2023-03-14T18:52:56",
+  "source_file_size": 7678,
+  "generation_date": "2023-03-14T18:54:26",
   "@type": "SchemaDefinition",
   "@context": [
     "project/jsonld/pfhub_schema.context.jsonld",
