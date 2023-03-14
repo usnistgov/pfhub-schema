@@ -3,5 +3,3 @@ name: pfhub_schema
 author: Trevor Keller <trevor.keller@nist.gov>
 description: Phase-field simulation and benchmark schema in LinkML.
 source_schema_path: src/pfhub_schema/schema/pfhub_schema.yaml
-google_sheet_id: 1wVoaiFg47aT9YWNeRfTZ8tYHN8s8PAuDx5i2HUcDpvQ
-google_sheet_tabs: personinfo enums

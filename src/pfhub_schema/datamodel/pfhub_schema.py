@@ -1,5 +1,5 @@
 # Auto generated from pfhub_schema.yaml by pythongen.py version: 0.9.0
-# Generation date: 2023-03-14T18:54:33
+# Generation date: 2023-03-14T19:30:40
 # Schema: pfhub-schema
 #
 # id: https://w3id.org/usnistgov/pfhub-schema
@@ -33,6 +33,7 @@ dataclasses._init_fn = dataclasses_init_fn_with_kwargs
 
 # Namespaces
 NCIT = CurieNamespace('NCIT', 'http://purl.obolibrary.org/obo/NCIT_')
+SRAO = CurieNamespace('SRAO', 'http://www.fairsharing.org/ontology/subject/SRAO_')
 UO = CurieNamespace('UO', 'http://purl.obolibrary.org/obo/UO_')
 BITBUCKET = CurieNamespace('bitbucket', 'https://bitbucket.org/')
 DCTERMS = CurieNamespace('dcterms', 'http://purl.org/dc/terms/')
@@ -90,8 +91,9 @@ class BenchmarkResult(YAMLRoot):
 
     id: Union[str, BenchmarkResultId] = None
     name: Optional[str] = None
-    contributors: Optional[Union[Dict[Union[str, ContributorId], Union[dict, "Contributor"]], List[Union[dict, "Contributor"]]]] = empty_dict()
     benchmark: Optional[Union[str, BenchmarkId]] = None
+    contributors: Optional[Union[Dict[Union[str, ContributorId], Union[dict, "Contributor"]], List[Union[dict, "Contributor"]]]] = empty_dict()
+    date_created: Optional[Union[str, XSDDate]] = None
     framework: Optional[Union[Dict[Union[str, SoftwareId], Union[dict, "Software"]], List[Union[dict, "Software"]]]] = empty_dict()
     implementation: Optional[Union[str, SourceCodeId]] = None
     results: Optional[Union[dict, "Results"]] = None
@@ -106,10 +108,13 @@ class BenchmarkResult(YAMLRoot):
         if self.name is not None and not isinstance(self.name, str):
             self.name = str(self.name)
 
-        self._normalize_inlined_as_list(slot_name="contributors", slot_type=Contributor, key_name="id", keyed=True)
-
         if self.benchmark is not None and not isinstance(self.benchmark, BenchmarkId):
             self.benchmark = BenchmarkId(self.benchmark)
+
+        self._normalize_inlined_as_list(slot_name="contributors", slot_type=Contributor, key_name="id", keyed=True)
+
+        if self.date_created is not None and not isinstance(self.date_created, XSDDate):
+            self.date_created = XSDDate(self.date_created)
 
         self._normalize_inlined_as_list(slot_name="framework", slot_type=Software, key_name="id", keyed=True)
 
@@ -172,14 +177,13 @@ class ComputeResource(YAMLRoot):
     class_name: ClassVar[str] = "ComputeResource"
     class_model_uri: ClassVar[URIRef] = PFHUB.ComputeResource
 
-    architecture: Optional[Union[Union[dict, "ComputeResource"], List[Union[dict, "ComputeResource"]]]] = empty_list()
+    architecture: Optional[str] = None
     cores: Optional[int] = None
     nodes: Optional[int] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
-        if not isinstance(self.architecture, list):
-            self.architecture = [self.architecture] if self.architecture is not None else []
-        self.architecture = [v if isinstance(v, ComputeResource) else ComputeResource(**as_dict(v)) for v in self.architecture]
+        if self.architecture is not None and not isinstance(self.architecture, str):
+            self.architecture = str(self.architecture)
 
         if self.cores is not None and not isinstance(self.cores, int):
             self.cores = int(self.cores)
@@ -391,8 +395,8 @@ slots.id = Slot(uri=SCHEMA.identifier, name="id", curie=SCHEMA.curie('identifier
 slots.affiliation = Slot(uri=PFHUB.affiliation, name="affiliation", curie=PFHUB.curie('affiliation'),
                    model_uri=PFHUB.affiliation, domain=None, range=Optional[Union[str, List[str]]])
 
-slots.architecture = Slot(uri=PFHUB.architecture, name="architecture", curie=PFHUB.curie('architecture'),
-                   model_uri=PFHUB.architecture, domain=None, range=Optional[Union[Union[dict, ComputeResource], List[Union[dict, ComputeResource]]]])
+slots.architecture = Slot(uri=SRAO['0000258'], name="architecture", curie=SRAO.curie('0000258'),
+                   model_uri=PFHUB.architecture, domain=None, range=Optional[str])
 
 slots.benchmark = Slot(uri=PFHUB.benchmark, name="benchmark", curie=PFHUB.curie('benchmark'),
                    model_uri=PFHUB.benchmark, domain=None, range=Optional[Union[str, BenchmarkId]])
@@ -407,8 +411,8 @@ slots.contributors = Slot(uri=SCHEMA.contributor, name="contributors", curie=SCH
 slots.cores = Slot(uri=NCIT.C64194, name="cores", curie=NCIT.curie('C64194'),
                    model_uri=PFHUB.cores, domain=None, range=Optional[int])
 
-slots.date = Slot(uri=SCHEMA.datePublished, name="date", curie=SCHEMA.curie('datePublished'),
-                   model_uri=PFHUB.date, domain=None, range=Optional[Union[str, XSDDate]])
+slots.date_created = Slot(uri=SCHEMA.dateCreated, name="date_created", curie=SCHEMA.curie('dateCreated'),
+                   model_uri=PFHUB.date_created, domain=None, range=Optional[Union[str, XSDDate]])
 
 slots.download = Slot(uri=SCHEMA.downloadUrl, name="download", curie=SCHEMA.curie('downloadUrl'),
                    model_uri=PFHUB.download, domain=None, range=Optional[Union[str, URIorCURIE]])

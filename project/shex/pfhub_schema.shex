@@ -48,8 +48,9 @@ linkml:Nodeidentifier NONLITERAL
 
 <BenchmarkResult> CLOSED {
     (  $<BenchmarkResult_tes> (  schema:name @linkml:String ? ;
-          schema:contributor @<Contributor> * ;
           <benchmark> @<Benchmark> ? ;
+          schema:contributor @<Contributor> * ;
+          schema:dateCreated @linkml:Date ? ;
           schema:SoftwareApplication @<Software> * ;
           <implementation> @<SourceCode> ? ;
           <results> @<Results> ? ;
@@ -60,7 +61,7 @@ linkml:Nodeidentifier NONLITERAL
 }
 
 <ComputeResource> CLOSED {
-    (  $<ComputeResource_tes> (  <architecture> @<ComputeResource> * ;
+    (  $<ComputeResource_tes> (  <http://www.fairsharing.org/ontology/subject/SRAO_0000258> @linkml:String ? ;
           <http://purl.obolibrary.org/obo/NCIT_C64194> @linkml:Integer ? ;
           <http://purl.obolibrary.org/obo/NCIT_C18132> @linkml:Integer ?
        ) ;

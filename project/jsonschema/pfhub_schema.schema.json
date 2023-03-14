@@ -43,6 +43,11 @@
                     },
                     "type": "array"
                 },
+                "date_created": {
+                    "description": "Day when an item was uploaded, released, or published.",
+                    "format": "date",
+                    "type": "string"
+                },
                 "framework": {
                     "description": "A computer program or library",
                     "items": {
@@ -83,10 +88,7 @@
             "properties": {
                 "architecture": {
                     "description": "Computer processor architecture required for this simulation.",
-                    "items": {
-                        "$ref": "#/$defs/ComputeResource"
-                    },
-                    "type": "array"
+                    "type": "string"
                 },
                 "cores": {
                     "description": "Number of parallel cores or threads of execution used by the simulation on a CPU, GPU, or accelerator device.",
@@ -255,6 +257,11 @@
                 "$ref": "#/$defs/Contributor"
             },
             "type": "array"
+        },
+        "date_created": {
+            "description": "Day when an item was uploaded, released, or published.",
+            "format": "date",
+            "type": "string"
         },
         "framework": {
             "description": "A computer program or library",

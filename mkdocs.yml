@@ -14,6 +14,7 @@ nav:
   - Index: index.md
   - About: about.md
 
-site_url: https://usnistgov.github.io/pfhub-schema
-repo_url: https://github.com/usnistgov/pfhub-schema
-remote-branch: nist-pages
+remote_branch: gh-pages
+remote_name: tkphd
+repo_url: https://github.com/tkphd/pfhub-schema
+site_url: https://tkphd.github.io/pfhub-schema

@@ -10,8 +10,9 @@ type BenchmarkResult
   {
     id: Uriorcurie!
     name: String
-    contributors: [Contributor]
     benchmark: Benchmark
+    contributors: [Contributor]
+    dateCreated: Date
     framework: [Software]
     implementation: SourceCode
     results: Results
@@ -20,7 +21,7 @@ type BenchmarkResult
 
 type ComputeResource
   {
-    architecture: [ComputeResource]
+    architecture: String
     cores: Integer
     nodes: Integer
   }

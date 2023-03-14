@@ -30,6 +30,7 @@ prefixes:
   orcid: https://orcid.org/  # Open Researcher & Contributor ID
   qudt: http://qudt.org/2.1/schema/qudt/  # Quantities, Units, Dimensions, Types
   schema: http://schema.org/  # a schema so broad they just call it "schema"
+  SRAO: http://www.fairsharing.org/ontology/subject/SRAO_  # Subject Application Ontology
   UO: http://purl.obolibrary.org/obo/UO_  # Units of Measure Ontology
   # social media
   bitbucket: https://bitbucket.org/
@@ -151,9 +152,8 @@ slots:
   architecture:
     description: >-
       Computer processor architecture required for this simulation.
-    inlined_as_list: true
-    multivalued: true
-    range: ComputeResource
+    range: string
+    slot_uri: SRAO:0000258
 
   benchmark:
     description: >-
@@ -187,7 +187,7 @@ slots:
     description: >-
       Day when an item was uploaded, released, or published.
     range: date
-    slot_uri: schema:datePublished
+    slot_uri: schema:dateCreated
 
   download:
     description: >-

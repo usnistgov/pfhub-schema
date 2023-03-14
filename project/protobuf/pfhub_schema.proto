@@ -11,8 +11,9 @@ message BenchmarkResult
  {
   uriorcurie id = 0
   string name = 0
- repeated  contributor contributors = 0
   benchmark benchmark = 0
+ repeated  contributor contributors = 0
+  date dateCreated = 0
  repeated  software framework = 0
   sourceCode implementation = 0
   results results = 0
@@ -21,7 +22,7 @@ message BenchmarkResult
 // Summary of the hardware used to execute the simulation.
 message ComputeResource
  {
- repeated  computeResource architecture = 0
+  string architecture = 0
   integer cores = 0
   integer nodes = 0
  }

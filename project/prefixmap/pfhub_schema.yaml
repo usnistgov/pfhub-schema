@@ -1,5 +1,6 @@
 {
    "NCIT": "http://purl.obolibrary.org/obo/NCIT_",
+   "SRAO": "http://www.fairsharing.org/ontology/subject/SRAO_",
    "UO": "http://purl.obolibrary.org/obo/UO_",
    "bitbucket": "https://bitbucket.org/",
    "dcterms": "http://purl.org/dc/terms/",

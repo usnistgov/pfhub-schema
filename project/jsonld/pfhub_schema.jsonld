@@ -53,6 +53,10 @@
       "prefix_reference": "http://schema.org/"
     },
     {
+      "prefix_prefix": "SRAO",
+      "prefix_reference": "http://www.fairsharing.org/ontology/subject/SRAO_"
+    },
+    {
       "prefix_prefix": "UO",
       "prefix_reference": "http://purl.obolibrary.org/obo/UO_"
     },
@@ -336,15 +340,15 @@
       "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/architecture",
       "description": "Computer processor architecture required for this simulation.",
       "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
-      "slot_uri": "https://w3id.org/usnistgov/pfhub-schema/architecture",
-      "multivalued": true,
+      "mappings": [
+        "http://www.fairsharing.org/ontology/subject/SRAO_0000258"
+      ],
+      "slot_uri": "http://www.fairsharing.org/ontology/subject/SRAO_0000258",
       "owner": "ComputeResource",
       "domain_of": [
         "ComputeResource"
       ],
-      "range": "ComputeResource",
-      "inlined": true,
-      "inlined_as_list": true,
+      "range": "string",
       "@type": "SlotDefinition"
     },
     {
@@ -412,14 +416,18 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "date",
-      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/date",
+      "name": "date_created",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/date_created",
       "description": "Day when an item was uploaded, released, or published.",
       "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
       "mappings": [
-        "http://schema.org/datePublished"
+        "http://schema.org/dateCreated"
       ],
-      "slot_uri": "http://schema.org/datePublished",
+      "slot_uri": "http://schema.org/dateCreated",
+      "owner": "BenchmarkResult",
+      "domain_of": [
+        "BenchmarkResult"
+      ],
       "range": "date",
       "@type": "SlotDefinition"
     },
@@ -753,8 +761,9 @@
       "slots": [
         "id",
         "name",
-        "contributors",
         "benchmark",
+        "contributors",
+        "date_created",
         "framework",
         "implementation",
         "results",
@@ -894,9 +903,9 @@
   ],
   "metamodel_version": "1.7.0",
   "source_file": "pfhub_schema.yaml",
-  "source_file_date": "2023-03-14T18:52:56",
-  "source_file_size": 7678,
-  "generation_date": "2023-03-14T18:54:26",
+  "source_file_date": "2023-03-14T19:26:54",
+  "source_file_size": 7765,
+  "generation_date": "2023-03-14T19:30:34",
   "@type": "SchemaDefinition",
   "@context": [
     "project/jsonld/pfhub_schema.context.jsonld",

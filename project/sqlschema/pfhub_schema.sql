@@ -36,6 +36,7 @@ CREATE TABLE "BenchmarkResult" (
 	id TEXT NOT NULL, 
 	name TEXT, 
 	benchmark TEXT, 
+	date_created DATE, 
 	implementation TEXT, 
 	results TEXT, 
 	summary TEXT, 
