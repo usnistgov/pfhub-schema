@@ -1,57 +1,56 @@
 # Example of a PFHub Benchmark result
 ---
-datasets:
-  - id: pfhub:BenchmarkResult  # actual: https://doi.org/10.5281/zenodo.7474506
-    name: 1a
-    summary: >-
-      Serial Travis CI benchmark with FiPy, periodic domain
-    date_created: 2017-01-10
+id: pfhub:BenchmarkResult  # actual: https://doi.org/10.5281/zenodo.7474506
+name: 1a
+summary: >-
+  Serial Travis CI benchmark with FiPy, periodic domain
+date_created: 2017-01-10
 
-    contributors:
-      - id: orcid:0000-0002-2920-8302
-        name: Trevor Keller
-        affiliation: NIST
-        email: trevor.keller@nist.gov
-        handle:
-          - github:tkphd
-      - id: orcid:0000-0002-2653-7418
-        name: Daniel Wheeler
-        affiliation: NIST
-        email: daniel.wheeler@nist.gov
-        handle:
-          - github:wd15
+contributors:
+  - id: orcid:0000-0002-2920-8302
+    name: Trevor Keller
+    affiliation: NIST
+    email: trevor.keller@nist.gov
+    handle:
+      - github:tkphd
+  - id: orcid:0000-0002-2653-7418
+    name: Daniel Wheeler
+    affiliation: NIST
+    email: daniel.wheeler@nist.gov
+    handle:
+      - github:wd15
 
-    benchmark:
-      id: https://pages.nist.gov/pfhub/hackathons/hackathon1/problems.ipynb/
-      name: 1a
-      version: 0
+benchmark:
+  id: https://pages.nist.gov/pfhub/hackathons/hackathon1/problems.ipynb/
+  name: 1a
+  version: 0
 
-    framework:
-      - id: https://www.ctcms.nist.gov/fipy/
-        name: FiPy
-        download: https://anaconda.org/conda-forge/fipy
-        repository: https://github.com/usnistgov/fipy
-        version: 3.1.2
-      - id: https://github.com/usnistgov/steppyngstounes
-        name: steppyngstounes
-        download: https://github.com/usnistgov/steppyngstounes
-        repository: https://github.com/usnistgov/steppyngstounes
-        version: 0.0
+framework:
+  - id: https://www.ctcms.nist.gov/fipy/
+    name: FiPy
+    download: https://anaconda.org/conda-forge/fipy
+    repository: https://github.com/usnistgov/fipy
+    version: 3.1.2
+  - id: https://github.com/usnistgov/steppyngstounes
+    name: steppyngstounes
+    download: https://github.com/usnistgov/steppyngstounes
+    repository: https://github.com/usnistgov/steppyngstounes
+    version: 0.0
 
-    implementation:
-      id: https://github.com/usnistgov/FiPy-spinodal-decomposition-benchmark/tree/master/periodic
-      repository: https://github.com/usnistgov/FiPy-spinodal-decomposition-benchmark
+implementation:
+  id: https://github.com/usnistgov/FiPy-spinodal-decomposition-benchmark/tree/master/periodic
+  repository: https://github.com/usnistgov/FiPy-spinodal-decomposition-benchmark
 
-    results:
-      csv_data:
-        - name: free_energy.csv
-          encodingFormat: iana_text/csv
-          columns:
-            - time
-            - free_energy
-      hardware:
-        - architecture: cpu
-          cores: 1
-          nodes: 1
-      memory_in_kb: 28600
-      time_in_s: 157187
+results:
+  csv_data:
+    - name: free_energy.csv
+      encodingFormat: iana_text/csv
+      columns:
+        - time
+        - free_energy
+  hardware:
+    - architecture: cpu
+      cores: 1
+      nodes: 1
+  memory_in_kb: 28600
+  time_in_s: 157187

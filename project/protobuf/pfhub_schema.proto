@@ -5,10 +5,18 @@ message Benchmark
   string name = 0
   string version = 0
  }
-// Container for this Benchmark Problem solution.
+// Root and context for this Benchmark Problem solution.
 message BenchmarkResult
  {
- repeated  dataset datasets = 0
+  uriorcurie id = 0
+  string name = 0
+  benchmark benchmark = 0
+ repeated  contributor contributors = 0
+  date dateCreated = 0
+ repeated  software framework = 0
+  sourceCode implementation = 0
+  results results = 0
+  string summary = 0
  }
 // Summary of the hardware used to execute the simulation.
 message ComputeResource
@@ -25,19 +33,6 @@ message Contributor
  repeated  uriorcurie handle = 0
  repeated  string affiliation = 0
   string email = 0
- }
-// Root and context for this Benchmark Problem solution.
-message Dataset
- {
-  uriorcurie id = 0
-  string name = 0
-  benchmark benchmark = 0
- repeated  contributor contributors = 0
-  date dateCreated = 0
- repeated  software framework = 0
-  sourceCode implementation = 0
-  results results = 0
-  string summary = 0
  }
 // Runtime information and output from a simulation.
 message Results

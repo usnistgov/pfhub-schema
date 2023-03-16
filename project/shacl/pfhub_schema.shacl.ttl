@@ -8,48 +8,88 @@
 
 pfhub:BenchmarkResult a sh:NodeShape ;
     sh:closed true ;
-    sh:description "Container for this Benchmark Problem solution." ;
+    sh:description "Root and context for this Benchmark Problem solution." ;
     sh:ignoredProperties ( rdf:type ) ;
-    sh:property [ sh:class pfhub:Dataset ;
-            sh:description "Container for a simulation result." ;
-            sh:nodeKind sh:IRI ;
+    sh:property [ sh:description "Unique identifier that must not collide with any other." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
             sh:order 0 ;
-            sh:path pfhub:datasets ] ;
+            sh:path schema:identifier ],
+        [ sh:description "Text description, abstract, or narrative." ;
+            sh:maxCount 1 ;
+            sh:order 8 ;
+            sh:path schema:abstract ],
+        [ sh:description "Day when an item was uploaded, released, or published." ;
+            sh:maxCount 1 ;
+            sh:order 4 ;
+            sh:path schema:dateCreated ],
+        [ sh:class schema:SoftwareApplication ;
+            sh:description "A computer program or library" ;
+            sh:nodeKind sh:IRI ;
+            sh:order 5 ;
+            sh:path schema:SoftwareApplication ],
+        [ sh:description "Informal or human-memorable identifier that may collide with others." ;
+            sh:maxCount 1 ;
+            sh:order 1 ;
+            sh:path schema:name ],
+        [ sh:class schema:SoftwareSourceCode ;
+            sh:description "Source code implementing the solution." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:IRI ;
+            sh:order 6 ;
+            sh:path pfhub:implementation ],
+        [ sh:class schema:Dataset ;
+            sh:description "Collection of outputs and summary data from a simulation." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNode ;
+            sh:order 7 ;
+            sh:path pfhub:results ],
+        [ sh:class schema:Person ;
+            sh:description "Collection of people who worked on this solution." ;
+            sh:nodeKind sh:IRI ;
+            sh:order 3 ;
+            sh:path schema:contributor ],
+        [ sh:class pfhub:Benchmark ;
+            sh:description "Details of the Benchmark Problem." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:IRI ;
+            sh:order 2 ;
+            sh:path pfhub:benchmark ] ;
     sh:targetClass pfhub:BenchmarkResult .
 
 schema:Dataset a sh:NodeShape ;
     sh:closed true ;
     sh:description "Runtime information and output from a simulation." ;
     sh:ignoredProperties ( rdf:type ) ;
-    sh:property [ sh:class schema:DigitalDocument ;
-            sh:description "Tabular output from a simulation." ;
-            sh:minCount 1 ;
-            sh:nodeKind sh:IRI ;
-            sh:order 0 ;
-            sh:path pfhub:csv_data ],
-        [ sh:class schema:DigitalDocument ;
-            sh:description "Raw data output from a simulation." ;
-            sh:nodeKind sh:IRI ;
-            sh:order 1 ;
-            sh:path pfhub:raw_data ],
+    sh:property [ sh:description "Memory capacity required for this simulation." ;
+            sh:maxCount 1 ;
+            sh:order 4 ;
+            sh:path pfhub:memory_in_kb ],
         [ sh:class schema:softwareRequirements ;
             sh:description "Computer hardware used to run the simulation." ;
             sh:nodeKind sh:BlankNode ;
             sh:order 3 ;
             sh:path pfhub:hardware ],
         [ sh:class schema:DigitalDocument ;
+            sh:description "Raw data output from a simulation." ;
+            sh:nodeKind sh:IRI ;
+            sh:order 1 ;
+            sh:path pfhub:raw_data ],
+        [ sh:class schema:DigitalDocument ;
             sh:description "Visualization output from a simulation." ;
             sh:nodeKind sh:IRI ;
             sh:order 2 ;
             sh:path pfhub:viz_data ],
+        [ sh:class schema:DigitalDocument ;
+            sh:description "Tabular output from a simulation." ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:IRI ;
+            sh:order 0 ;
+            sh:path pfhub:csv_data ],
         [ sh:description "Amount of time required to execute the simulation." ;
             sh:maxCount 1 ;
             sh:order 5 ;
-            sh:path schema:Number ],
-        [ sh:description "Memory capacity required for this simulation." ;
-            sh:maxCount 1 ;
-            sh:order 4 ;
-            sh:path pfhub:memory_in_kb ] ;
+            sh:path schema:Number ] ;
     sh:targetClass schema:Dataset .
 
 schema:Person a sh:NodeShape ;
@@ -61,13 +101,13 @@ schema:Person a sh:NodeShape ;
             sh:order 4 ;
             sh:path schema:email ;
             sh:pattern "^\\S+@[\\S+\\.]+\\S+" ],
-        [ sh:description "Institution, company, or agency a person works with." ;
-            sh:order 3 ;
-            sh:path pfhub:affiliation ],
         [ sh:description "Informal or human-memorable identifier that may collide with others." ;
             sh:maxCount 1 ;
             sh:order 1 ;
             sh:path schema:name ],
+        [ sh:description "Institution, company, or agency a person works with." ;
+            sh:order 3 ;
+            sh:path pfhub:affiliation ],
         [ sh:description "Unique identifier that must not collide with any other." ;
             sh:maxCount 1 ;
             sh:minCount 1 ;
@@ -82,44 +122,49 @@ schema:SoftwareSourceCode a sh:NodeShape ;
     sh:closed true ;
     sh:description "Link to the authors' implementation of the benchmark problem." ;
     sh:ignoredProperties ( rdf:type ) ;
-    sh:property [ sh:description "Unique identifier that must not collide with any other." ;
+    sh:property [ sh:description "A repository of source code." ;
             sh:maxCount 1 ;
-            sh:minCount 1 ;
-            sh:order 0 ;
-            sh:path schema:identifier ],
+            sh:order 2 ;
+            sh:path schema:codeRepository ],
         [ sh:description "Informal or human-memorable identifier that may collide with others." ;
             sh:maxCount 1 ;
             sh:order 1 ;
             sh:path schema:name ],
-        [ sh:description "A repository of source code." ;
+        [ sh:description "Unique identifier that must not collide with any other." ;
             sh:maxCount 1 ;
-            sh:order 2 ;
-            sh:path schema:codeRepository ] ;
+            sh:minCount 1 ;
+            sh:order 0 ;
+            sh:path schema:identifier ] ;
     sh:targetClass schema:SoftwareSourceCode .
 
 schema:softwareRequirements a sh:NodeShape ;
     sh:closed true ;
     sh:description "Summary of the hardware used to execute the simulation." ;
     sh:ignoredProperties ( rdf:type ) ;
-    sh:property [ sh:description "Number of machines allocated for the simulation in a computer cluster environment." ;
+    sh:property [ sh:description "Computer processor architecture required for this simulation." ;
             sh:maxCount 1 ;
-            sh:order 2 ;
-            sh:path NCIT:C18132 ],
+            sh:order 0 ;
+            sh:path SRAO:0000258 ],
         [ sh:description "Number of parallel cores or threads of execution used by the simulation on a CPU, GPU, or accelerator device." ;
             sh:maxCount 1 ;
             sh:order 1 ;
             sh:path NCIT:C64194 ],
-        [ sh:description "Computer processor architecture required for this simulation." ;
+        [ sh:description "Number of machines allocated for the simulation in a computer cluster environment." ;
             sh:maxCount 1 ;
-            sh:order 0 ;
-            sh:path SRAO:0000258 ] ;
+            sh:order 2 ;
+            sh:path NCIT:C18132 ] ;
     sh:targetClass schema:softwareRequirements .
 
 pfhub:Benchmark a sh:NodeShape ;
     sh:closed true ;
     sh:description "Information about the specific Benchmark solved." ;
     sh:ignoredProperties ( rdf:type ) ;
-    sh:property [ sh:description "Unique identifier that must not collide with any other." ;
+    sh:property [ sh:description "Semantic version of a software project." ;
+            sh:maxCount 1 ;
+            sh:order 2 ;
+            sh:path schema:softwareVersion ;
+            sh:pattern "^[\\d+\\.]+" ],
+        [ sh:description "Unique identifier that must not collide with any other." ;
             sh:maxCount 1 ;
             sh:minCount 1 ;
             sh:order 0 ;
@@ -129,113 +174,57 @@ pfhub:Benchmark a sh:NodeShape ;
             sh:minCount 1 ;
             sh:order 1 ;
             sh:path schema:version ;
-            sh:pattern "^\\d\\a" ],
-        [ sh:description "Semantic version of a software project." ;
-            sh:maxCount 1 ;
-            sh:order 2 ;
-            sh:path schema:softwareVersion ;
-            sh:pattern "^[\\d+\\.]+" ] ;
+            sh:pattern "^\\d\\a" ] ;
     sh:targetClass pfhub:Benchmark .
-
-pfhub:Dataset a sh:NodeShape ;
-    sh:closed true ;
-    sh:description "Root and context for this Benchmark Problem solution." ;
-    sh:ignoredProperties ( rdf:type ) ;
-    sh:property [ sh:description "Text description, abstract, or narrative." ;
-            sh:maxCount 1 ;
-            sh:order 8 ;
-            sh:path schema:abstract ],
-        [ sh:class schema:SoftwareSourceCode ;
-            sh:description "Source code implementing the solution." ;
-            sh:maxCount 1 ;
-            sh:nodeKind sh:IRI ;
-            sh:order 6 ;
-            sh:path pfhub:implementation ],
-        [ sh:class schema:SoftwareApplication ;
-            sh:description "A computer program or library" ;
-            sh:nodeKind sh:IRI ;
-            sh:order 5 ;
-            sh:path schema:SoftwareApplication ],
-        [ sh:class pfhub:Benchmark ;
-            sh:description "Details of the Benchmark Problem." ;
-            sh:maxCount 1 ;
-            sh:nodeKind sh:IRI ;
-            sh:order 2 ;
-            sh:path pfhub:benchmark ],
-        [ sh:description "Day when an item was uploaded, released, or published." ;
-            sh:maxCount 1 ;
-            sh:order 4 ;
-            sh:path schema:dateCreated ],
-        [ sh:description "Informal or human-memorable identifier that may collide with others." ;
-            sh:maxCount 1 ;
-            sh:order 1 ;
-            sh:path schema:name ],
-        [ sh:class schema:Person ;
-            sh:description "Collection of people who worked on this solution." ;
-            sh:nodeKind sh:IRI ;
-            sh:order 3 ;
-            sh:path schema:contributor ],
-        [ sh:description "Unique identifier that must not collide with any other." ;
-            sh:maxCount 1 ;
-            sh:minCount 1 ;
-            sh:order 0 ;
-            sh:path schema:identifier ],
-        [ sh:class schema:Dataset ;
-            sh:description "Collection of outputs and summary data from a simulation." ;
-            sh:maxCount 1 ;
-            sh:nodeKind sh:BlankNode ;
-            sh:order 7 ;
-            sh:path pfhub:results ] ;
-    sh:targetClass pfhub:Dataset .
 
 schema:SoftwareApplication a sh:NodeShape ;
     sh:closed true ;
     sh:description "A software product, download, or repository." ;
     sh:ignoredProperties ( rdf:type ) ;
-    sh:property [ sh:description "Unique identifier that must not collide with any other." ;
-            sh:maxCount 1 ;
-            sh:minCount 1 ;
-            sh:order 0 ;
-            sh:path schema:identifier ],
-        [ sh:description "Link to a download URL." ;
+    sh:property [ sh:description "Link to a download URL." ;
             sh:maxCount 1 ;
             sh:order 2 ;
             sh:path schema:downloadUrl ],
+        [ sh:description "A repository of source code." ;
+            sh:maxCount 1 ;
+            sh:order 3 ;
+            sh:path schema:codeRepository ],
+        [ sh:description "Informal or human-memorable identifier that may collide with others." ;
+            sh:maxCount 1 ;
+            sh:order 1 ;
+            sh:path schema:name ],
         [ sh:description "Semantic version of a software project." ;
             sh:maxCount 1 ;
             sh:order 4 ;
             sh:path schema:softwareVersion ;
             sh:pattern "^[\\d+\\.]+" ],
-        [ sh:description "Informal or human-memorable identifier that may collide with others." ;
+        [ sh:description "Unique identifier that must not collide with any other." ;
             sh:maxCount 1 ;
-            sh:order 1 ;
-            sh:path schema:name ],
-        [ sh:description "A repository of source code." ;
-            sh:maxCount 1 ;
-            sh:order 3 ;
-            sh:path schema:codeRepository ] ;
+            sh:minCount 1 ;
+            sh:order 0 ;
+            sh:path schema:identifier ] ;
     sh:targetClass schema:SoftwareApplication .
 
 schema:DigitalDocument a sh:NodeShape ;
     sh:closed false ;
     sh:description "A generic electronic information container." ;
     sh:ignoredProperties ( rdf:type ) ;
-    sh:property [ sh:description "Format of data contained in a file." ;
-            sh:maxCount 1 ;
-            sh:order 3 ;
-            sh:path schema:encodingFormat ],
-        [ sh:description "Informal or human-memorable identifier that may collide with others." ;
-            sh:maxCount 1 ;
-            sh:order 1 ;
-            sh:path schema:name ],
-        [ sh:description "Column names applied to tabular data." ;
+    sh:property [ sh:description "Column names applied to tabular data." ;
             sh:order 2 ;
             sh:path pfhub:columns ;
             sh:pattern "^\\S+" ],
+        [ sh:description "Format of data contained in a file." ;
+            sh:maxCount 1 ;
+            sh:order 3 ;
+            sh:path schema:encodingFormat ],
         [ sh:description "Unique identifier that must not collide with any other." ;
             sh:maxCount 1 ;
             sh:minCount 1 ;
             sh:order 0 ;
-            sh:path schema:identifier ] ;
+            sh:path schema:identifier ],
+        [ sh:description "Informal or human-memorable identifier that may collide with others." ;
+            sh:maxCount 1 ;
+            sh:order 1 ;
+            sh:path schema:name ] ;
     sh:targetClass schema:DigitalDocument .
 

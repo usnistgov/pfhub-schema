@@ -1,5 +1,5 @@
 # Auto generated from pfhub_schema.yaml by pythongen.py version: 0.9.0
-# Generation date: 2023-03-16T15:58:59
+# Generation date: 2023-03-16T16:18:43
 # Schema: pfhub_schema
 #
 # id: https://w3id.org/usnistgov/pfhub-schema
@@ -46,21 +46,13 @@ LINKML = CurieNamespace('linkml', 'https://w3id.org/linkml/')
 ORCID = CurieNamespace('orcid', 'https://orcid.org/')
 PFHUB = CurieNamespace('pfhub', 'https://w3id.org/usnistgov/pfhub-schema/')
 QUDT = CurieNamespace('qudt', 'http://qudt.org/schema/qudt/')
-RDF = CurieNamespace('rdf', 'http://www.w3.org/1999/02/22-rdf-syntax-ns#')
-RDFS = CurieNamespace('rdfs', 'http://www.w3.org/2000/01/rdf-schema#')
 SCHEMA = CurieNamespace('schema', 'http://schema.org/')
-SKOS = CurieNamespace('skos', 'http://example.org/UNKNOWN/skos/')
-XSD = CurieNamespace('xsd', 'http://www.w3.org/2001/XMLSchema#')
 DEFAULT_ = PFHUB
 
 
 # Types
 
 # Class references
-class DatasetId(URIorCURIE):
-    pass
-
-
 class BenchmarkId(URIorCURIE):
     pass
 
@@ -81,57 +73,8 @@ class SourceCodeId(URIorCURIE):
     pass
 
 
-@dataclass
-class Dataset(YAMLRoot):
-    """
-    Root and context for this Benchmark Problem solution.
-    """
-    _inherited_slots: ClassVar[List[str]] = []
-
-    class_class_uri: ClassVar[URIRef] = PFHUB.Dataset
-    class_class_curie: ClassVar[str] = "pfhub:Dataset"
-    class_name: ClassVar[str] = "Dataset"
-    class_model_uri: ClassVar[URIRef] = PFHUB.Dataset
-
-    id: Union[str, DatasetId] = None
-    name: Optional[str] = None
-    benchmark: Optional[Union[str, BenchmarkId]] = None
-    contributors: Optional[Union[Dict[Union[str, ContributorId], Union[dict, "Contributor"]], List[Union[dict, "Contributor"]]]] = empty_dict()
-    date_created: Optional[Union[str, XSDDate]] = None
-    framework: Optional[Union[Dict[Union[str, SoftwareId], Union[dict, "Software"]], List[Union[dict, "Software"]]]] = empty_dict()
-    implementation: Optional[Union[str, SourceCodeId]] = None
-    results: Optional[Union[dict, "Results"]] = None
-    summary: Optional[str] = None
-
-    def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
-        if self._is_empty(self.id):
-            self.MissingRequiredField("id")
-        if not isinstance(self.id, DatasetId):
-            self.id = DatasetId(self.id)
-
-        if self.name is not None and not isinstance(self.name, str):
-            self.name = str(self.name)
-
-        if self.benchmark is not None and not isinstance(self.benchmark, BenchmarkId):
-            self.benchmark = BenchmarkId(self.benchmark)
-
-        self._normalize_inlined_as_list(slot_name="contributors", slot_type=Contributor, key_name="id", keyed=True)
-
-        if self.date_created is not None and not isinstance(self.date_created, XSDDate):
-            self.date_created = XSDDate(self.date_created)
-
-        self._normalize_inlined_as_list(slot_name="framework", slot_type=Software, key_name="id", keyed=True)
-
-        if self.implementation is not None and not isinstance(self.implementation, SourceCodeId):
-            self.implementation = SourceCodeId(self.implementation)
-
-        if self.results is not None and not isinstance(self.results, Results):
-            self.results = Results(**as_dict(self.results))
-
-        if self.summary is not None and not isinstance(self.summary, str):
-            self.summary = str(self.summary)
-
-        super().__post_init__(**kwargs)
+class BenchmarkResultId(URIorCURIE):
+    pass
 
 
 @dataclass
@@ -387,7 +330,7 @@ class SourceCode(YAMLRoot):
 @dataclass
 class BenchmarkResult(YAMLRoot):
     """
-    Container for this Benchmark Problem solution.
+    Root and context for this Benchmark Problem solution.
     """
     _inherited_slots: ClassVar[List[str]] = []
 
@@ -396,10 +339,43 @@ class BenchmarkResult(YAMLRoot):
     class_name: ClassVar[str] = "BenchmarkResult"
     class_model_uri: ClassVar[URIRef] = PFHUB.BenchmarkResult
 
-    datasets: Optional[Union[Dict[Union[str, DatasetId], Union[dict, Dataset]], List[Union[dict, Dataset]]]] = empty_dict()
+    id: Union[str, BenchmarkResultId] = None
+    name: Optional[str] = None
+    benchmark: Optional[Union[str, BenchmarkId]] = None
+    contributors: Optional[Union[Dict[Union[str, ContributorId], Union[dict, Contributor]], List[Union[dict, Contributor]]]] = empty_dict()
+    date_created: Optional[Union[str, XSDDate]] = None
+    framework: Optional[Union[Dict[Union[str, SoftwareId], Union[dict, Software]], List[Union[dict, Software]]]] = empty_dict()
+    implementation: Optional[Union[str, SourceCodeId]] = None
+    results: Optional[Union[dict, Results]] = None
+    summary: Optional[str] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
-        self._normalize_inlined_as_list(slot_name="datasets", slot_type=Dataset, key_name="id", keyed=True)
+        if self._is_empty(self.id):
+            self.MissingRequiredField("id")
+        if not isinstance(self.id, BenchmarkResultId):
+            self.id = BenchmarkResultId(self.id)
+
+        if self.name is not None and not isinstance(self.name, str):
+            self.name = str(self.name)
+
+        if self.benchmark is not None and not isinstance(self.benchmark, BenchmarkId):
+            self.benchmark = BenchmarkId(self.benchmark)
+
+        self._normalize_inlined_as_list(slot_name="contributors", slot_type=Contributor, key_name="id", keyed=True)
+
+        if self.date_created is not None and not isinstance(self.date_created, XSDDate):
+            self.date_created = XSDDate(self.date_created)
+
+        self._normalize_inlined_as_list(slot_name="framework", slot_type=Software, key_name="id", keyed=True)
+
+        if self.implementation is not None and not isinstance(self.implementation, SourceCodeId):
+            self.implementation = SourceCodeId(self.implementation)
+
+        if self.results is not None and not isinstance(self.results, Results):
+            self.results = Results(**as_dict(self.results))
+
+        if self.summary is not None and not isinstance(self.summary, str):
+            self.summary = str(self.summary)
 
         super().__post_init__(**kwargs)
 
@@ -470,9 +446,6 @@ slots.benchmark = Slot(uri=PFHUB.benchmark, name="benchmark", curie=PFHUB.curie(
 
 slots.contributors = Slot(uri=SCHEMA.contributor, name="contributors", curie=SCHEMA.curie('contributor'),
                    model_uri=PFHUB.contributors, domain=None, range=Optional[Union[Dict[Union[str, ContributorId], Union[dict, Contributor]], List[Union[dict, Contributor]]]])
-
-slots.datasets = Slot(uri=PFHUB.datasets, name="datasets", curie=PFHUB.curie('datasets'),
-                   model_uri=PFHUB.datasets, domain=None, range=Optional[Union[Dict[Union[str, DatasetId], Union[dict, Dataset]], List[Union[dict, Dataset]]]])
 
 slots.framework = Slot(uri=SCHEMA.SoftwareApplication, name="framework", curie=SCHEMA.curie('SoftwareApplication'),
                    model_uri=PFHUB.framework, domain=None, range=Optional[Union[Dict[Union[str, SoftwareId], Union[dict, Software]], List[Union[dict, Software]]]])

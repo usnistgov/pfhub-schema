@@ -7,7 +7,15 @@ type Benchmark
 
 type BenchmarkResult
   {
-    datasets: [Dataset]
+    id: Uriorcurie!
+    name: String
+    benchmark: Benchmark
+    contributors: [Contributor]
+    dateCreated: Date
+    framework: [Software]
+    implementation: SourceCode
+    results: Results
+    summary: String
   }
 
 type ComputeResource
@@ -24,19 +32,6 @@ type Contributor
     handle: [Uriorcurie]
     affiliation: [String]
     email: String
-  }
-
-type Dataset
-  {
-    id: Uriorcurie!
-    name: String
-    benchmark: Benchmark
-    contributors: [Contributor]
-    dateCreated: Date
-    framework: [Software]
-    implementation: SourceCode
-    results: Results
-    summary: String
   }
 
 interface File

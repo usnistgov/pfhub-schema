@@ -46,8 +46,16 @@ linkml:Nodeidentifier NONLITERAL
 }
 
 <BenchmarkResult> CLOSED {
-    (  $<BenchmarkResult_tes> <datasets> @<Dataset> * ;
-       rdf:type [ <BenchmarkResult> ] ?
+    (  $<BenchmarkResult_tes> (  schema:name @linkml:String ? ;
+          <benchmark> @<Benchmark> ? ;
+          schema:contributor @<Contributor> * ;
+          schema:dateCreated @linkml:Date ? ;
+          schema:SoftwareApplication @<Software> * ;
+          <implementation> @<SourceCode> ? ;
+          <results> @<Results> ? ;
+          schema:abstract @linkml:String ?
+       ) ;
+       rdf:type [ <BenchmarkResult> ]
     )
 }
 
@@ -67,20 +75,6 @@ linkml:Nodeidentifier NONLITERAL
           schema:email @linkml:String ?
        ) ;
        rdf:type [ schema:Person ]
-    )
-}
-
-<Dataset> CLOSED {
-    (  $<Dataset_tes> (  schema:name @linkml:String ? ;
-          <benchmark> @<Benchmark> ? ;
-          schema:contributor @<Contributor> * ;
-          schema:dateCreated @linkml:Date ? ;
-          schema:SoftwareApplication @<Software> * ;
-          <implementation> @<SourceCode> ? ;
-          <results> @<Results> ? ;
-          schema:abstract @linkml:String ?
-       ) ;
-       rdf:type [ <Dataset> ]
     )
 }
 

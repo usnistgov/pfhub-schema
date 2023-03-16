@@ -43,29 +43,10 @@ default_curi_maps:
   - semweb_context
 default_prefix: pfhub
 default_range: string
-emit_prefixes:
-  - rdf
-  - rdfs
-  - xsd
-  - skos
 imports:
   - linkml:types
 
 classes:
-  Dataset:
-    description: >-
-      Root and context for this Benchmark Problem solution.
-    slots:
-      - id
-      - name
-      - benchmark
-      - contributors
-      - date_created
-      - framework
-      - implementation
-      - results
-      - summary
-
   Benchmark:
     description: >-
       Information about the specific Benchmark solved.
@@ -150,10 +131,18 @@ classes:
 
   BenchmarkResult:
     description: >-
-      Container for this Benchmark Problem solution.
+      Root and context for this Benchmark Problem solution.
     slots:
-      - datasets
-    tree_root: true
+      - id
+      - name
+      - benchmark
+      - contributors
+      - date_created
+      - framework
+      - implementation
+      - results
+      - summary
+    # tree_root: true
 
 slots:
   id:
@@ -292,13 +281,6 @@ slots:
     multivalued: true
     range: Contributor
     slot_uri: schema:contributor
-
-  datasets:
-    description: >-
-      Container for a simulation result.
-    inlined_as_list: true
-    multivalued: true
-    range: Dataset
 
   framework:
     description: >-

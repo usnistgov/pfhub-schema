@@ -115,6 +115,9 @@ test-python:
 lint:
 	$(RUN) linkml-lint $(SOURCE_SCHEMA_PATH)
 
+validate:
+	$(RUN) linkml-validate -s $(SOURCE_SCHEMA_PATH) --target-class BenchmarkResult examples/BenchmarkResult-001.yaml
+
 check-config:
 	@(grep my-datamodel about.yaml > /dev/null && printf "\n**Project not configured**:\n\n  - Remember to edit 'about.yaml'\n\n" || exit 0)
 

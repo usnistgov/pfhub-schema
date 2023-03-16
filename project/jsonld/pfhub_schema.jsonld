@@ -74,12 +74,6 @@
       "prefix_reference": "https://gitlab.com/"
     }
   ],
-  "emit_prefixes": [
-    "rdf",
-    "rdfs",
-    "xsd",
-    "skos"
-  ],
   "default_curi_maps": [
     "semweb_context"
   ],
@@ -317,14 +311,14 @@
       ],
       "slot_uri": "http://schema.org/identifier",
       "identifier": true,
-      "owner": "SourceCode",
+      "owner": "BenchmarkResult",
       "domain_of": [
-        "Dataset",
         "Benchmark",
         "Contributor",
         "File",
         "Software",
-        "SourceCode"
+        "SourceCode",
+        "BenchmarkResult"
       ],
       "range": "uriorcurie",
       "required": true,
@@ -402,9 +396,9 @@
         "http://schema.org/dateCreated"
       ],
       "slot_uri": "http://schema.org/dateCreated",
-      "owner": "Dataset",
+      "owner": "BenchmarkResult",
       "domain_of": [
-        "Dataset"
+        "BenchmarkResult"
       ],
       "range": "date",
       "@type": "SlotDefinition"
@@ -503,14 +497,14 @@
         "http://schema.org/name"
       ],
       "slot_uri": "http://schema.org/name",
-      "owner": "SourceCode",
+      "owner": "BenchmarkResult",
       "domain_of": [
-        "Dataset",
         "Benchmark",
         "Contributor",
         "File",
         "Software",
-        "SourceCode"
+        "SourceCode",
+        "BenchmarkResult"
       ],
       "range": "string",
       "@type": "SlotDefinition"
@@ -557,9 +551,9 @@
         "http://schema.org/abstract"
       ],
       "slot_uri": "http://schema.org/abstract",
-      "owner": "Dataset",
+      "owner": "BenchmarkResult",
       "domain_of": [
-        "Dataset"
+        "BenchmarkResult"
       ],
       "range": "string",
       "@type": "SlotDefinition"
@@ -610,9 +604,9 @@
       "description": "Details of the Benchmark Problem.",
       "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
       "slot_uri": "https://w3id.org/usnistgov/pfhub-schema/benchmark",
-      "owner": "Dataset",
+      "owner": "BenchmarkResult",
       "domain_of": [
-        "Dataset"
+        "BenchmarkResult"
       ],
       "range": "Benchmark",
       "@type": "SlotDefinition"
@@ -627,27 +621,11 @@
       ],
       "slot_uri": "http://schema.org/contributor",
       "multivalued": true,
-      "owner": "Dataset",
-      "domain_of": [
-        "Dataset"
-      ],
-      "range": "Contributor",
-      "inlined": true,
-      "inlined_as_list": true,
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "datasets",
-      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/datasets",
-      "description": "Container for a simulation result.",
-      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
-      "slot_uri": "https://w3id.org/usnistgov/pfhub-schema/datasets",
-      "multivalued": true,
       "owner": "BenchmarkResult",
       "domain_of": [
         "BenchmarkResult"
       ],
-      "range": "Dataset",
+      "range": "Contributor",
       "inlined": true,
       "inlined_as_list": true,
       "@type": "SlotDefinition"
@@ -662,9 +640,9 @@
       ],
       "slot_uri": "http://schema.org/SoftwareApplication",
       "multivalued": true,
-      "owner": "Dataset",
+      "owner": "BenchmarkResult",
       "domain_of": [
-        "Dataset"
+        "BenchmarkResult"
       ],
       "range": "Software",
       "inlined": true,
@@ -692,9 +670,9 @@
       "description": "Source code implementing the solution.",
       "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
       "slot_uri": "https://w3id.org/usnistgov/pfhub-schema/implementation",
-      "owner": "Dataset",
+      "owner": "BenchmarkResult",
       "domain_of": [
-        "Dataset"
+        "BenchmarkResult"
       ],
       "range": "SourceCode",
       "@type": "SlotDefinition"
@@ -705,9 +683,9 @@
       "description": "Collection of outputs and summary data from a simulation.",
       "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
       "slot_uri": "https://w3id.org/usnistgov/pfhub-schema/results",
-      "owner": "Dataset",
+      "owner": "BenchmarkResult",
       "domain_of": [
-        "Dataset"
+        "BenchmarkResult"
       ],
       "range": "Results",
       "inlined": true,
@@ -787,26 +765,6 @@
     }
   ],
   "classes": [
-    {
-      "name": "Dataset",
-      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/Dataset",
-      "description": "Root and context for this Benchmark Problem solution.",
-      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
-      "slots": [
-        "id",
-        "name",
-        "benchmark",
-        "contributors",
-        "date_created",
-        "framework",
-        "implementation",
-        "results",
-        "summary"
-      ],
-      "slot_usage": {},
-      "class_uri": "https://w3id.org/usnistgov/pfhub-schema/Dataset",
-      "@type": "ClassDefinition"
-    },
     {
       "name": "Benchmark",
       "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/Benchmark",
@@ -935,22 +893,29 @@
     {
       "name": "BenchmarkResult",
       "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/BenchmarkResult",
-      "description": "Container for this Benchmark Problem solution.",
+      "description": "Root and context for this Benchmark Problem solution.",
       "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
       "slots": [
-        "datasets"
+        "id",
+        "name",
+        "benchmark",
+        "contributors",
+        "date_created",
+        "framework",
+        "implementation",
+        "results",
+        "summary"
       ],
       "slot_usage": {},
       "class_uri": "https://w3id.org/usnistgov/pfhub-schema/BenchmarkResult",
-      "tree_root": true,
       "@type": "ClassDefinition"
     }
   ],
   "metamodel_version": "1.7.0",
   "source_file": "pfhub_schema.yaml",
-  "source_file_date": "2023-03-16T15:55:59",
-  "source_file_size": 8301,
-  "generation_date": "2023-03-16T15:58:53",
+  "source_file_date": "2023-03-16T16:18:16",
+  "source_file_size": 8000,
+  "generation_date": "2023-03-16T16:18:37",
   "@type": "SchemaDefinition",
   "@context": [
     "project/jsonld/pfhub_schema.context.jsonld",
