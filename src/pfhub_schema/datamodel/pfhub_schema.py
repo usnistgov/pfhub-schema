@@ -1,10 +1,10 @@
 # Auto generated from pfhub_schema.yaml by pythongen.py version: 0.9.0
-# Generation date: 2023-03-14T19:30:40
-# Schema: pfhub-schema
+# Generation date: 2023-03-16T15:58:59
+# Schema: pfhub_schema
 #
 # id: https://w3id.org/usnistgov/pfhub-schema
-# description: Phase-field simulation and benchmark schema in LinkML.
-# license: NIST
+# description: Schema for Phase-field Simulation and Benchmark Results schema in LinkML.
+# license: https://www.nist.gov/open/license
 
 import dataclasses
 import sys
@@ -26,7 +26,7 @@ from linkml_runtime.linkml_model.types import Date, Integer, String, Uriorcurie
 from linkml_runtime.utils.metamodelcore import URIorCURIE, XSDDate
 
 metamodel_version = "1.7.0"
-version = None
+version = "0.1.0"
 
 # Overwrite dataclasses _init_fn to add **kwargs in __init__
 dataclasses._init_fn = dataclasses_init_fn_with_kwargs
@@ -45,15 +45,19 @@ IANA_TEXT = CurieNamespace('iana_text', 'https://www.iana.org/assignments/media-
 LINKML = CurieNamespace('linkml', 'https://w3id.org/linkml/')
 ORCID = CurieNamespace('orcid', 'https://orcid.org/')
 PFHUB = CurieNamespace('pfhub', 'https://w3id.org/usnistgov/pfhub-schema/')
-QUDT = CurieNamespace('qudt', 'http://qudt.org/2.1/schema/qudt/')
+QUDT = CurieNamespace('qudt', 'http://qudt.org/schema/qudt/')
+RDF = CurieNamespace('rdf', 'http://www.w3.org/1999/02/22-rdf-syntax-ns#')
+RDFS = CurieNamespace('rdfs', 'http://www.w3.org/2000/01/rdf-schema#')
 SCHEMA = CurieNamespace('schema', 'http://schema.org/')
+SKOS = CurieNamespace('skos', 'http://example.org/UNKNOWN/skos/')
+XSD = CurieNamespace('xsd', 'http://www.w3.org/2001/XMLSchema#')
 DEFAULT_ = PFHUB
 
 
 # Types
 
 # Class references
-class BenchmarkResultId(URIorCURIE):
+class DatasetId(URIorCURIE):
     pass
 
 
@@ -78,18 +82,18 @@ class SourceCodeId(URIorCURIE):
 
 
 @dataclass
-class BenchmarkResult(YAMLRoot):
+class Dataset(YAMLRoot):
     """
     Root and context for this Benchmark Problem solution.
     """
     _inherited_slots: ClassVar[List[str]] = []
 
-    class_class_uri: ClassVar[URIRef] = PFHUB.BenchmarkResult
-    class_class_curie: ClassVar[str] = "pfhub:BenchmarkResult"
-    class_name: ClassVar[str] = "BenchmarkResult"
-    class_model_uri: ClassVar[URIRef] = PFHUB.BenchmarkResult
+    class_class_uri: ClassVar[URIRef] = PFHUB.Dataset
+    class_class_curie: ClassVar[str] = "pfhub:Dataset"
+    class_name: ClassVar[str] = "Dataset"
+    class_model_uri: ClassVar[URIRef] = PFHUB.Dataset
 
-    id: Union[str, BenchmarkResultId] = None
+    id: Union[str, DatasetId] = None
     name: Optional[str] = None
     benchmark: Optional[Union[str, BenchmarkId]] = None
     contributors: Optional[Union[Dict[Union[str, ContributorId], Union[dict, "Contributor"]], List[Union[dict, "Contributor"]]]] = empty_dict()
@@ -102,8 +106,8 @@ class BenchmarkResult(YAMLRoot):
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
             self.MissingRequiredField("id")
-        if not isinstance(self.id, BenchmarkResultId):
-            self.id = BenchmarkResultId(self.id)
+        if not isinstance(self.id, DatasetId):
+            self.id = DatasetId(self.id)
 
         if self.name is not None and not isinstance(self.name, str):
             self.name = str(self.name)
@@ -143,8 +147,7 @@ class Benchmark(YAMLRoot):
     class_model_uri: ClassVar[URIRef] = PFHUB.Benchmark
 
     id: Union[str, BenchmarkId] = None
-    name: Optional[str] = None
-    number: Optional[str] = None
+    name: str = None
     version: Optional[str] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
@@ -153,11 +156,10 @@ class Benchmark(YAMLRoot):
         if not isinstance(self.id, BenchmarkId):
             self.id = BenchmarkId(self.id)
 
-        if self.name is not None and not isinstance(self.name, str):
+        if self._is_empty(self.name):
+            self.MissingRequiredField("name")
+        if not isinstance(self.name, str):
             self.name = str(self.name)
-
-        if self.number is not None and not isinstance(self.number, str):
-            self.number = str(self.number)
 
         if self.version is not None and not isinstance(self.version, str):
             self.version = str(self.version)
@@ -283,28 +285,28 @@ class Results(YAMLRoot):
     class_name: ClassVar[str] = "Results"
     class_model_uri: ClassVar[URIRef] = PFHUB.Results
 
-    data_table: Union[Dict[Union[str, FileId], Union[dict, File]], List[Union[dict, File]]] = empty_dict()
-    data_raw: Optional[Union[Dict[Union[str, FileId], Union[dict, File]], List[Union[dict, File]]]] = empty_dict()
-    data_visualization: Optional[Union[Dict[Union[str, FileId], Union[dict, File]], List[Union[dict, File]]]] = empty_dict()
+    csv_data: Union[Dict[Union[str, FileId], Union[dict, File]], List[Union[dict, File]]] = empty_dict()
+    raw_data: Optional[Union[Dict[Union[str, FileId], Union[dict, File]], List[Union[dict, File]]]] = empty_dict()
+    viz_data: Optional[Union[Dict[Union[str, FileId], Union[dict, File]], List[Union[dict, File]]]] = empty_dict()
     hardware: Optional[Union[Union[dict, ComputeResource], List[Union[dict, ComputeResource]]]] = empty_list()
-    memory_in_KB: Optional[int] = None
+    memory_in_kb: Optional[int] = None
     time_in_s: Optional[int] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
-        if self._is_empty(self.data_table):
-            self.MissingRequiredField("data_table")
-        self._normalize_inlined_as_list(slot_name="data_table", slot_type=File, key_name="id", keyed=True)
+        if self._is_empty(self.csv_data):
+            self.MissingRequiredField("csv_data")
+        self._normalize_inlined_as_list(slot_name="csv_data", slot_type=File, key_name="id", keyed=True)
 
-        self._normalize_inlined_as_list(slot_name="data_raw", slot_type=File, key_name="id", keyed=True)
+        self._normalize_inlined_as_list(slot_name="raw_data", slot_type=File, key_name="id", keyed=True)
 
-        self._normalize_inlined_as_list(slot_name="data_visualization", slot_type=File, key_name="id", keyed=True)
+        self._normalize_inlined_as_list(slot_name="viz_data", slot_type=File, key_name="id", keyed=True)
 
         if not isinstance(self.hardware, list):
             self.hardware = [self.hardware] if self.hardware is not None else []
         self.hardware = [v if isinstance(v, ComputeResource) else ComputeResource(**as_dict(v)) for v in self.hardware]
 
-        if self.memory_in_KB is not None and not isinstance(self.memory_in_KB, int):
-            self.memory_in_KB = int(self.memory_in_KB)
+        if self.memory_in_kb is not None and not isinstance(self.memory_in_kb, int):
+            self.memory_in_kb = int(self.memory_in_kb)
 
         if self.time_in_s is not None and not isinstance(self.time_in_s, int):
             self.time_in_s = int(self.time_in_s)
@@ -382,6 +384,26 @@ class SourceCode(YAMLRoot):
         super().__post_init__(**kwargs)
 
 
+@dataclass
+class BenchmarkResult(YAMLRoot):
+    """
+    Container for this Benchmark Problem solution.
+    """
+    _inherited_slots: ClassVar[List[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = PFHUB.BenchmarkResult
+    class_class_curie: ClassVar[str] = "pfhub:BenchmarkResult"
+    class_name: ClassVar[str] = "BenchmarkResult"
+    class_model_uri: ClassVar[URIRef] = PFHUB.BenchmarkResult
+
+    datasets: Optional[Union[Dict[Union[str, DatasetId], Union[dict, Dataset]], List[Union[dict, Dataset]]]] = empty_dict()
+
+    def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
+        self._normalize_inlined_as_list(slot_name="datasets", slot_type=Dataset, key_name="id", keyed=True)
+
+        super().__post_init__(**kwargs)
+
+
 # Enumerations
 
 
@@ -398,15 +420,9 @@ slots.affiliation = Slot(uri=PFHUB.affiliation, name="affiliation", curie=PFHUB.
 slots.architecture = Slot(uri=SRAO['0000258'], name="architecture", curie=SRAO.curie('0000258'),
                    model_uri=PFHUB.architecture, domain=None, range=Optional[str])
 
-slots.benchmark = Slot(uri=PFHUB.benchmark, name="benchmark", curie=PFHUB.curie('benchmark'),
-                   model_uri=PFHUB.benchmark, domain=None, range=Optional[Union[str, BenchmarkId]])
-
 slots.columns = Slot(uri=PFHUB.columns, name="columns", curie=PFHUB.curie('columns'),
                    model_uri=PFHUB.columns, domain=None, range=Optional[Union[str, List[str]]],
                    pattern=re.compile(r'^\S+'))
-
-slots.contributors = Slot(uri=SCHEMA.contributor, name="contributors", curie=SCHEMA.curie('contributor'),
-                   model_uri=PFHUB.contributors, domain=None, range=Optional[Union[Dict[Union[str, ContributorId], Union[dict, Contributor]], List[Union[dict, Contributor]]]])
 
 slots.cores = Slot(uri=NCIT.C64194, name="cores", curie=NCIT.curie('C64194'),
                    model_uri=PFHUB.cores, domain=None, range=Optional[int])
@@ -421,32 +437,14 @@ slots.email = Slot(uri=SCHEMA.email, name="email", curie=SCHEMA.curie('email'),
                    model_uri=PFHUB.email, domain=None, range=Optional[str],
                    pattern=re.compile(r'^\S+@[\S+\.]+\S+'))
 
-slots.data_raw = Slot(uri=PFHUB.data_raw, name="data_raw", curie=PFHUB.curie('data_raw'),
-                   model_uri=PFHUB.data_raw, domain=None, range=Optional[Union[Dict[Union[str, FileId], Union[dict, File]], List[Union[dict, File]]]])
-
-slots.data_table = Slot(uri=PFHUB.data_table, name="data_table", curie=PFHUB.curie('data_table'),
-                   model_uri=PFHUB.data_table, domain=None, range=Union[Dict[Union[str, FileId], Union[dict, File]], List[Union[dict, File]]])
-
-slots.data_visualization = Slot(uri=PFHUB.data_visualization, name="data_visualization", curie=PFHUB.curie('data_visualization'),
-                   model_uri=PFHUB.data_visualization, domain=None, range=Optional[Union[Dict[Union[str, FileId], Union[dict, File]], List[Union[dict, File]]]])
-
 slots.format = Slot(uri=SCHEMA.encodingFormat, name="format", curie=SCHEMA.curie('encodingFormat'),
                    model_uri=PFHUB.format, domain=None, range=Optional[str])
 
-slots.framework = Slot(uri=SCHEMA.SoftwareApplication, name="framework", curie=SCHEMA.curie('SoftwareApplication'),
-                   model_uri=PFHUB.framework, domain=None, range=Optional[Union[Dict[Union[str, SoftwareId], Union[dict, Software]], List[Union[dict, Software]]]])
-
-slots.handle = Slot(uri=SCHEMA.identifier, name="handle", curie=SCHEMA.curie('identifier'),
+slots.handle = Slot(uri=SCHEMA.member, name="handle", curie=SCHEMA.curie('member'),
                    model_uri=PFHUB.handle, domain=None, range=Optional[Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]]])
 
-slots.hardware = Slot(uri=PFHUB.hardware, name="hardware", curie=PFHUB.curie('hardware'),
-                   model_uri=PFHUB.hardware, domain=None, range=Optional[Union[Union[dict, ComputeResource], List[Union[dict, ComputeResource]]]])
-
-slots.implementation = Slot(uri=PFHUB.implementation, name="implementation", curie=PFHUB.curie('implementation'),
-                   model_uri=PFHUB.implementation, domain=None, range=Optional[Union[str, SourceCodeId]])
-
-slots.memory_in_KB = Slot(uri=PFHUB.memory_in_KB, name="memory_in_KB", curie=PFHUB.curie('memory_in_KB'),
-                   model_uri=PFHUB.memory_in_KB, domain=None, range=Optional[int])
+slots.memory_in_kb = Slot(uri=PFHUB.memory_in_kb, name="memory_in_kb", curie=PFHUB.curie('memory_in_kb'),
+                   model_uri=PFHUB.memory_in_kb, domain=None, range=Optional[int])
 
 slots.name = Slot(uri=SCHEMA.name, name="name", curie=SCHEMA.curie('name'),
                    model_uri=PFHUB.name, domain=None, range=Optional[str])
@@ -454,21 +452,49 @@ slots.name = Slot(uri=SCHEMA.name, name="name", curie=SCHEMA.curie('name'),
 slots.nodes = Slot(uri=NCIT.C18132, name="nodes", curie=NCIT.curie('C18132'),
                    model_uri=PFHUB.nodes, domain=None, range=Optional[int])
 
-slots.number = Slot(uri=SCHEMA.identifier, name="number", curie=SCHEMA.curie('identifier'),
-                   model_uri=PFHUB.number, domain=None, range=Optional[str],
-                   pattern=re.compile(r'^\a\d'))
-
 slots.repository = Slot(uri=SCHEMA.codeRepository, name="repository", curie=SCHEMA.curie('codeRepository'),
                    model_uri=PFHUB.repository, domain=None, range=Optional[Union[str, URIorCURIE]])
-
-slots.results = Slot(uri=PFHUB.results, name="results", curie=PFHUB.curie('results'),
-                   model_uri=PFHUB.results, domain=None, range=Optional[Union[dict, Results]])
 
 slots.summary = Slot(uri=SCHEMA.abstract, name="summary", curie=SCHEMA.curie('abstract'),
                    model_uri=PFHUB.summary, domain=None, range=Optional[str])
 
 slots.version = Slot(uri=SCHEMA.softwareVersion, name="version", curie=SCHEMA.curie('softwareVersion'),
-                   model_uri=PFHUB.version, domain=None, range=Optional[str])
+                   model_uri=PFHUB.version, domain=None, range=Optional[str],
+                   pattern=re.compile(r'^[\d+\.]+'))
 
 slots.time_in_s = Slot(uri=SCHEMA.Number, name="time_in_s", curie=SCHEMA.curie('Number'),
                    model_uri=PFHUB.time_in_s, domain=None, range=Optional[int])
+
+slots.benchmark = Slot(uri=PFHUB.benchmark, name="benchmark", curie=PFHUB.curie('benchmark'),
+                   model_uri=PFHUB.benchmark, domain=None, range=Optional[Union[str, BenchmarkId]])
+
+slots.contributors = Slot(uri=SCHEMA.contributor, name="contributors", curie=SCHEMA.curie('contributor'),
+                   model_uri=PFHUB.contributors, domain=None, range=Optional[Union[Dict[Union[str, ContributorId], Union[dict, Contributor]], List[Union[dict, Contributor]]]])
+
+slots.datasets = Slot(uri=PFHUB.datasets, name="datasets", curie=PFHUB.curie('datasets'),
+                   model_uri=PFHUB.datasets, domain=None, range=Optional[Union[Dict[Union[str, DatasetId], Union[dict, Dataset]], List[Union[dict, Dataset]]]])
+
+slots.framework = Slot(uri=SCHEMA.SoftwareApplication, name="framework", curie=SCHEMA.curie('SoftwareApplication'),
+                   model_uri=PFHUB.framework, domain=None, range=Optional[Union[Dict[Union[str, SoftwareId], Union[dict, Software]], List[Union[dict, Software]]]])
+
+slots.hardware = Slot(uri=PFHUB.hardware, name="hardware", curie=PFHUB.curie('hardware'),
+                   model_uri=PFHUB.hardware, domain=None, range=Optional[Union[Union[dict, ComputeResource], List[Union[dict, ComputeResource]]]])
+
+slots.implementation = Slot(uri=PFHUB.implementation, name="implementation", curie=PFHUB.curie('implementation'),
+                   model_uri=PFHUB.implementation, domain=None, range=Optional[Union[str, SourceCodeId]])
+
+slots.results = Slot(uri=PFHUB.results, name="results", curie=PFHUB.curie('results'),
+                   model_uri=PFHUB.results, domain=None, range=Optional[Union[dict, Results]])
+
+slots.csv_data = Slot(uri=PFHUB.csv_data, name="csv_data", curie=PFHUB.curie('csv_data'),
+                   model_uri=PFHUB.csv_data, domain=None, range=Union[Dict[Union[str, FileId], Union[dict, File]], List[Union[dict, File]]])
+
+slots.raw_data = Slot(uri=PFHUB.raw_data, name="raw_data", curie=PFHUB.curie('raw_data'),
+                   model_uri=PFHUB.raw_data, domain=None, range=Optional[Union[Dict[Union[str, FileId], Union[dict, File]], List[Union[dict, File]]]])
+
+slots.viz_data = Slot(uri=PFHUB.viz_data, name="viz_data", curie=PFHUB.curie('viz_data'),
+                   model_uri=PFHUB.viz_data, domain=None, range=Optional[Union[Dict[Union[str, FileId], Union[dict, File]], List[Union[dict, File]]]])
+
+slots.Benchmark_name = Slot(uri=SCHEMA.version, name="Benchmark_name", curie=SCHEMA.curie('version'),
+                   model_uri=PFHUB.Benchmark_name, domain=Benchmark, range=str,
+                   pattern=re.compile(r'^\d\a'))

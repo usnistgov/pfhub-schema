@@ -10,14 +10,16 @@
 # * Simulation data: endpoint, CSV file, CSV fields.
 ---
 id: https://w3id.org/usnistgov/pfhub-schema
-name: pfhub-schema
-title: pfhub-schema
+name: pfhub_schema
+title: PFHub Benchmark Results
 description: >-
-  Phase-field simulation and benchmark schema in LinkML.
-license: NIST
+  Schema for Phase-field Simulation and Benchmark Results schema in LinkML.
+license: https://www.nist.gov/open/license
 see_also:
   - https://pages.nist.gov/pfhub
   - https://pages.nist.gov/pfhub-schema
+
+version: 0.1.0
 
 prefixes:
   pfhub: https://w3id.org/usnistgov/pfhub-schema/
@@ -28,24 +30,29 @@ prefixes:
   iana_app: https://www.iana.org/assignments/media-types/application/
   NCIT: http://purl.obolibrary.org/obo/NCIT_
   orcid: https://orcid.org/  # Open Researcher & Contributor ID
-  qudt: http://qudt.org/2.1/schema/qudt/  # Quantities, Units, Dimensions, Types
+  qudt: http://qudt.org/schema/qudt/  # Quantities, Units, Dimensions, Types
   schema: http://schema.org/  # a schema so broad they just call it "schema"
-  SRAO: http://www.fairsharing.org/ontology/subject/SRAO_  # Subject Application Ontology
+  SRAO: http://www.fairsharing.org/ontology/subject/SRAO_  # Subject Ontology
   UO: http://purl.obolibrary.org/obo/UO_  # Units of Measure Ontology
   # social media
   bitbucket: https://bitbucket.org/
   github: https://github.com/
   gitlab: https://gitlab.com/
 
+default_curi_maps:
+  - semweb_context
 default_prefix: pfhub
 default_range: string
-
+emit_prefixes:
+  - rdf
+  - rdfs
+  - xsd
+  - skos
 imports:
   - linkml:types
 
-
 classes:
-  BenchmarkResult:
+  Dataset:
     description: >-
       Root and context for this Benchmark Problem solution.
     slots:
@@ -58,7 +65,6 @@ classes:
       - implementation
       - results
       - summary
-    tree_root: true
 
   Benchmark:
     description: >-
@@ -66,8 +72,16 @@ classes:
     slots:
       - id
       - name
-      - number
       - version
+    slot_usage:
+      name:
+        description: >-
+          Alphanumerical identifier for part of a Benchmark Problem.
+        multivalued: false
+        pattern: "^\\d\\a"
+        range: string
+        required: true
+        slot_uri: schema:version
 
   ComputeResource:
     class_uri: schema:softwareRequirements
@@ -105,11 +119,11 @@ classes:
     description: >-
       Runtime information and output from a simulation.
     slots:
-      - data_raw
-      - data_table
-      - data_visualization
+      - csv_data
+      - raw_data
+      - viz_data
       - hardware
-      - memory_in_KB
+      - memory_in_kb
       - time_in_s
 
   Software:
@@ -132,6 +146,14 @@ classes:
       - name
       - repository
 
+  # ~~ derived classes ~~
+
+  BenchmarkResult:
+    description: >-
+      Container for this Benchmark Problem solution.
+    slots:
+      - datasets
+    tree_root: true
 
 slots:
   id:
@@ -148,17 +170,13 @@ slots:
       Institution, company, or agency a person works with.
     inlined_as_list: true
     multivalued: true
+    range: string
 
   architecture:
     description: >-
       Computer processor architecture required for this simulation.
     range: string
     slot_uri: SRAO:0000258
-
-  benchmark:
-    description: >-
-      Details of the Benchmark Problem.
-    range: Benchmark
 
   columns:
     description: >-
@@ -167,14 +185,6 @@ slots:
     multivalued: true
     pattern: "^\\S+"  # no whitespace allowed
     range: string
-
-  contributors:
-    description: >-
-      Collection of people who worked on this solution.
-    inlined_as_list: true
-    multivalued: true
-    range: Contributor
-    slot_uri: schema:contributor
 
   cores:
     description: >-
@@ -202,40 +212,10 @@ slots:
     range: string
     slot_uri: schema:email
 
-  data_raw:
-    description: >-
-      Raw data output from a simulation.
-    inlined_as_list: true
-    multivalued: true
-    range: File
-
-  data_table:
-    description: >-
-      Tabular output from a simulation.
-    inlined_as_list: true
-    multivalued: true
-    range: File
-    required: true
-
-  data_visualization:
-    description: >-
-      Visualization output from a simulation.
-    inlined_as_list: true
-    multivalued: true
-    range: File
-
   format:
     description: >-
       Format of data contained in a file.
     slot_uri: schema:encodingFormat
-
-  framework:
-    description: >-
-      A computer program or library
-    inlined_as_list: true
-    multivalued: true
-    range: Software
-    slot_uri: schema:SoftwareApplication
 
   handle:
     description: >-
@@ -243,25 +223,14 @@ slots:
     inlined_as_list: true
     multivalued: true
     range: uriorcurie
-    slot_uri: schema:identifier
+    slot_uri: schema:member
 
-  hardware:
-    description: >-
-      Computer hardware used to run the simulation.
-    multivalued: true
-    range: ComputeResource
-
-  implementation:
-    description: >-
-      Source code implementing the solution.
-    range: SourceCode
-
-  memory_in_KB:
+  memory_in_kb:
     description: >-
       Memory capacity required for this simulation.
     range: integer
     unit:
-      ucum_code: KIB*BY
+      ucum_code: "KIB*BY"
       has_quantity_kind: UO:0000245
 
   name:
@@ -279,25 +248,11 @@ slots:
     range: integer
     slot_uri: NCIT:C18132
 
-  number:
-    description: >-
-      Alphanumerical identifier for part of a Benchmark Problem.
-    multivalued: false
-    pattern: "^\\a\\d"
-    range: string
-    slot_uri: schema:identifier
-
   repository:
     description: >-
       A repository of source code.
     range: uriorcurie
     slot_uri: schema:codeRepository
-
-  results:
-    description: >-
-      Collection of outputs and summary data from a simulation.
-    multivalued: false
-    range: Results
 
   summary:
     description: >-
@@ -309,7 +264,9 @@ slots:
   version:
     description: >-
       Semantic version of a software project.
+    pattern: "^[\\d+\\.]+"
     range: string
+    recommended: true
     slot_uri: schema:softwareVersion
 
   time_in_s:
@@ -320,6 +277,75 @@ slots:
     unit:
       ucum_code: S
       has_quantity_kind: NCIT:C42535
+
+  # ~~ derived slots ~~
+
+  benchmark:
+    description: >-
+      Details of the Benchmark Problem.
+    range: Benchmark
+
+  contributors:
+    description: >-
+      Collection of people who worked on this solution.
+    inlined_as_list: true
+    multivalued: true
+    range: Contributor
+    slot_uri: schema:contributor
+
+  datasets:
+    description: >-
+      Container for a simulation result.
+    inlined_as_list: true
+    multivalued: true
+    range: Dataset
+
+  framework:
+    description: >-
+      A computer program or library
+    inlined_as_list: true
+    multivalued: true
+    range: Software
+    slot_uri: schema:SoftwareApplication
+
+  hardware:
+    description: >-
+      Computer hardware used to run the simulation.
+    multivalued: true
+    range: ComputeResource
+
+  implementation:
+    description: >-
+      Source code implementing the solution.
+    range: SourceCode
+
+  results:
+    description: >-
+      Collection of outputs and summary data from a simulation.
+    multivalued: false
+    range: Results
+
+  csv_data:
+    description: >-
+      Tabular output from a simulation.
+    inlined_as_list: true
+    multivalued: true
+    range: File
+    required: true
+
+  raw_data:
+    description: >-
+      Raw data output from a simulation.
+    inlined_as_list: true
+    multivalued: true
+    range: File
+
+  viz_data:
+    description: >-
+      Visualization output from a simulation.
+    inlined_as_list: true
+    multivalued: true
+    range: File
 
 # === Enums ===
 

@@ -2,10 +2,14 @@
 
 CREATE TABLE "Benchmark" (
 	id TEXT NOT NULL, 
-	name TEXT, 
-	number TEXT, 
+	name TEXT NOT NULL, 
 	version TEXT, 
 	PRIMARY KEY (id)
+);
+
+CREATE TABLE "BenchmarkResult" (
+	datasets TEXT, 
+	PRIMARY KEY (datasets)
 );
 
 CREATE TABLE "ComputeResource" (
@@ -16,13 +20,13 @@ CREATE TABLE "ComputeResource" (
 );
 
 CREATE TABLE "Results" (
-	data_raw TEXT, 
-	data_table TEXT NOT NULL, 
-	data_visualization TEXT, 
+	csv_data TEXT NOT NULL, 
+	raw_data TEXT, 
+	viz_data TEXT, 
 	hardware TEXT, 
-	"memory_in_KB" INTEGER, 
+	memory_in_kb INTEGER, 
 	time_in_s INTEGER, 
-	PRIMARY KEY (data_raw, data_table, data_visualization, hardware, "memory_in_KB", time_in_s)
+	PRIMARY KEY (csv_data, raw_data, viz_data, hardware, memory_in_kb, time_in_s)
 );
 
 CREATE TABLE "SourceCode" (
@@ -32,7 +36,7 @@ CREATE TABLE "SourceCode" (
 	PRIMARY KEY (id)
 );
 
-CREATE TABLE "BenchmarkResult" (
+CREATE TABLE "Dataset" (
 	id TEXT NOT NULL, 
 	name TEXT, 
 	benchmark TEXT, 
@@ -49,9 +53,9 @@ CREATE TABLE "Contributor" (
 	id TEXT NOT NULL, 
 	name TEXT, 
 	email TEXT, 
-	"BenchmarkResult_id" TEXT, 
+	"Dataset_id" TEXT, 
 	PRIMARY KEY (id), 
-	FOREIGN KEY("BenchmarkResult_id") REFERENCES "BenchmarkResult" (id)
+	FOREIGN KEY("Dataset_id") REFERENCES "Dataset" (id)
 );
 
 CREATE TABLE "Software" (
@@ -60,9 +64,9 @@ CREATE TABLE "Software" (
 	download TEXT, 
 	repository TEXT, 
 	version TEXT, 
-	"BenchmarkResult_id" TEXT, 
+	"Dataset_id" TEXT, 
 	PRIMARY KEY (id), 
-	FOREIGN KEY("BenchmarkResult_id") REFERENCES "BenchmarkResult" (id)
+	FOREIGN KEY("Dataset_id") REFERENCES "Dataset" (id)
 );
 
 CREATE TABLE "Contributor_handle" (

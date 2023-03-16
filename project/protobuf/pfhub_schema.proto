@@ -3,21 +3,12 @@ message Benchmark
  {
   uriorcurie id = 0
   string name = 0
-  string number = 0
   string version = 0
  }
-// Root and context for this Benchmark Problem solution.
+// Container for this Benchmark Problem solution.
 message BenchmarkResult
  {
-  uriorcurie id = 0
-  string name = 0
-  benchmark benchmark = 0
- repeated  contributor contributors = 0
-  date dateCreated = 0
- repeated  software framework = 0
-  sourceCode implementation = 0
-  results results = 0
-  string summary = 0
+ repeated  dataset datasets = 0
  }
 // Summary of the hardware used to execute the simulation.
 message ComputeResource
@@ -35,14 +26,27 @@ message Contributor
  repeated  string affiliation = 0
   string email = 0
  }
+// Root and context for this Benchmark Problem solution.
+message Dataset
+ {
+  uriorcurie id = 0
+  string name = 0
+  benchmark benchmark = 0
+ repeated  contributor contributors = 0
+  date dateCreated = 0
+ repeated  software framework = 0
+  sourceCode implementation = 0
+  results results = 0
+  string summary = 0
+ }
 // Runtime information and output from a simulation.
 message Results
  {
- repeated  file dataRaw = 0
- repeated  file dataTable = 0
- repeated  file dataVisualization = 0
+ repeated  file csvData = 0
+ repeated  file rawData = 0
+ repeated  file vizData = 0
  repeated  computeResource hardware = 0
-  integer memoryInKB = 0
+  integer memoryInKb = 0
   integer timeInS = 0
  }
 // A software product, download, or repository.

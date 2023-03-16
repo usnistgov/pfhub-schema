@@ -12,8 +12,12 @@
    "linkml": "https://w3id.org/linkml/",
    "orcid": "https://orcid.org/",
    "pfhub": "https://w3id.org/usnistgov/pfhub-schema/",
-   "qudt": "http://qudt.org/2.1/schema/qudt/",
+   "qudt": "http://qudt.org/schema/qudt/",
+   "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+   "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
    "schema": "http://schema.org/",
+   "skos": "http://example.org/UNKNOWN/skos/",
+   "xsd": "http://www.w3.org/2001/XMLSchema#",
    "ComputeResource": {
       "@id": "schema:softwareRequirements"
    },

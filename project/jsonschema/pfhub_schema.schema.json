@@ -9,76 +9,35 @@
                     "type": "string"
                 },
                 "name": {
-                    "description": "Informal or human-memorable identifier that may collide with others.",
-                    "type": "string"
-                },
-                "number": {
                     "description": "Alphanumerical identifier for part of a Benchmark Problem.",
-                    "pattern": "^\\a\\d",
+                    "pattern": "^\\d\\a",
                     "type": "string"
                 },
                 "version": {
                     "description": "Semantic version of a software project.",
+                    "pattern": "^[\\d+\\.]+",
                     "type": "string"
                 }
             },
             "required": [
-                "id"
+                "id",
+                "name"
             ],
             "title": "Benchmark",
             "type": "object"
         },
         "BenchmarkResult": {
             "additionalProperties": false,
-            "description": "Root and context for this Benchmark Problem solution.",
+            "description": "Container for this Benchmark Problem solution.",
             "properties": {
-                "benchmark": {
-                    "description": "Details of the Benchmark Problem.",
-                    "type": "string"
-                },
-                "contributors": {
-                    "description": "Collection of people who worked on this solution.",
+                "datasets": {
+                    "description": "Container for a simulation result.",
                     "items": {
-                        "$ref": "#/$defs/Contributor"
+                        "$ref": "#/$defs/Dataset"
                     },
                     "type": "array"
-                },
-                "date_created": {
-                    "description": "Day when an item was uploaded, released, or published.",
-                    "format": "date",
-                    "type": "string"
-                },
-                "framework": {
-                    "description": "A computer program or library",
-                    "items": {
-                        "$ref": "#/$defs/Software"
-                    },
-                    "type": "array"
-                },
-                "id": {
-                    "description": "Unique identifier that must not collide with any other.",
-                    "type": "string"
-                },
-                "implementation": {
-                    "description": "Source code implementing the solution.",
-                    "type": "string"
-                },
-                "name": {
-                    "description": "Informal or human-memorable identifier that may collide with others.",
-                    "type": "string"
-                },
-                "results": {
-                    "$ref": "#/$defs/Results",
-                    "description": "Collection of outputs and summary data from a simulation."
-                },
-                "summary": {
-                    "description": "Text description, abstract, or narrative.",
-                    "type": "string"
                 }
             },
-            "required": [
-                "id"
-            ],
             "title": "BenchmarkResult",
             "type": "object"
         },
@@ -140,26 +99,66 @@
             "title": "Contributor",
             "type": "object"
         },
+        "Dataset": {
+            "additionalProperties": false,
+            "description": "Root and context for this Benchmark Problem solution.",
+            "properties": {
+                "benchmark": {
+                    "description": "Details of the Benchmark Problem.",
+                    "type": "string"
+                },
+                "contributors": {
+                    "description": "Collection of people who worked on this solution.",
+                    "items": {
+                        "$ref": "#/$defs/Contributor"
+                    },
+                    "type": "array"
+                },
+                "date_created": {
+                    "description": "Day when an item was uploaded, released, or published.",
+                    "format": "date",
+                    "type": "string"
+                },
+                "framework": {
+                    "description": "A computer program or library",
+                    "items": {
+                        "$ref": "#/$defs/Software"
+                    },
+                    "type": "array"
+                },
+                "id": {
+                    "description": "Unique identifier that must not collide with any other.",
+                    "type": "string"
+                },
+                "implementation": {
+                    "description": "Source code implementing the solution.",
+                    "type": "string"
+                },
+                "name": {
+                    "description": "Informal or human-memorable identifier that may collide with others.",
+                    "type": "string"
+                },
+                "results": {
+                    "$ref": "#/$defs/Results",
+                    "description": "Collection of outputs and summary data from a simulation."
+                },
+                "summary": {
+                    "description": "Text description, abstract, or narrative.",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "id"
+            ],
+            "title": "Dataset",
+            "type": "object"
+        },
         "Results": {
             "additionalProperties": false,
             "description": "Runtime information and output from a simulation.",
             "properties": {
-                "data_raw": {
-                    "description": "Raw data output from a simulation.",
-                    "items": {
-                        "$ref": "#/$defs/File"
-                    },
-                    "type": "array"
-                },
-                "data_table": {
+                "csv_data": {
                     "description": "Tabular output from a simulation.",
-                    "items": {
-                        "$ref": "#/$defs/File"
-                    },
-                    "type": "array"
-                },
-                "data_visualization": {
-                    "description": "Visualization output from a simulation.",
                     "items": {
                         "$ref": "#/$defs/File"
                     },
@@ -172,17 +171,31 @@
                     },
                     "type": "array"
                 },
-                "memory_in_KB": {
+                "memory_in_kb": {
                     "description": "Memory capacity required for this simulation.",
                     "type": "integer"
+                },
+                "raw_data": {
+                    "description": "Raw data output from a simulation.",
+                    "items": {
+                        "$ref": "#/$defs/File"
+                    },
+                    "type": "array"
                 },
                 "time_in_s": {
                     "description": "Amount of time required to execute the simulation.",
                     "type": "integer"
+                },
+                "viz_data": {
+                    "description": "Visualization output from a simulation.",
+                    "items": {
+                        "$ref": "#/$defs/File"
+                    },
+                    "type": "array"
                 }
             },
             "required": [
-                "data_table"
+                "csv_data"
             ],
             "title": "Results",
             "type": "object"
@@ -209,6 +222,7 @@
                 },
                 "version": {
                     "description": "Semantic version of a software project.",
+                    "pattern": "^[\\d+\\.]+",
                     "type": "string"
                 }
             },
@@ -247,54 +261,15 @@
     "additionalProperties": true,
     "metamodel_version": "1.7.0",
     "properties": {
-        "benchmark": {
-            "description": "Details of the Benchmark Problem.",
-            "type": "string"
-        },
-        "contributors": {
-            "description": "Collection of people who worked on this solution.",
+        "datasets": {
+            "description": "Container for a simulation result.",
             "items": {
-                "$ref": "#/$defs/Contributor"
+                "$ref": "#/$defs/Dataset"
             },
             "type": "array"
-        },
-        "date_created": {
-            "description": "Day when an item was uploaded, released, or published.",
-            "format": "date",
-            "type": "string"
-        },
-        "framework": {
-            "description": "A computer program or library",
-            "items": {
-                "$ref": "#/$defs/Software"
-            },
-            "type": "array"
-        },
-        "id": {
-            "description": "Unique identifier that must not collide with any other.",
-            "type": "string"
-        },
-        "implementation": {
-            "description": "Source code implementing the solution.",
-            "type": "string"
-        },
-        "name": {
-            "description": "Informal or human-memorable identifier that may collide with others.",
-            "type": "string"
-        },
-        "results": {
-            "$ref": "#/$defs/Results",
-            "description": "Collection of outputs and summary data from a simulation."
-        },
-        "summary": {
-            "description": "Text description, abstract, or narrative.",
-            "type": "string"
         }
     },
-    "required": [
-        "id"
-    ],
-    "title": "pfhub-schema",
+    "title": "pfhub_schema",
     "type": "object",
-    "version": null
+    "version": "0.1.0"
 }
