@@ -21,7 +21,7 @@ contributors:
       - github:wd15
 
 benchmark:
-  id: https://pages.nist.gov/pfhub/hackathons/hackathon1/problems.ipynb/
+  id: "https://pages.nist.gov/pfhub/hackathons/hackathon1/problems.ipynb"
   name: 1a
   version: 0
 
@@ -44,7 +44,7 @@ implementation:
 results:
   csv_data:
     - name: free_energy.csv
-      encodingFormat: iana_text/csv
+      format: iana_text:csv
       columns:
         - time
         - free_energy

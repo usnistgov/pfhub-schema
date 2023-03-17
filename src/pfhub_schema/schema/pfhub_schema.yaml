@@ -47,6 +47,21 @@ imports:
   - linkml:types
 
 classes:
+  BenchmarkResult:
+    description: >-
+      Root and context for this Benchmark Problem solution.
+    slots:
+      - id
+      - name
+      - benchmark
+      - contributors
+      - date_created
+      - framework
+      - implementation
+      - results
+      - summary
+    tree_root: true
+
   Benchmark:
     description: >-
       Information about the specific Benchmark solved.
@@ -90,10 +105,28 @@ classes:
     description: >-
       A generic electronic information container.
     slots:
-      - id
       - name
-      - columns
       - format
+    slot_usage:
+      name:
+        identifier: true
+
+  CsvFile:
+    description: >-
+      Comma-separated values.
+    is_a: File
+    slots:
+      - columns
+
+  DataFile:
+    description: >-
+      Raw data.
+    is_a: File
+
+  VisualizationFile:
+    description: >-
+      Visualization data.
+    is_a: File
 
   Results:
     class_uri: schema:Dataset
@@ -127,22 +160,6 @@ classes:
       - name
       - repository
 
-  # ~~ derived classes ~~
-
-  BenchmarkResult:
-    description: >-
-      Root and context for this Benchmark Problem solution.
-    slots:
-      - id
-      - name
-      - benchmark
-      - contributors
-      - date_created
-      - framework
-      - implementation
-      - results
-      - summary
-    # tree_root: true
 
 slots:
   id:
@@ -312,22 +329,21 @@ slots:
       Tabular output from a simulation.
     inlined_as_list: true
     multivalued: true
-    range: File
-    required: true
+    range: CsvFile
 
   raw_data:
     description: >-
       Raw data output from a simulation.
     inlined_as_list: true
     multivalued: true
-    range: File
+    range: DataFile
 
   viz_data:
     description: >-
       Visualization output from a simulation.
     inlined_as_list: true
     multivalued: true
-    range: File
+    range: VisualizationFile
 
 # === Enums ===
 
