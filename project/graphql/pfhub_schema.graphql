@@ -1,15 +1,8 @@
-type BenchmarkProblem
-  {
-    id: Uriorcurie!
-    name: String
-    version: String
-  }
-
 type BenchmarkResult
   {
     id: Uriorcurie!
-    name: String
-    benchmark: BenchmarkProblem
+    benchmarkProblem: ValidBenchmarkProblem!
+    benchmarkVersion: Integer!
     contributors: [Contributor]
     dateCreated: Date
     framework: [Software]

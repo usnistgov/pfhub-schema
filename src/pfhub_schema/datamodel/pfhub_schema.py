@@ -1,5 +1,5 @@
 # Auto generated from pfhub_schema.yaml by pythongen.py version: 0.9.0
-# Generation date: 2023-03-17T17:09:04
+# Generation date: 2023-03-17T18:15:52
 # Schema: pfhub_schema
 #
 # id: https://w3id.org/usnistgov/pfhub-schema
@@ -57,10 +57,6 @@ class BenchmarkResultId(URIorCURIE):
     pass
 
 
-class BenchmarkProblemId(URIorCURIE):
-    pass
-
-
 class ContributorId(URIorCURIE):
     pass
 
@@ -102,8 +98,8 @@ class BenchmarkResult(YAMLRoot):
     class_model_uri: ClassVar[URIRef] = PFHUB.BenchmarkResult
 
     id: Union[str, BenchmarkResultId] = None
-    name: Optional[str] = None
-    benchmark: Optional[Union[dict, "BenchmarkProblem"]] = None
+    benchmark_problem: Union[str, "ValidBenchmarkProblem"] = None
+    benchmark_version: int = None
     contributors: Optional[Union[Dict[Union[str, ContributorId], Union[dict, "Contributor"]], List[Union[dict, "Contributor"]]]] = empty_dict()
     date_created: Optional[Union[str, XSDDate]] = None
     framework: Optional[Union[Dict[Union[str, SoftwareUrl], Union[dict, "Software"]], List[Union[dict, "Software"]]]] = empty_dict()
@@ -117,11 +113,15 @@ class BenchmarkResult(YAMLRoot):
         if not isinstance(self.id, BenchmarkResultId):
             self.id = BenchmarkResultId(self.id)
 
-        if self.name is not None and not isinstance(self.name, str):
-            self.name = str(self.name)
+        if self._is_empty(self.benchmark_problem):
+            self.MissingRequiredField("benchmark_problem")
+        if not isinstance(self.benchmark_problem, ValidBenchmarkProblem):
+            self.benchmark_problem = ValidBenchmarkProblem(self.benchmark_problem)
 
-        if self.benchmark is not None and not isinstance(self.benchmark, BenchmarkProblem):
-            self.benchmark = BenchmarkProblem(**as_dict(self.benchmark))
+        if self._is_empty(self.benchmark_version):
+            self.MissingRequiredField("benchmark_version")
+        if not isinstance(self.benchmark_version, int):
+            self.benchmark_version = int(self.benchmark_version)
 
         self._normalize_inlined_as_list(slot_name="contributors", slot_type=Contributor, key_name="id", keyed=True)
 
@@ -138,37 +138,6 @@ class BenchmarkResult(YAMLRoot):
 
         if self.summary is not None and not isinstance(self.summary, str):
             self.summary = str(self.summary)
-
-        super().__post_init__(**kwargs)
-
-
-@dataclass
-class BenchmarkProblem(YAMLRoot):
-    """
-    Information about the specific Benchmark solved.
-    """
-    _inherited_slots: ClassVar[List[str]] = []
-
-    class_class_uri: ClassVar[URIRef] = PFHUB.BenchmarkProblem
-    class_class_curie: ClassVar[str] = "pfhub:BenchmarkProblem"
-    class_name: ClassVar[str] = "BenchmarkProblem"
-    class_model_uri: ClassVar[URIRef] = PFHUB.BenchmarkProblem
-
-    id: Union[str, BenchmarkProblemId] = None
-    name: Optional[str] = None
-    version: Optional[str] = None
-
-    def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
-        if self._is_empty(self.id):
-            self.MissingRequiredField("id")
-        if not isinstance(self.id, BenchmarkProblemId):
-            self.id = BenchmarkProblemId(self.id)
-
-        if self.name is not None and not isinstance(self.name, str):
-            self.name = str(self.name)
-
-        if self.version is not None and not isinstance(self.version, str):
-            self.version = str(self.version)
 
         super().__post_init__(**kwargs)
 
@@ -454,7 +423,47 @@ class SourceCode(YAMLRoot):
 
 
 # Enumerations
+class ValidBenchmarkProblem(EnumDefinitionImpl):
+    """
+    Known parts of the accepted PFHub Benchmark Problems.
+    """
+    _defn = EnumDefinition(
+        name="ValidBenchmarkProblem",
+        description="Known parts of the accepted PFHub Benchmark Problems.",
+    )
 
+    @classmethod
+    def _addvals(cls):
+        setattr(cls, "1a",
+                PermissibleValue(text="1a",
+                                 description="Spinodal decomposition in a square domain with periodic boundaries.") )
+        setattr(cls, "1b",
+                PermissibleValue(text="1b",
+                                 description="Spinodal decomposition in a square domain with no-flux boundaries.") )
+        setattr(cls, "1c",
+                PermissibleValue(text="1c",
+                                 description="Spinodal decomposition in a T domain with no-flux boundaries.") )
+        setattr(cls, "1d",
+                PermissibleValue(text="1d",
+                                 description="Spinodal decomposition on a spherical shell with periodic boundaries.") )
+
+class ValidBenchmarkVersion(EnumDefinitionImpl):
+    """
+    Known versions of the accepted PFHub Benchmark Problems.
+    """
+    _defn = EnumDefinition(
+        name="ValidBenchmarkVersion",
+        description="Known versions of the accepted PFHub Benchmark Problems.",
+    )
+
+    @classmethod
+    def _addvals(cls):
+        setattr(cls, "0",
+                PermissibleValue(text="0",
+                                 description="Initial or Hackathon version.") )
+        setattr(cls, "1",
+                PermissibleValue(text="1",
+                                 description="Published version.") )
 
 # Slots
 class slots:
@@ -468,6 +477,13 @@ slots.affiliation = Slot(uri=PFHUB.affiliation, name="affiliation", curie=PFHUB.
 
 slots.architecture = Slot(uri=SRAO['0000258'], name="architecture", curie=SRAO.curie('0000258'),
                    model_uri=PFHUB.architecture, domain=None, range=Optional[str])
+
+slots.benchmark_problem = Slot(uri=PFHUB.benchmark_problem, name="benchmark_problem", curie=PFHUB.curie('benchmark_problem'),
+                   model_uri=PFHUB.benchmark_problem, domain=None, range=Union[str, "ValidBenchmarkProblem"],
+                   pattern=re.compile(r'^\d\a'))
+
+slots.benchmark_version = Slot(uri=PFHUB.benchmark_version, name="benchmark_version", curie=PFHUB.curie('benchmark_version'),
+                   model_uri=PFHUB.benchmark_version, domain=None, range=int)
 
 slots.columns = Slot(uri=PFHUB.columns, name="columns", curie=PFHUB.curie('columns'),
                    model_uri=PFHUB.columns, domain=None, range=Optional[Union[str, List[str]]],
@@ -516,9 +532,6 @@ slots.time_in_s = Slot(uri=SCHEMA.Number, name="time_in_s", curie=SCHEMA.curie('
 
 slots.url = Slot(uri=SCHEMA.url, name="url", curie=SCHEMA.curie('url'),
                    model_uri=PFHUB.url, domain=None, range=Optional[Union[str, URIorCURIE]])
-
-slots.benchmark = Slot(uri=PFHUB.benchmark, name="benchmark", curie=PFHUB.curie('benchmark'),
-                   model_uri=PFHUB.benchmark, domain=None, range=Optional[Union[dict, BenchmarkProblem]])
 
 slots.contributors = Slot(uri=SCHEMA.contributor, name="contributors", curie=SCHEMA.curie('contributor'),
                    model_uri=PFHUB.contributors, domain=None, range=Optional[Union[Dict[Union[str, ContributorId], Union[dict, Contributor]], List[Union[dict, Contributor]]]])

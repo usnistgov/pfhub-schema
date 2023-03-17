@@ -37,17 +37,9 @@ linkml:Objectidentifier IRI
 
 linkml:Nodeidentifier NONLITERAL
 
-<BenchmarkProblem> CLOSED {
-    (  $<BenchmarkProblem_tes> (  schema:name @linkml:String ? ;
-          schema:softwareVersion @linkml:String ?
-       ) ;
-       rdf:type [ <BenchmarkProblem> ]
-    )
-}
-
 <BenchmarkResult> CLOSED {
-    (  $<BenchmarkResult_tes> (  schema:name @linkml:String ? ;
-          <benchmark> @<BenchmarkProblem> ? ;
+    (  $<BenchmarkResult_tes> (  <benchmark_problem> @<ValidBenchmarkProblem> ;
+          <benchmark_version> @linkml:Integer ;
           schema:contributor @<Contributor> * ;
           schema:dateCreated @linkml:Date ? ;
           schema:SoftwareApplication @<Software> * ;

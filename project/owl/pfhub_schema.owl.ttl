@@ -6,6 +6,7 @@
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix pav: <http://purl.org/pav/> .
 @prefix pfhub: <https://w3id.org/usnistgov/pfhub-schema/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <http://schema.org/> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
@@ -22,8 +23,7 @@ linkml:topValue a owl:DatatypeProperty ;
 
 <https://w3id.org/usnistgov/pfhub-schema> a owl:Ontology ;
     rdfs:label "pfhub_schema" ;
-    IAO:0000700 pfhub:BenchmarkProblem,
-        pfhub:BenchmarkResult,
+    IAO:0000700 pfhub:BenchmarkResult,
         pfhub:ComputeResource,
         pfhub:Contributor,
         pfhub:File,
@@ -35,35 +35,26 @@ linkml:topValue a owl:DatatypeProperty ;
     pav:version "0.1.0" ;
     rdfs:seeAlso "https://pages.nist.gov/pfhub",
         "https://pages.nist.gov/pfhub-schema" ;
-    linkml:generation_date "2023-03-17T17:09:02" ;
+    linkml:generation_date "2023-03-17T18:15:51" ;
     linkml:metamodel_version "1.7.0" ;
     linkml:source_file "pfhub_schema.yaml" ;
-    linkml:source_file_date "2023-03-17T17:06:14" ;
-    linkml:source_file_size 8604 .
+    linkml:source_file_date "2023-03-17T18:14:45" ;
+    linkml:source_file_size 9262 .
 
 pfhub:BenchmarkResult a owl:Class,
         linkml:ClassDefinition ;
     rdfs:label "BenchmarkResult" ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:maxQualifiedCardinality 1 ;
-            owl:onClass pfhub:Results ;
-            owl:onProperty pfhub:results ],
-        [ a owl:Restriction ;
-            owl:maxQualifiedCardinality 1 ;
-            owl:onClass pfhub:BenchmarkProblem ;
-            owl:onProperty pfhub:benchmark ],
-        [ a owl:Restriction ;
-            owl:maxQualifiedCardinality 1 ;
             owl:onClass linkml:Date ;
             owl:onProperty schema:dateCreated ],
         [ a owl:Restriction ;
             owl:maxQualifiedCardinality 1 ;
-            owl:onClass linkml:String ;
-            owl:onProperty schema:name ],
+            owl:onClass pfhub:Results ;
+            owl:onProperty pfhub:results ],
         [ a owl:Restriction ;
-            owl:maxQualifiedCardinality 1 ;
-            owl:onClass linkml:String ;
-            owl:onProperty schema:abstract ],
+            owl:allValuesFrom pfhub:Software ;
+            owl:onProperty schema:SoftwareApplication ],
         [ a owl:Restriction ;
             owl:onClass linkml:Uriorcurie ;
             owl:onProperty schema:identifier ;
@@ -73,11 +64,20 @@ pfhub:BenchmarkResult a owl:Class,
             owl:onClass pfhub:SourceCode ;
             owl:onProperty pfhub:implementation ],
         [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
+            owl:onClass linkml:String ;
+            owl:onProperty schema:abstract ],
+        [ a owl:Restriction ;
+            owl:onClass linkml:Integer ;
+            owl:onProperty pfhub:benchmark_version ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
             owl:allValuesFrom pfhub:Contributor ;
             owl:onProperty schema:contributor ],
         [ a owl:Restriction ;
-            owl:allValuesFrom pfhub:Software ;
-            owl:onProperty schema:SoftwareApplication ] ;
+            owl:onClass pfhub:ValidBenchmarkProblem ;
+            owl:onProperty pfhub:benchmark_problem ;
+            owl:qualifiedCardinality 1 ] ;
     skos:definition "Root and context for this Benchmark Problem solution." .
 
 pfhub:affiliation a owl:ObjectProperty,
@@ -86,11 +86,17 @@ pfhub:affiliation a owl:ObjectProperty,
     rdfs:range linkml:String ;
     skos:definition "Institution, company, or agency a person works with." .
 
-pfhub:benchmark a owl:ObjectProperty,
+pfhub:benchmark_problem a owl:ObjectProperty,
         linkml:SlotDefinition ;
-    rdfs:label "benchmark" ;
-    rdfs:range pfhub:BenchmarkProblem ;
-    skos:definition "Details of the Benchmark Problem." .
+    rdfs:label "benchmark_problem" ;
+    rdfs:range pfhub:ValidBenchmarkProblem ;
+    skos:definition "Alphanumerical identifier for part of a Benchmark Problem." .
+
+pfhub:benchmark_version a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "benchmark_version" ;
+    rdfs:range linkml:Integer ;
+    skos:definition "Numerical identifier for a Benchmark Problem version." .
 
 pfhub:columns a owl:ObjectProperty,
         linkml:SlotDefinition ;
@@ -210,6 +216,13 @@ schema:member a owl:ObjectProperty,
     skos:definition "A person's identifier on a website, without the \"at\" symbol." ;
     skos:exactMatch schema:member .
 
+schema:softwareVersion a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "version" ;
+    rdfs:range linkml:String ;
+    skos:definition "Semantic version of a software project." ;
+    skos:exactMatch schema:softwareVersion .
+
 SRAO:0000258 a owl:ObjectProperty,
         linkml:SlotDefinition ;
     rdfs:label "architecture" ;
@@ -232,6 +245,37 @@ pfhub:DataFile a owl:Class,
     rdfs:subClassOf pfhub:File ;
     skos:definition "Raw data." .
 
+<https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#1a> a owl:Class,
+        pfhub:ValidBenchmarkProblem ;
+    rdfs:label "1a" .
+
+<https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#1b> a owl:Class,
+        pfhub:ValidBenchmarkProblem ;
+    rdfs:label "1b" .
+
+<https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#1c> a owl:Class,
+        pfhub:ValidBenchmarkProblem ;
+    rdfs:label "1c" .
+
+<https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#1d> a owl:Class,
+        pfhub:ValidBenchmarkProblem ;
+    rdfs:label "1d" .
+
+pfhub:ValidBenchmarkVersion a owl:Class,
+        linkml:EnumDefinition ;
+    rdfs:label "ValidBenchmarkVersion" ;
+    owl:unionOf ( <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkVersion#0> <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkVersion#1> ) ;
+    linkml:permissible_values <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkVersion#0>,
+        <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkVersion#1> .
+
+<https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkVersion#0> a owl:Class,
+        pfhub:ValidBenchmarkVersion ;
+    rdfs:label "0" .
+
+<https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkVersion#1> a owl:Class,
+        pfhub:ValidBenchmarkVersion ;
+    rdfs:label "1" .
+
 pfhub:VisualizationFile a owl:Class,
         linkml:ClassDefinition ;
     rdfs:label "VisualizationFile" ;
@@ -252,12 +296,12 @@ schema:codeRepository a owl:ObjectProperty,
     skos:definition "A repository of source code." ;
     skos:exactMatch schema:codeRepository .
 
-schema:softwareVersion a owl:ObjectProperty,
+schema:identifier a owl:ObjectProperty,
         linkml:SlotDefinition ;
-    rdfs:label "version" ;
-    rdfs:range linkml:String ;
-    skos:definition "Semantic version of a software project." ;
-    skos:exactMatch schema:softwareVersion .
+    rdfs:label "id" ;
+    rdfs:range linkml:Uriorcurie ;
+    skos:definition "Unique identifier that must not collide with any other." ;
+    skos:exactMatch schema:identifier .
 
 schema:url a owl:ObjectProperty,
         linkml:SlotDefinition ;
@@ -266,38 +310,21 @@ schema:url a owl:ObjectProperty,
     skos:definition "URL of an online resource or website." ;
     skos:exactMatch schema:url .
 
-pfhub:BenchmarkProblem a owl:Class,
-        linkml:ClassDefinition ;
-    rdfs:label "BenchmarkProblem" ;
-    rdfs:subClassOf [ a owl:Restriction ;
-            owl:maxQualifiedCardinality 1 ;
-            owl:onClass linkml:String ;
-            owl:onProperty schema:softwareVersion ],
-        [ a owl:Restriction ;
-            owl:maxQualifiedCardinality 1 ;
-            owl:onClass linkml:String ;
-            owl:onProperty schema:name ],
-        [ a owl:Restriction ;
-            owl:onClass linkml:Uriorcurie ;
-            owl:onProperty schema:identifier ;
-            owl:qualifiedCardinality 1 ] ;
-    skos:definition "Information about the specific Benchmark solved." .
-
 pfhub:ComputeResource a owl:Class,
         linkml:ClassDefinition ;
     rdfs:label "ComputeResource" ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:maxQualifiedCardinality 1 ;
             owl:onClass linkml:Integer ;
-            owl:onProperty NCIT:C18132 ],
-        [ a owl:Restriction ;
-            owl:maxQualifiedCardinality 1 ;
-            owl:onClass linkml:Integer ;
             owl:onProperty NCIT:C64194 ],
         [ a owl:Restriction ;
             owl:maxQualifiedCardinality 1 ;
             owl:onClass linkml:String ;
-            owl:onProperty SRAO:0000258 ] ;
+            owl:onProperty SRAO:0000258 ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
+            owl:onClass linkml:Integer ;
+            owl:onProperty NCIT:C18132 ] ;
     skos:definition "Summary of the hardware used to execute the simulation." ;
     skos:exactMatch schema:softwareRequirements .
 
@@ -305,13 +332,8 @@ pfhub:Contributor a owl:Class,
         linkml:ClassDefinition ;
     rdfs:label "Contributor" ;
     rdfs:subClassOf [ a owl:Restriction ;
-            owl:maxQualifiedCardinality 1 ;
-            owl:onClass linkml:String ;
-            owl:onProperty schema:name ],
-        [ a owl:Restriction ;
-            owl:onClass linkml:Uriorcurie ;
-            owl:onProperty schema:identifier ;
-            owl:qualifiedCardinality 1 ],
+            owl:allValuesFrom linkml:Uriorcurie ;
+            owl:onProperty schema:member ],
         [ a owl:Restriction ;
             owl:allValuesFrom linkml:String ;
             owl:onProperty pfhub:affiliation ],
@@ -320,8 +342,13 @@ pfhub:Contributor a owl:Class,
             owl:onClass linkml:String ;
             owl:onProperty schema:email ],
         [ a owl:Restriction ;
-            owl:allValuesFrom linkml:Uriorcurie ;
-            owl:onProperty schema:member ] ;
+            owl:onClass linkml:Uriorcurie ;
+            owl:onProperty schema:identifier ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
+            owl:onClass linkml:String ;
+            owl:onProperty schema:name ] ;
     skos:definition "Someone who contributed to this solution." ;
     skos:exactMatch schema:Person .
 
@@ -329,25 +356,25 @@ pfhub:Results a owl:Class,
         linkml:ClassDefinition ;
     rdfs:label "Results" ;
     rdfs:subClassOf [ a owl:Restriction ;
-            owl:allValuesFrom pfhub:VisualizationFile ;
-            owl:onProperty pfhub:viz_data ],
-        [ a owl:Restriction ;
-            owl:maxQualifiedCardinality 1 ;
-            owl:onClass linkml:Integer ;
-            owl:onProperty pfhub:memory_in_kb ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom pfhub:DataFile ;
-            owl:onProperty pfhub:raw_data ],
-        [ a owl:Restriction ;
             owl:allValuesFrom pfhub:ComputeResource ;
             owl:onProperty pfhub:hardware ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom pfhub:CsvFile ;
+            owl:onProperty pfhub:csv_data ],
         [ a owl:Restriction ;
             owl:maxQualifiedCardinality 1 ;
             owl:onClass linkml:Integer ;
             owl:onProperty schema:Number ],
         [ a owl:Restriction ;
-            owl:allValuesFrom pfhub:CsvFile ;
-            owl:onProperty pfhub:csv_data ] ;
+            owl:allValuesFrom pfhub:DataFile ;
+            owl:onProperty pfhub:raw_data ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
+            owl:onClass linkml:Integer ;
+            owl:onProperty pfhub:memory_in_kb ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom pfhub:VisualizationFile ;
+            owl:onProperty pfhub:viz_data ] ;
     skos:definition "Runtime information and output from a simulation." ;
     skos:exactMatch schema:Dataset .
 
@@ -357,19 +384,19 @@ pfhub:Software a owl:Class,
     rdfs:subClassOf [ a owl:Restriction ;
             owl:maxQualifiedCardinality 1 ;
             owl:onClass linkml:Uriorcurie ;
-            owl:onProperty schema:codeRepository ],
-        [ a owl:Restriction ;
-            owl:maxQualifiedCardinality 1 ;
-            owl:onClass linkml:String ;
-            owl:onProperty schema:softwareVersion ],
+            owl:onProperty schema:downloadUrl ],
         [ a owl:Restriction ;
             owl:maxQualifiedCardinality 1 ;
             owl:onClass linkml:String ;
             owl:onProperty schema:name ],
         [ a owl:Restriction ;
             owl:maxQualifiedCardinality 1 ;
+            owl:onClass linkml:String ;
+            owl:onProperty schema:softwareVersion ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
             owl:onClass linkml:Uriorcurie ;
-            owl:onProperty schema:downloadUrl ],
+            owl:onProperty schema:codeRepository ],
         [ a owl:Restriction ;
             owl:onClass linkml:Uriorcurie ;
             owl:onProperty schema:url ;
@@ -385,34 +412,27 @@ pfhub:SourceCode a owl:Class,
             owl:onClass linkml:Uriorcurie ;
             owl:onProperty schema:codeRepository ],
         [ a owl:Restriction ;
-            owl:onClass linkml:Uriorcurie ;
-            owl:onProperty schema:url ;
-            owl:qualifiedCardinality 1 ],
-        [ a owl:Restriction ;
             owl:maxQualifiedCardinality 1 ;
             owl:onClass linkml:String ;
-            owl:onProperty schema:name ] ;
+            owl:onProperty schema:name ],
+        [ a owl:Restriction ;
+            owl:onClass linkml:Uriorcurie ;
+            owl:onProperty schema:url ;
+            owl:qualifiedCardinality 1 ] ;
     skos:definition "Link to the authors' implementation of the benchmark problem." ;
     skos:exactMatch schema:SoftwareSourceCode .
-
-schema:identifier a owl:ObjectProperty,
-        linkml:SlotDefinition ;
-    rdfs:label "id" ;
-    rdfs:range linkml:Uriorcurie ;
-    skos:definition "Unique identifier that must not collide with any other." ;
-    skos:exactMatch schema:identifier .
 
 pfhub:File a owl:Class,
         linkml:ClassDefinition ;
     rdfs:label "File" ;
     rdfs:subClassOf [ a owl:Restriction ;
-            owl:maxQualifiedCardinality 1 ;
-            owl:onClass linkml:String ;
-            owl:onProperty schema:encodingFormat ],
-        [ a owl:Restriction ;
             owl:onClass linkml:String ;
             owl:onProperty schema:name ;
-            owl:qualifiedCardinality 1 ] ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
+            owl:onClass linkml:String ;
+            owl:onProperty schema:encodingFormat ] ;
     skos:definition "A generic electronic information container." ;
     skos:exactMatch schema:DigitalDocument .
 
@@ -422,6 +442,15 @@ schema:name a owl:ObjectProperty,
     rdfs:range linkml:String ;
     skos:definition "Informal or human-memorable identifier that may collide with others." ;
     skos:exactMatch schema:name .
+
+pfhub:ValidBenchmarkProblem a owl:Class,
+        linkml:EnumDefinition ;
+    rdfs:label "ValidBenchmarkProblem" ;
+    owl:unionOf ( <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#1a> <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#1b> <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#1c> <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#1d> ) ;
+    linkml:permissible_values <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#1a>,
+        <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#1b>,
+        <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#1c>,
+        <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#1d> .
 
 linkml:ClassDefinition a owl:Class ;
     rdfs:label "class_definition" .

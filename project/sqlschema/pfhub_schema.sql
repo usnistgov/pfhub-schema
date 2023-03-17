@@ -1,12 +1,5 @@
 
 
-CREATE TABLE "BenchmarkProblem" (
-	id TEXT NOT NULL, 
-	name TEXT, 
-	version TEXT, 
-	PRIMARY KEY (id)
-);
-
 CREATE TABLE "ComputeResource" (
 	architecture TEXT, 
 	cores INTEGER, 
@@ -51,14 +44,13 @@ CREATE TABLE "VisualizationFile" (
 
 CREATE TABLE "BenchmarkResult" (
 	id TEXT NOT NULL, 
-	name TEXT, 
-	benchmark TEXT, 
+	benchmark_problem VARCHAR(2) NOT NULL, 
+	benchmark_version INTEGER NOT NULL, 
 	date_created DATE, 
 	implementation TEXT, 
 	results TEXT, 
 	summary TEXT, 
 	PRIMARY KEY (id), 
-	FOREIGN KEY(benchmark) REFERENCES "BenchmarkProblem" (id), 
 	FOREIGN KEY(implementation) REFERENCES "SourceCode" (url)
 );
 

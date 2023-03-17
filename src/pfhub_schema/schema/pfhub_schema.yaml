@@ -52,8 +52,8 @@ classes:
       Root and context for this Benchmark Problem solution.
     slots:
       - id
-      - name
-      - benchmark
+      - benchmark_problem
+      - benchmark_version
       - contributors
       - date_created
       - framework
@@ -61,23 +61,6 @@ classes:
       - results
       - summary
     tree_root: true
-
-  BenchmarkProblem:
-    description: >-
-      Information about the specific Benchmark solved.
-    slots:
-      - id
-      - name
-      - version
-    # slot_usage:
-    #   name:
-    #     description: >-
-    #       Alphanumerical identifier for part of a Benchmark Problem.
-    #     multivalued: false
-    #     pattern: "^\\d\\a"
-    #     range: string
-    #     required: true
-    #     slot_uri: schema:version
 
   ComputeResource:
     class_uri: schema:softwareRequirements
@@ -189,6 +172,21 @@ slots:
     range: string
     slot_uri: SRAO:0000258
 
+  benchmark_problem:
+    description: >-
+      Alphanumerical identifier for part of a Benchmark Problem.
+    multivalued: false
+    pattern: "^\\d\\a"
+    range: ValidBenchmarkProblem
+    required: true
+
+  benchmark_version:
+    description: >-
+      Numerical identifier for a Benchmark Problem version.
+    multivalued: false
+    range: integer
+    required: true
+
   columns:
     description: >-
       Column names applied to tabular data.
@@ -297,13 +295,6 @@ slots:
 
   # ~~ derived slots ~~
 
-  benchmark:
-    description: >-
-      Details of the Benchmark Problem.
-    inlined_as_list: true
-    multivalued: false
-    range: BenchmarkProblem
-
   contributors:
     description: >-
       Collection of people who worked on this solution.
@@ -362,4 +353,31 @@ slots:
 
 # === Enums ===
 
-# enums:
+enums:
+  ValidBenchmarkProblem:
+    description: >-
+      Known parts of the accepted PFHub Benchmark Problems.
+    permissible_values:
+      1a:
+        description: >-
+          Spinodal decomposition in a square domain with periodic boundaries.
+      1b:
+        description: >-
+          Spinodal decomposition in a square domain with no-flux boundaries.
+      1c:
+        description: >-
+          Spinodal decomposition in a T domain with no-flux boundaries.
+      1d:
+        description: >-
+          Spinodal decomposition on a spherical shell with periodic boundaries.
+
+  ValidBenchmarkVersion:
+    description: >-
+      Known versions of the accepted PFHub Benchmark Problems.
+    permissible_values:
+      0:
+        description: >-
+          Initial or Hackathon version.
+      1:
+        description: >-
+          Published version.

@@ -2,10 +2,11 @@
 ---
 # id: pfhub:BenchmarkResult
 id: https://doi.org/10.5281/zenodo.7474506
-name: 1a
+benchmark_problem: 1a
+benchmark_version: 0
+date_created: 2017-01-10
 summary: >-
   Serial Travis CI benchmark with FiPy, periodic domain
-date_created: 2017-01-10
 
 contributors:
   - id: orcid:0000-0002-2920-8302
@@ -16,11 +17,6 @@ contributors:
     name: Daniel Wheeler
     affiliation: NIST
     email: daniel.wheeler@nist.gov
-
-benchmark:
-  id: pfhub:1a
-  name: 1a
-  version: 0
 
 framework:
   - url: https://www.ctcms.nist.gov/fipy/

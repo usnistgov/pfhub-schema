@@ -1,16 +1,9 @@
-// Information about the specific Benchmark solved.
-message BenchmarkProblem
- {
-  uriorcurie id = 0
-  string name = 0
-  string version = 0
- }
 // Root and context for this Benchmark Problem solution.
 message BenchmarkResult
  {
   uriorcurie id = 0
-  string name = 0
-  benchmarkProblem benchmark = 0
+  validBenchmarkProblem benchmarkProblem = 0
+  integer benchmarkVersion = 0
  repeated  contributor contributors = 0
   date dateCreated = 0
  repeated  software framework = 0

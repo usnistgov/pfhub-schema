@@ -300,6 +300,48 @@
       "@type": "TypeDefinition"
     }
   ],
+  "enums": [
+    {
+      "name": "ValidBenchmarkProblem",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem",
+      "description": "Known parts of the accepted PFHub Benchmark Problems.",
+      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
+      "permissible_values": [
+        {
+          "text": "1a",
+          "description": "Spinodal decomposition in a square domain with periodic boundaries."
+        },
+        {
+          "text": "1b",
+          "description": "Spinodal decomposition in a square domain with no-flux boundaries."
+        },
+        {
+          "text": "1c",
+          "description": "Spinodal decomposition in a T domain with no-flux boundaries."
+        },
+        {
+          "text": "1d",
+          "description": "Spinodal decomposition on a spherical shell with periodic boundaries."
+        }
+      ]
+    },
+    {
+      "name": "ValidBenchmarkVersion",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkVersion",
+      "description": "Known versions of the accepted PFHub Benchmark Problems.",
+      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
+      "permissible_values": [
+        {
+          "text": "0",
+          "description": "Initial or Hackathon version."
+        },
+        {
+          "text": "1",
+          "description": "Published version."
+        }
+      ]
+    }
+  ],
   "slots": [
     {
       "name": "id",
@@ -314,7 +356,6 @@
       "owner": "Contributor",
       "domain_of": [
         "BenchmarkResult",
-        "BenchmarkProblem",
         "Contributor"
       ],
       "range": "uriorcurie",
@@ -350,6 +391,35 @@
         "ComputeResource"
       ],
       "range": "string",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "benchmark_problem",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/benchmark_problem",
+      "description": "Alphanumerical identifier for part of a Benchmark Problem.",
+      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
+      "slot_uri": "https://w3id.org/usnistgov/pfhub-schema/benchmark_problem",
+      "owner": "BenchmarkResult",
+      "domain_of": [
+        "BenchmarkResult"
+      ],
+      "range": "ValidBenchmarkProblem",
+      "required": true,
+      "pattern": "^\\d\\a",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "benchmark_version",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/benchmark_version",
+      "description": "Numerical identifier for a Benchmark Problem version.",
+      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
+      "slot_uri": "https://w3id.org/usnistgov/pfhub-schema/benchmark_version",
+      "owner": "BenchmarkResult",
+      "domain_of": [
+        "BenchmarkResult"
+      ],
+      "range": "integer",
+      "required": true,
       "@type": "SlotDefinition"
     },
     {
@@ -496,8 +566,6 @@
       "slot_uri": "http://schema.org/name",
       "owner": "SourceCode",
       "domain_of": [
-        "BenchmarkResult",
-        "BenchmarkProblem",
         "Contributor",
         "File",
         "Software",
@@ -566,7 +634,6 @@
       "slot_uri": "http://schema.org/softwareVersion",
       "owner": "Software",
       "domain_of": [
-        "BenchmarkProblem",
         "Software"
       ],
       "range": "string",
@@ -610,21 +677,6 @@
         "SourceCode"
       ],
       "range": "uriorcurie",
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "benchmark",
-      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/benchmark",
-      "description": "Details of the Benchmark Problem.",
-      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
-      "slot_uri": "https://w3id.org/usnistgov/pfhub-schema/benchmark",
-      "owner": "BenchmarkResult",
-      "domain_of": [
-        "BenchmarkResult"
-      ],
-      "range": "BenchmarkProblem",
-      "inlined": true,
-      "inlined_as_list": true,
       "@type": "SlotDefinition"
     },
     {
@@ -835,8 +887,8 @@
       "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
       "slots": [
         "id",
-        "name",
-        "benchmark",
+        "benchmark_problem",
+        "benchmark_version",
         "contributors",
         "date_created",
         "framework",
@@ -847,20 +899,6 @@
       "slot_usage": {},
       "class_uri": "https://w3id.org/usnistgov/pfhub-schema/BenchmarkResult",
       "tree_root": true,
-      "@type": "ClassDefinition"
-    },
-    {
-      "name": "BenchmarkProblem",
-      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/BenchmarkProblem",
-      "description": "Information about the specific Benchmark solved.",
-      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
-      "slots": [
-        "id",
-        "name",
-        "version"
-      ],
-      "slot_usage": {},
-      "class_uri": "https://w3id.org/usnistgov/pfhub-schema/BenchmarkProblem",
       "@type": "ClassDefinition"
     },
     {
@@ -1018,9 +1056,9 @@
   ],
   "metamodel_version": "1.7.0",
   "source_file": "pfhub_schema.yaml",
-  "source_file_date": "2023-03-17T17:06:14",
-  "source_file_size": 8604,
-  "generation_date": "2023-03-17T17:08:56",
+  "source_file_date": "2023-03-17T18:14:45",
+  "source_file_size": 9262,
+  "generation_date": "2023-03-17T18:15:45",
   "@type": "SchemaDefinition",
   "@context": [
     "project/jsonld/pfhub_schema.context.jsonld",
