@@ -1,7 +1,7 @@
-type Benchmark
+type BenchmarkProblem
   {
     id: Uriorcurie!
-    name: String!
+    name: String
     version: String
   }
 
@@ -9,7 +9,7 @@ type BenchmarkResult
   {
     id: Uriorcurie!
     name: String
-    benchmark: Benchmark
+    benchmark: BenchmarkProblem
     contributors: [Contributor]
     dateCreated: Date
     framework: [Software]
@@ -34,19 +34,30 @@ type Contributor
     email: String
   }
 
+type CsvFile
+  {
+    name: String!
+    format: String
+    columns: [String]
+  }
+
+type DataFile
+  {
+    name: String!
+    format: String
+  }
+
 interface File
   {
-    id: Uriorcurie!
-    name: String
-    columns: [String]
+    name: String!
     format: String
   }
 
 type Results
   {
-    csvData: [File]!
-    rawData: [File]
-    vizData: [File]
+    csvData: [CsvFile]
+    rawData: [DataFile]
+    vizData: [VisualizationFile]
     hardware: [ComputeResource]
     memoryInKb: Integer
     timeInS: Integer
@@ -54,7 +65,7 @@ type Results
 
 type Software
   {
-    id: Uriorcurie!
+    url: Uriorcurie!
     name: String
     download: Uriorcurie
     repository: Uriorcurie
@@ -63,8 +74,14 @@ type Software
 
 type SourceCode
   {
-    id: Uriorcurie!
+    url: Uriorcurie!
     name: String
     repository: Uriorcurie
+  }
+
+type VisualizationFile
+  {
+    name: String!
+    format: String
   }
 

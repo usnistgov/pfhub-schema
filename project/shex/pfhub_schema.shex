@@ -37,17 +37,17 @@ linkml:Objectidentifier IRI
 
 linkml:Nodeidentifier NONLITERAL
 
-<Benchmark> CLOSED {
-    (  $<Benchmark_tes> (  schema:version @linkml:String ;
+<BenchmarkProblem> CLOSED {
+    (  $<BenchmarkProblem_tes> (  schema:name @linkml:String ? ;
           schema:softwareVersion @linkml:String ?
        ) ;
-       rdf:type [ <Benchmark> ]
+       rdf:type [ <BenchmarkProblem> ]
     )
 }
 
 <BenchmarkResult> CLOSED {
     (  $<BenchmarkResult_tes> (  schema:name @linkml:String ? ;
-          <benchmark> @<Benchmark> ? ;
+          <benchmark> @<BenchmarkProblem> ? ;
           schema:contributor @<Contributor> * ;
           schema:dateCreated @linkml:Date ? ;
           schema:SoftwareApplication @<Software> * ;
@@ -78,19 +78,37 @@ linkml:Nodeidentifier NONLITERAL
     )
 }
 
-<File> {
-    (  $<File_tes> (  schema:name @linkml:String ? ;
-          <columns> @linkml:String * ;
-          schema:encodingFormat @linkml:String ?
+<CsvFile> CLOSED {
+    (  $<CsvFile_tes> (  &<File_tes> ;
+          rdf:type [ schema:DigitalDocument ] ? ;
+          <columns> @linkml:String *
        ) ;
+       rdf:type [ <CsvFile> ]
+    )
+}
+
+<DataFile> CLOSED {
+    (  $<DataFile_tes> (  &<File_tes> ;
+          rdf:type [ schema:DigitalDocument ] ?
+       ) ;
+       rdf:type [ <DataFile> ]
+    )
+}
+
+<File>  (
+    @<CsvFile> OR @<DataFile> OR @<VisualizationFile>
+)
+
+<File_struct> {
+    (  $<File_tes> schema:encodingFormat @linkml:String ? ;
        rdf:type [ schema:DigitalDocument ]
     )
 }
 
 <Results> CLOSED {
-    (  $<Results_tes> (  <csv_data> @<File> + ;
-          <raw_data> @<File> * ;
-          <viz_data> @<File> * ;
+    (  $<Results_tes> (  <csv_data> @<CsvFile> * ;
+          <raw_data> @<DataFile> * ;
+          <viz_data> @<VisualizationFile> * ;
           <hardware> @<ComputeResource> * ;
           <memory_in_kb> @linkml:Integer ? ;
           schema:Number @linkml:Integer ?
@@ -114,6 +132,14 @@ linkml:Nodeidentifier NONLITERAL
           schema:codeRepository @linkml:Uriorcurie ?
        ) ;
        rdf:type [ schema:SoftwareSourceCode ]
+    )
+}
+
+<VisualizationFile> CLOSED {
+    (  $<VisualizationFile_tes> (  &<File_tes> ;
+          rdf:type [ schema:DigitalDocument ] ?
+       ) ;
+       rdf:type [ <VisualizationFile> ]
     )
 }
 

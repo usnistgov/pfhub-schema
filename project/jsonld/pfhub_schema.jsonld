@@ -311,14 +311,11 @@
       ],
       "slot_uri": "http://schema.org/identifier",
       "identifier": true,
-      "owner": "BenchmarkResult",
+      "owner": "Contributor",
       "domain_of": [
-        "Benchmark",
-        "Contributor",
-        "File",
-        "Software",
-        "SourceCode",
-        "BenchmarkResult"
+        "BenchmarkResult",
+        "BenchmarkProblem",
+        "Contributor"
       ],
       "range": "uriorcurie",
       "required": true,
@@ -362,9 +359,9 @@
       "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
       "slot_uri": "https://w3id.org/usnistgov/pfhub-schema/columns",
       "multivalued": true,
-      "owner": "File",
+      "owner": "CsvFile",
       "domain_of": [
-        "File"
+        "CsvFile"
       ],
       "range": "string",
       "inlined_as_list": true,
@@ -497,14 +494,14 @@
         "http://schema.org/name"
       ],
       "slot_uri": "http://schema.org/name",
-      "owner": "BenchmarkResult",
+      "owner": "SourceCode",
       "domain_of": [
-        "Benchmark",
+        "BenchmarkResult",
+        "BenchmarkProblem",
         "Contributor",
         "File",
         "Software",
-        "SourceCode",
-        "BenchmarkResult"
+        "SourceCode"
       ],
       "range": "string",
       "@type": "SlotDefinition"
@@ -569,7 +566,7 @@
       "slot_uri": "http://schema.org/softwareVersion",
       "owner": "Software",
       "domain_of": [
-        "Benchmark",
+        "BenchmarkProblem",
         "Software"
       ],
       "range": "string",
@@ -599,6 +596,23 @@
       "@type": "SlotDefinition"
     },
     {
+      "name": "url",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/url",
+      "description": "URL of an online resource or website.",
+      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
+      "mappings": [
+        "http://schema.org/url"
+      ],
+      "slot_uri": "http://schema.org/url",
+      "owner": "SourceCode",
+      "domain_of": [
+        "Software",
+        "SourceCode"
+      ],
+      "range": "uriorcurie",
+      "@type": "SlotDefinition"
+    },
+    {
       "name": "benchmark",
       "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/benchmark",
       "description": "Details of the Benchmark Problem.",
@@ -608,7 +622,9 @@
       "domain_of": [
         "BenchmarkResult"
       ],
-      "range": "Benchmark",
+      "range": "BenchmarkProblem",
+      "inlined": true,
+      "inlined_as_list": true,
       "@type": "SlotDefinition"
     },
     {
@@ -675,6 +691,8 @@
         "BenchmarkResult"
       ],
       "range": "SourceCode",
+      "inlined": true,
+      "inlined_as_list": true,
       "@type": "SlotDefinition"
     },
     {
@@ -702,8 +720,7 @@
       "domain_of": [
         "Results"
       ],
-      "range": "File",
-      "required": true,
+      "range": "CsvFile",
       "inlined": true,
       "inlined_as_list": true,
       "@type": "SlotDefinition"
@@ -719,7 +736,7 @@
       "domain_of": [
         "Results"
       ],
-      "range": "File",
+      "range": "DataFile",
       "inlined": true,
       "inlined_as_list": true,
       "@type": "SlotDefinition"
@@ -735,48 +752,115 @@
       "domain_of": [
         "Results"
       ],
-      "range": "File",
+      "range": "VisualizationFile",
       "inlined": true,
       "inlined_as_list": true,
       "@type": "SlotDefinition"
     },
     {
-      "name": "Benchmark_name",
+      "name": "File_name",
       "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/name",
-      "description": "Alphanumerical identifier for part of a Benchmark Problem.",
+      "description": "Informal or human-memorable identifier that may collide with others.",
       "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
       "mappings": [
-        "http://schema.org/version"
+        "http://schema.org/name"
       ],
       "is_a": "name",
-      "domain": "Benchmark",
-      "slot_uri": "http://schema.org/version",
+      "domain": "File",
+      "slot_uri": "http://schema.org/name",
+      "identifier": true,
       "alias": "name",
-      "owner": "Benchmark",
+      "owner": "File",
       "domain_of": [
-        "Benchmark"
+        "File"
       ],
       "is_usage_slot": true,
       "usage_slot_name": "name",
       "range": "string",
       "required": true,
-      "pattern": "^\\d\\a",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "Software_url",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/url",
+      "description": "URL of an online resource or website.",
+      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
+      "mappings": [
+        "http://schema.org/url"
+      ],
+      "is_a": "url",
+      "domain": "Software",
+      "slot_uri": "http://schema.org/url",
+      "identifier": true,
+      "alias": "url",
+      "owner": "Software",
+      "domain_of": [
+        "Software"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "url",
+      "range": "uriorcurie",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "SourceCode_url",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/url",
+      "description": "URL of an online resource or website.",
+      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
+      "mappings": [
+        "http://schema.org/url"
+      ],
+      "is_a": "url",
+      "domain": "SourceCode",
+      "slot_uri": "http://schema.org/url",
+      "identifier": true,
+      "alias": "url",
+      "owner": "SourceCode",
+      "domain_of": [
+        "SourceCode"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "url",
+      "range": "uriorcurie",
+      "required": true,
       "@type": "SlotDefinition"
     }
   ],
   "classes": [
     {
-      "name": "Benchmark",
-      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/Benchmark",
+      "name": "BenchmarkResult",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/BenchmarkResult",
+      "description": "Root and context for this Benchmark Problem solution.",
+      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
+      "slots": [
+        "id",
+        "name",
+        "benchmark",
+        "contributors",
+        "date_created",
+        "framework",
+        "implementation",
+        "results",
+        "summary"
+      ],
+      "slot_usage": {},
+      "class_uri": "https://w3id.org/usnistgov/pfhub-schema/BenchmarkResult",
+      "tree_root": true,
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "BenchmarkProblem",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/BenchmarkProblem",
       "description": "Information about the specific Benchmark solved.",
       "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
       "slots": [
         "id",
-        "Benchmark_name",
+        "name",
         "version"
       ],
       "slot_usage": {},
-      "class_uri": "https://w3id.org/usnistgov/pfhub-schema/Benchmark",
+      "class_uri": "https://w3id.org/usnistgov/pfhub-schema/BenchmarkProblem",
       "@type": "ClassDefinition"
     },
     {
@@ -825,13 +909,54 @@
       ],
       "abstract": true,
       "slots": [
-        "id",
-        "name",
-        "columns",
+        "File_name",
         "format"
       ],
       "slot_usage": {},
       "class_uri": "http://schema.org/DigitalDocument",
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "CsvFile",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/CsvFile",
+      "description": "Comma-separated values.",
+      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
+      "is_a": "File",
+      "slots": [
+        "File_name",
+        "format",
+        "columns"
+      ],
+      "slot_usage": {},
+      "class_uri": "https://w3id.org/usnistgov/pfhub-schema/CsvFile",
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "DataFile",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/DataFile",
+      "description": "Raw data.",
+      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
+      "is_a": "File",
+      "slots": [
+        "File_name",
+        "format"
+      ],
+      "slot_usage": {},
+      "class_uri": "https://w3id.org/usnistgov/pfhub-schema/DataFile",
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "VisualizationFile",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/VisualizationFile",
+      "description": "Visualization data.",
+      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
+      "is_a": "File",
+      "slots": [
+        "File_name",
+        "format"
+      ],
+      "slot_usage": {},
+      "class_uri": "https://w3id.org/usnistgov/pfhub-schema/VisualizationFile",
       "@type": "ClassDefinition"
     },
     {
@@ -863,7 +988,7 @@
         "schema:SoftwareApplication"
       ],
       "slots": [
-        "id",
+        "Software_url",
         "name",
         "download",
         "repository",
@@ -882,40 +1007,20 @@
         "schema:SoftwareSourceCode"
       ],
       "slots": [
-        "id",
+        "SourceCode_url",
         "name",
         "repository"
       ],
       "slot_usage": {},
       "class_uri": "http://schema.org/SoftwareSourceCode",
       "@type": "ClassDefinition"
-    },
-    {
-      "name": "BenchmarkResult",
-      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/BenchmarkResult",
-      "description": "Root and context for this Benchmark Problem solution.",
-      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
-      "slots": [
-        "id",
-        "name",
-        "benchmark",
-        "contributors",
-        "date_created",
-        "framework",
-        "implementation",
-        "results",
-        "summary"
-      ],
-      "slot_usage": {},
-      "class_uri": "https://w3id.org/usnistgov/pfhub-schema/BenchmarkResult",
-      "@type": "ClassDefinition"
     }
   ],
   "metamodel_version": "1.7.0",
   "source_file": "pfhub_schema.yaml",
-  "source_file_date": "2023-03-16T16:18:16",
-  "source_file_size": 8000,
-  "generation_date": "2023-03-16T16:29:11",
+  "source_file_date": "2023-03-17T17:06:14",
+  "source_file_size": 8604,
+  "generation_date": "2023-03-17T17:08:56",
   "@type": "SchemaDefinition",
   "@context": [
     "project/jsonld/pfhub_schema.context.jsonld",

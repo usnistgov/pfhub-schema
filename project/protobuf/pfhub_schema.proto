@@ -1,5 +1,5 @@
 // Information about the specific Benchmark solved.
-message Benchmark
+message BenchmarkProblem
  {
   uriorcurie id = 0
   string name = 0
@@ -10,7 +10,7 @@ message BenchmarkResult
  {
   uriorcurie id = 0
   string name = 0
-  benchmark benchmark = 0
+  benchmarkProblem benchmark = 0
  repeated  contributor contributors = 0
   date dateCreated = 0
  repeated  software framework = 0
@@ -34,12 +34,25 @@ message Contributor
  repeated  string affiliation = 0
   string email = 0
  }
+// Comma-separated values.
+message CsvFile
+ {
+  string name = 0
+  string format = 0
+ repeated  string columns = 0
+ }
+// Raw data.
+message DataFile
+ {
+  string name = 0
+  string format = 0
+ }
 // Runtime information and output from a simulation.
 message Results
  {
- repeated  file csvData = 0
- repeated  file rawData = 0
- repeated  file vizData = 0
+ repeated  csvFile csvData = 0
+ repeated  dataFile rawData = 0
+ repeated  visualizationFile vizData = 0
  repeated  computeResource hardware = 0
   integer memoryInKb = 0
   integer timeInS = 0
@@ -47,7 +60,7 @@ message Results
 // A software product, download, or repository.
 message Software
  {
-  uriorcurie id = 0
+  uriorcurie url = 0
   string name = 0
   uriorcurie download = 0
   uriorcurie repository = 0
@@ -56,7 +69,13 @@ message Software
 // Link to the authors' implementation of the benchmark problem.
 message SourceCode
  {
-  uriorcurie id = 0
+  uriorcurie url = 0
   string name = 0
   uriorcurie repository = 0
+ }
+// Visualization data.
+message VisualizationFile
+ {
+  string name = 0
+  string format = 0
  }

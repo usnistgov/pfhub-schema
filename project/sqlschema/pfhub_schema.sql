@@ -1,8 +1,8 @@
 
 
-CREATE TABLE "Benchmark" (
+CREATE TABLE "BenchmarkProblem" (
 	id TEXT NOT NULL, 
-	name TEXT NOT NULL, 
+	name TEXT, 
 	version TEXT, 
 	PRIMARY KEY (id)
 );
@@ -14,8 +14,20 @@ CREATE TABLE "ComputeResource" (
 	PRIMARY KEY (architecture, cores, nodes)
 );
 
+CREATE TABLE "CsvFile" (
+	name TEXT NOT NULL, 
+	format TEXT, 
+	PRIMARY KEY (name)
+);
+
+CREATE TABLE "DataFile" (
+	name TEXT NOT NULL, 
+	format TEXT, 
+	PRIMARY KEY (name)
+);
+
 CREATE TABLE "Results" (
-	csv_data TEXT NOT NULL, 
+	csv_data TEXT, 
 	raw_data TEXT, 
 	viz_data TEXT, 
 	hardware TEXT, 
@@ -25,10 +37,16 @@ CREATE TABLE "Results" (
 );
 
 CREATE TABLE "SourceCode" (
-	id TEXT NOT NULL, 
+	url TEXT NOT NULL, 
 	name TEXT, 
 	repository TEXT, 
-	PRIMARY KEY (id)
+	PRIMARY KEY (url)
+);
+
+CREATE TABLE "VisualizationFile" (
+	name TEXT NOT NULL, 
+	format TEXT, 
+	PRIMARY KEY (name)
 );
 
 CREATE TABLE "BenchmarkResult" (
@@ -40,8 +58,15 @@ CREATE TABLE "BenchmarkResult" (
 	results TEXT, 
 	summary TEXT, 
 	PRIMARY KEY (id), 
-	FOREIGN KEY(benchmark) REFERENCES "Benchmark" (id), 
-	FOREIGN KEY(implementation) REFERENCES "SourceCode" (id)
+	FOREIGN KEY(benchmark) REFERENCES "BenchmarkProblem" (id), 
+	FOREIGN KEY(implementation) REFERENCES "SourceCode" (url)
+);
+
+CREATE TABLE "CsvFile_columns" (
+	backref_id TEXT, 
+	columns TEXT, 
+	PRIMARY KEY (backref_id, columns), 
+	FOREIGN KEY(backref_id) REFERENCES "CsvFile" (name)
 );
 
 CREATE TABLE "Contributor" (
@@ -54,13 +79,13 @@ CREATE TABLE "Contributor" (
 );
 
 CREATE TABLE "Software" (
-	id TEXT NOT NULL, 
+	url TEXT NOT NULL, 
 	name TEXT, 
 	download TEXT, 
 	repository TEXT, 
 	version TEXT, 
 	"BenchmarkResult_id" TEXT, 
-	PRIMARY KEY (id), 
+	PRIMARY KEY (url), 
 	FOREIGN KEY("BenchmarkResult_id") REFERENCES "BenchmarkResult" (id)
 );
 

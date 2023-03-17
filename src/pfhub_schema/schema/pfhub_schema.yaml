@@ -62,22 +62,22 @@ classes:
       - summary
     tree_root: true
 
-  Benchmark:
+  BenchmarkProblem:
     description: >-
       Information about the specific Benchmark solved.
     slots:
       - id
       - name
       - version
-    slot_usage:
-      name:
-        description: >-
-          Alphanumerical identifier for part of a Benchmark Problem.
-        multivalued: false
-        pattern: "^\\d\\a"
-        range: string
-        required: true
-        slot_uri: schema:version
+    # slot_usage:
+    #   name:
+    #     description: >-
+    #       Alphanumerical identifier for part of a Benchmark Problem.
+    #     multivalued: false
+    #     pattern: "^\\d\\a"
+    #     range: string
+    #     required: true
+    #     slot_uri: schema:version
 
   ComputeResource:
     class_uri: schema:softwareRequirements
@@ -145,21 +145,26 @@ classes:
       A software product, download, or repository.
     class_uri: schema:SoftwareApplication
     slots:
-      - id
+      - url
       - name
       - download
       - repository
       - version
+    slot_usage:
+      url:
+        identifier: true
 
   SourceCode:
     description: >-
       Link to the authors' implementation of the benchmark problem.
     class_uri: schema:SoftwareSourceCode
     slots:
-      - id
+      - url
       - name
       - repository
-
+    slot_usage:
+      url:
+        identifier: true
 
 slots:
   id:
@@ -284,12 +289,20 @@ slots:
       ucum_code: S
       has_quantity_kind: NCIT:C42535
 
+  url:
+    description: >-
+      URL of an online resource or website.
+    range: uriorcurie
+    slot_uri: schema:url
+
   # ~~ derived slots ~~
 
   benchmark:
     description: >-
       Details of the Benchmark Problem.
-    range: Benchmark
+    inlined_as_list: true
+    multivalued: false
+    range: BenchmarkProblem
 
   contributors:
     description: >-
@@ -316,6 +329,8 @@ slots:
   implementation:
     description: >-
       Source code implementing the solution.
+    inlined_as_list: true
+    multivalued: false
     range: SourceCode
 
   results:

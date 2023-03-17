@@ -1,6 +1,6 @@
 {
     "$defs": {
-        "Benchmark": {
+        "BenchmarkProblem": {
             "additionalProperties": false,
             "description": "Information about the specific Benchmark solved.",
             "properties": {
@@ -9,8 +9,7 @@
                     "type": "string"
                 },
                 "name": {
-                    "description": "Alphanumerical identifier for part of a Benchmark Problem.",
-                    "pattern": "^\\d\\a",
+                    "description": "Informal or human-memorable identifier that may collide with others.",
                     "type": "string"
                 },
                 "version": {
@@ -20,10 +19,9 @@
                 }
             },
             "required": [
-                "id",
-                "name"
+                "id"
             ],
-            "title": "Benchmark",
+            "title": "BenchmarkProblem",
             "type": "object"
         },
         "BenchmarkResult": {
@@ -31,8 +29,8 @@
             "description": "Root and context for this Benchmark Problem solution.",
             "properties": {
                 "benchmark": {
-                    "description": "Details of the Benchmark Problem.",
-                    "type": "string"
+                    "$ref": "#/$defs/BenchmarkProblem",
+                    "description": "Details of the Benchmark Problem."
                 },
                 "contributors": {
                     "description": "Collection of people who worked on this solution.",
@@ -58,8 +56,8 @@
                     "type": "string"
                 },
                 "implementation": {
-                    "description": "Source code implementing the solution.",
-                    "type": "string"
+                    "$ref": "#/$defs/SourceCode",
+                    "description": "Source code implementing the solution."
                 },
                 "name": {
                     "description": "Informal or human-memorable identifier that may collide with others.",
@@ -138,6 +136,52 @@
             "title": "Contributor",
             "type": "object"
         },
+        "CsvFile": {
+            "additionalProperties": false,
+            "description": "Comma-separated values.",
+            "properties": {
+                "columns": {
+                    "description": "Column names applied to tabular data.",
+                    "items": {
+                        "pattern": "^\\S+",
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "format": {
+                    "description": "Format of data contained in a file.",
+                    "type": "string"
+                },
+                "name": {
+                    "description": "Informal or human-memorable identifier that may collide with others.",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name"
+            ],
+            "title": "CsvFile",
+            "type": "object"
+        },
+        "DataFile": {
+            "additionalProperties": false,
+            "description": "Raw data.",
+            "properties": {
+                "format": {
+                    "description": "Format of data contained in a file.",
+                    "type": "string"
+                },
+                "name": {
+                    "description": "Informal or human-memorable identifier that may collide with others.",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name"
+            ],
+            "title": "DataFile",
+            "type": "object"
+        },
         "Results": {
             "additionalProperties": false,
             "description": "Runtime information and output from a simulation.",
@@ -145,7 +189,7 @@
                 "csv_data": {
                     "description": "Tabular output from a simulation.",
                     "items": {
-                        "$ref": "#/$defs/File"
+                        "$ref": "#/$defs/CsvFile"
                     },
                     "type": "array"
                 },
@@ -163,7 +207,7 @@
                 "raw_data": {
                     "description": "Raw data output from a simulation.",
                     "items": {
-                        "$ref": "#/$defs/File"
+                        "$ref": "#/$defs/DataFile"
                     },
                     "type": "array"
                 },
@@ -174,14 +218,11 @@
                 "viz_data": {
                     "description": "Visualization output from a simulation.",
                     "items": {
-                        "$ref": "#/$defs/File"
+                        "$ref": "#/$defs/VisualizationFile"
                     },
                     "type": "array"
                 }
             },
-            "required": [
-                "csv_data"
-            ],
             "title": "Results",
             "type": "object"
         },
@@ -193,16 +234,16 @@
                     "description": "Link to a download URL.",
                     "type": "string"
                 },
-                "id": {
-                    "description": "Unique identifier that must not collide with any other.",
-                    "type": "string"
-                },
                 "name": {
                     "description": "Informal or human-memorable identifier that may collide with others.",
                     "type": "string"
                 },
                 "repository": {
                     "description": "A repository of source code.",
+                    "type": "string"
+                },
+                "url": {
+                    "description": "URL of an online resource or website.",
                     "type": "string"
                 },
                 "version": {
@@ -212,7 +253,7 @@
                 }
             },
             "required": [
-                "id"
+                "url"
             ],
             "title": "Software",
             "type": "object"
@@ -221,10 +262,6 @@
             "additionalProperties": false,
             "description": "Link to the authors' implementation of the benchmark problem.",
             "properties": {
-                "id": {
-                    "description": "Unique identifier that must not collide with any other.",
-                    "type": "string"
-                },
                 "name": {
                     "description": "Informal or human-memorable identifier that may collide with others.",
                     "type": "string"
@@ -232,12 +269,35 @@
                 "repository": {
                     "description": "A repository of source code.",
                     "type": "string"
+                },
+                "url": {
+                    "description": "URL of an online resource or website.",
+                    "type": "string"
                 }
             },
             "required": [
-                "id"
+                "url"
             ],
             "title": "SourceCode",
+            "type": "object"
+        },
+        "VisualizationFile": {
+            "additionalProperties": false,
+            "description": "Visualization data.",
+            "properties": {
+                "format": {
+                    "description": "Format of data contained in a file.",
+                    "type": "string"
+                },
+                "name": {
+                    "description": "Informal or human-memorable identifier that may collide with others.",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name"
+            ],
+            "title": "VisualizationFile",
             "type": "object"
         }
     },
@@ -245,6 +305,54 @@
     "$schema": "http://json-schema.org/draft-07/schema#",
     "additionalProperties": true,
     "metamodel_version": "1.7.0",
+    "properties": {
+        "benchmark": {
+            "$ref": "#/$defs/BenchmarkProblem",
+            "description": "Details of the Benchmark Problem."
+        },
+        "contributors": {
+            "description": "Collection of people who worked on this solution.",
+            "items": {
+                "$ref": "#/$defs/Contributor"
+            },
+            "type": "array"
+        },
+        "date_created": {
+            "description": "Day when an item was uploaded, released, or published.",
+            "format": "date",
+            "type": "string"
+        },
+        "framework": {
+            "description": "A computer program or library",
+            "items": {
+                "$ref": "#/$defs/Software"
+            },
+            "type": "array"
+        },
+        "id": {
+            "description": "Unique identifier that must not collide with any other.",
+            "type": "string"
+        },
+        "implementation": {
+            "$ref": "#/$defs/SourceCode",
+            "description": "Source code implementing the solution."
+        },
+        "name": {
+            "description": "Informal or human-memorable identifier that may collide with others.",
+            "type": "string"
+        },
+        "results": {
+            "$ref": "#/$defs/Results",
+            "description": "Collection of outputs and summary data from a simulation."
+        },
+        "summary": {
+            "description": "Text description, abstract, or narrative.",
+            "type": "string"
+        }
+    },
+    "required": [
+        "id"
+    ],
     "title": "pfhub_schema",
     "type": "object",
     "version": "0.1.0"
