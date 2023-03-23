@@ -102,6 +102,7 @@ linkml:Nodeidentifier NONLITERAL
     (  $<Results_tes> (  <csv_data> @<CsvFile> * ;
           <raw_data> @<DataFile> * ;
           <viz_data> @<VisualizationFile> * ;
+          <https://schema.org/Number> @linkml:Float ? ;
           <hardware> @<ComputeResource> * ;
           <memory_in_kb> @linkml:Integer ? ;
           <https://schema.org/Number> @linkml:Integer ?

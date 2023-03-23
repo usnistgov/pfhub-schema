@@ -1,5 +1,5 @@
 # Auto generated from pfhub_schema.yaml by pythongen.py version: 0.9.0
-# Generation date: 2023-03-23T13:16:56
+# Generation date: 2023-03-23T13:24:25
 # Schema: pfhub_schema
 #
 # id: https://w3id.org/usnistgov/pfhub-schema
@@ -22,7 +22,7 @@ from linkml_runtime.utils.formatutils import camelcase, underscore, sfx
 from linkml_runtime.utils.enumerations import EnumDefinitionImpl
 from rdflib import Namespace, URIRef
 from linkml_runtime.utils.curienamespace import CurieNamespace
-from linkml_runtime.linkml_model.types import Date, Integer, String, Uriorcurie
+from linkml_runtime.linkml_model.types import Date, Float, Integer, String, Uriorcurie
 from linkml_runtime.utils.metamodelcore import URIorCURIE, XSDDate
 
 metamodel_version = "1.7.0"
@@ -354,6 +354,7 @@ class Results(YAMLRoot):
     csv_data: Optional[Union[Dict[Union[str, CsvFileName], Union[dict, CsvFile]], List[Union[dict, CsvFile]]]] = empty_dict()
     raw_data: Optional[Union[Dict[Union[str, DataFileName], Union[dict, DataFile]], List[Union[dict, DataFile]]]] = empty_dict()
     viz_data: Optional[Union[Dict[Union[str, VisualizationFileName], Union[dict, VisualizationFile]], List[Union[dict, VisualizationFile]]]] = empty_dict()
+    fictive_time: Optional[float] = None
     hardware: Optional[Union[Union[dict, ComputeResource], List[Union[dict, ComputeResource]]]] = empty_list()
     memory_in_kb: Optional[int] = None
     time_in_s: Optional[int] = None
@@ -364,6 +365,9 @@ class Results(YAMLRoot):
         self._normalize_inlined_as_list(slot_name="raw_data", slot_type=DataFile, key_name="name", keyed=True)
 
         self._normalize_inlined_as_list(slot_name="viz_data", slot_type=VisualizationFile, key_name="name", keyed=True)
+
+        if self.fictive_time is not None and not isinstance(self.fictive_time, float):
+            self.fictive_time = float(self.fictive_time)
 
         if not isinstance(self.hardware, list):
             self.hardware = [self.hardware] if self.hardware is not None else []
@@ -633,6 +637,9 @@ slots.download = Slot(uri="str(uriorcurie)", name="download", curie=None,
 slots.email = Slot(uri="str(uriorcurie)", name="email", curie=None,
                    model_uri=PFHUB.email, domain=None, range=Optional[str],
                    pattern=re.compile(r'^\S+@[\S+\.]+\S+'))
+
+slots.fictive_time = Slot(uri="str(uriorcurie)", name="fictive_time", curie=None,
+                   model_uri=PFHUB.fictive_time, domain=None, range=Optional[float])
 
 slots.format = Slot(uri="str(uriorcurie)", name="format", curie=None,
                    model_uri=PFHUB.format, domain=None, range=Optional[str])

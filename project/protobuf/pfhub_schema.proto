@@ -47,6 +47,7 @@ message Results
  repeated  csvFile csvData = 0
  repeated  dataFile rawData = 0
  repeated  visualizationFile vizData = 0
+  float fictiveTime = 0
  repeated  computeResource hardware = 0
   integer memoryInKb = 0
   integer timeInS = 0

@@ -118,6 +118,7 @@ classes:
       - csv_data
       - raw_data
       - viz_data
+      - fictive_time
       - hardware
       - memory_in_kb
       - time_in_s
@@ -226,6 +227,12 @@ slots:
     pattern: "^\\S+@[\\S+\\.]+\\S+"
     range: string
     slot_uri: https://schema.org/email
+
+  fictive_time:
+    description: >-
+      Maximum simulated (or "fictive") time reached.
+    range: float
+    slot_uri: https://schema.org/Number
 
   format:
     description: >-

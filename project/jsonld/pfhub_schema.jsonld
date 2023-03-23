@@ -593,6 +593,22 @@
       "@type": "SlotDefinition"
     },
     {
+      "name": "fictive_time",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/fictive_time",
+      "description": "Maximum simulated (or \"fictive\") time reached.",
+      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
+      "mappings": [
+        "https://schema.org/Number"
+      ],
+      "slot_uri": "https://schema.org/Number",
+      "owner": "Results",
+      "domain_of": [
+        "Results"
+      ],
+      "range": "float",
+      "@type": "SlotDefinition"
+    },
+    {
       "name": "format",
       "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/format",
       "description": "Format of data contained in a file.",
@@ -1156,6 +1172,7 @@
         "csv_data",
         "raw_data",
         "viz_data",
+        "fictive_time",
         "hardware",
         "memory_in_kb",
         "time_in_s"
@@ -1203,9 +1220,9 @@
   ],
   "metamodel_version": "1.7.0",
   "source_file": "pfhub_schema.yaml",
-  "source_file_date": "2023-03-23T13:11:02",
-  "source_file_size": 13064,
-  "generation_date": "2023-03-23T13:16:48",
+  "source_file_date": "2023-03-23T13:22:54",
+  "source_file_size": 13232,
+  "generation_date": "2023-03-23T13:24:18",
   "@type": "SchemaDefinition",
   "@context": [
     "project/jsonld/pfhub_schema.context.jsonld",

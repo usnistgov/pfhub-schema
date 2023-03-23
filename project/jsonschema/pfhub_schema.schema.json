@@ -184,6 +184,10 @@
                     },
                     "type": "array"
                 },
+                "fictive_time": {
+                    "description": "Maximum simulated (or \"fictive\") time reached.",
+                    "type": "number"
+                },
                 "hardware": {
                     "description": "Computer hardware used to run the simulation.",
                     "items": {

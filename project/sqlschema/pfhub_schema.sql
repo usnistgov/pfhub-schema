@@ -23,10 +23,11 @@ CREATE TABLE "Results" (
 	csv_data TEXT, 
 	raw_data TEXT, 
 	viz_data TEXT, 
+	fictive_time FLOAT, 
 	hardware TEXT, 
 	memory_in_kb INTEGER, 
 	time_in_s INTEGER, 
-	PRIMARY KEY (csv_data, raw_data, viz_data, hardware, memory_in_kb, time_in_s)
+	PRIMARY KEY (csv_data, raw_data, viz_data, fictive_time, hardware, memory_in_kb, time_in_s)
 );
 
 CREATE TABLE "SourceCode" (

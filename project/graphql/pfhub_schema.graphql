@@ -52,6 +52,7 @@ type Results
     csvData: [CsvFile]
     rawData: [DataFile]
     vizData: [VisualizationFile]
+    fictiveTime: Float
     hardware: [ComputeResource]
     memoryInKb: Integer
     timeInS: Integer
