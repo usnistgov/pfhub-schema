@@ -6,7 +6,7 @@ benchmark_version: 0
 date_created: 2016-06-28
 schema:
   url: >-
-    https://github.com/usnistgov/pfhub-schema/tree/bac250b/project
+    https://github.com/usnistgov/pfhub-schema/tree/335a94b/project
 summary: >-
   MOOSE, IA solver, periodic domain.
 

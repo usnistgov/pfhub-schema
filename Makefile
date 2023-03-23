@@ -88,7 +88,7 @@ create-data-harmonizer:
 	npm init data-harmonizer $(SOURCE_SCHEMA_PATH)
 
 all: site
-site: gen-project gendoc
+site: gen-examples gen-project gendoc
 %.yaml: gen-project
 deploy: all mkd-gh-deploy
 
