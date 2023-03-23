@@ -265,11 +265,103 @@
         },
         {
           "text": "1c",
-          "description": "Spinodal decomposition in a T domain with no-flux boundaries."
+          "description": "Spinodal decomposition in a T-shaped domain with no-flux boundaries."
         },
         {
           "text": "1d",
-          "description": "Spinodal decomposition on a spherical shell with periodic boundaries."
+          "description": "Spinodal decomposition on a closed spherical shell."
+        },
+        {
+          "text": "2a",
+          "description": "Ostwald ripening in a square domain with periodic boundaries."
+        },
+        {
+          "text": "2b",
+          "description": "Ostwald ripening in a square domain with no-flux boundaries."
+        },
+        {
+          "text": "2c",
+          "description": "Ostwald ripening in a T-shaped domain with no-flux boundaries."
+        },
+        {
+          "text": "2d",
+          "description": "Ostwald ripening on a closed spherical shell."
+        },
+        {
+          "text": "3a",
+          "description": "Dendritic growth in a square domain."
+        },
+        {
+          "text": "4a",
+          "description": "Elastic precipitate with radii (20 nm, 20 nm), C\u2081\u2081\u2081\u2081=250 aJ/nm\u00b3, C\u2081\u2081\u2082\u2082=150 aJ/nm\u00b3, C\u2081\u2082\u2081\u2082=100 aJ/nm\u00b3."
+        },
+        {
+          "text": "4b",
+          "description": "Elastic precipitate with radii (75 nm, 75 nm), C\u2081\u2081\u2081\u2081=250 aJ/nm\u00b3, C\u2081\u2081\u2082\u2082=150 aJ/nm\u00b3, C\u2081\u2082\u2081\u2082=100 aJ/nm\u00b3."
+        },
+        {
+          "text": "4c",
+          "description": "Elastic precipitate with radii (20 nm, 20 nm), C\u2081\u2081\u2081\u2081=275 aJ/nm\u00b3, C\u2081\u2081\u2082\u2082=165 aJ/nm\u00b3, C\u2081\u2082\u2081\u2082=110 aJ/nm\u00b3."
+        },
+        {
+          "text": "4d",
+          "description": "Elastic precipitate with radii (75 nm, 75 nm), C\u2081\u2081\u2081\u2081=275 aJ/nm\u00b3, C\u2081\u2081\u2082\u2082=165 aJ/nm\u00b3, C\u2081\u2082\u2081\u2082=110 aJ/nm\u00b3."
+        },
+        {
+          "text": "4e",
+          "description": "Elastic precipitate with radii (20/0.9 nm, 0.9*20 nm), C\u2081\u2081\u2081\u2081=250 aJ/nm\u00b3, C\u2081\u2081\u2082\u2082=150 aJ/nm\u00b3, C\u2081\u2082\u2081\u2082=100 aJ/nm\u00b3."
+        },
+        {
+          "text": "4f",
+          "description": "Elastic precipitate with radii (75/0.9 nm, 0.9*75 nm), C\u2081\u2081\u2081\u2081=250 aJ/nm\u00b3, C\u2081\u2081\u2082\u2082=150 aJ/nm\u00b3, C\u2081\u2082\u2081\u2082=100 aJ/nm\u00b3."
+        },
+        {
+          "text": "4g",
+          "description": "Elastic precipitate with radii (20/0.9 nm, 0.9*20 nm), C\u2081\u2081\u2081\u2081=275 aJ/nm\u00b3, C\u2081\u2081\u2082\u2082=165 aJ/nm\u00b3, C\u2081\u2082\u2081\u2082=110 aJ/nm\u00b3."
+        },
+        {
+          "text": "4h",
+          "description": "Elastic precipitate with radii (75/0.9 nm, 0.9*75 nm), C\u2081\u2081\u2081\u2081=275 aJ/nm\u00b3, C\u2081\u2081\u2082\u2082=165 aJ/nm\u00b3, C\u2081\u2082\u2081\u2082=110 aJ/nm\u00b3."
+        },
+        {
+          "text": "5a",
+          "description": "Stokes flow in an un-obstructed channel."
+        },
+        {
+          "text": "5b",
+          "description": "Stokes flow in a channel with elliptical obstruction."
+        },
+        {
+          "text": "6a",
+          "description": "Electrostatics in a square domain."
+        },
+        {
+          "text": "6b",
+          "description": "Electrostatics in a domain comprised of a rectangle and half-circle."
+        },
+        {
+          "text": "7a",
+          "description": "Method of Manufactured Solutions: order of accuracy test."
+        },
+        {
+          "text": "7b",
+          "description": "Method of Manufactured Solutions: performance with fixed error."
+        },
+        {
+          "text": "7c",
+          "description": "Method of Manufactured Solutions: increased rate of change."
+        },
+        {
+          "text": "8a",
+          "description": "Homogeneous nucleation with a single initial seed."
+        },
+        {
+          "text": "8b",
+          "description": "Homogeneous nucleation with multiple initial seeds."
+        },
+        {
+          "text": "8c",
+          "description": "Homogeneous nucleation with seeds at random times."
         }
       ]
     },
@@ -604,24 +696,6 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "version",
-      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/version",
-      "description": "Semantic version of a software project.",
-      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
-      "mappings": [
-        "https://schema.org/softwareVersion"
-      ],
-      "slot_uri": "https://schema.org/softwareVersion",
-      "owner": "Software",
-      "domain_of": [
-        "Software"
-      ],
-      "range": "string",
-      "recommended": true,
-      "pattern": "^[\\d+\\.]+",
-      "@type": "SlotDefinition"
-    },
-    {
       "name": "time_in_s",
       "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/time_in_s",
       "description": "Amount of time required to execute the simulation.",
@@ -657,6 +731,24 @@
         "SourceCode"
       ],
       "range": "uriorcurie",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "version",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/version",
+      "description": "Semantic version of a software project.",
+      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
+      "mappings": [
+        "https://schema.org/softwareVersion"
+      ],
+      "slot_uri": "https://schema.org/softwareVersion",
+      "owner": "Software",
+      "domain_of": [
+        "Software"
+      ],
+      "range": "string",
+      "recommended": true,
+      "pattern": "^[\\d+\\.]+",
       "@type": "SlotDefinition"
     },
     {
@@ -739,6 +831,21 @@
       ],
       "range": "Results",
       "inlined": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "schema",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/schema",
+      "description": "Version of the PFHub Schema this record conforms to.",
+      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
+      "slot_uri": "https://w3id.org/usnistgov/pfhub-schema/schema",
+      "owner": "BenchmarkResult",
+      "domain_of": [
+        "BenchmarkResult"
+      ],
+      "range": "SourceCode",
+      "inlined": true,
+      "inlined_as_list": true,
       "@type": "SlotDefinition"
     },
     {
@@ -916,6 +1023,7 @@
         "framework",
         "implementation",
         "results",
+        "schema",
         "summary"
       ],
       "slot_usage": {},
@@ -1095,9 +1203,9 @@
   ],
   "metamodel_version": "1.7.0",
   "source_file": "pfhub_schema.yaml",
-  "source_file_date": "2023-03-22T21:45:43",
-  "source_file_size": 9940,
-  "generation_date": "2023-03-22T21:52:31",
+  "source_file_date": "2023-03-23T13:11:02",
+  "source_file_size": 13064,
+  "generation_date": "2023-03-23T13:14:17",
   "@type": "SchemaDefinition",
   "@context": [
     "project/jsonld/pfhub_schema.context.jsonld",

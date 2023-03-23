@@ -8,6 +8,7 @@ type BenchmarkResult
     framework: [Software]
     implementation: SourceCode
     results: Results
+    schema: SourceCode
     summary: String
   }
 

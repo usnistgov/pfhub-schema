@@ -55,9 +55,11 @@ CREATE TABLE "BenchmarkResult" (
 	date_created DATE, 
 	implementation TEXT, 
 	results TEXT, 
+	schema TEXT, 
 	summary TEXT, 
 	PRIMARY KEY (id), 
-	FOREIGN KEY(implementation) REFERENCES "SourceCode" (url)
+	FOREIGN KEY(implementation) REFERENCES "SourceCode" (url), 
+	FOREIGN KEY(schema) REFERENCES "SourceCode" (url)
 );
 
 CREATE TABLE "CsvFile_columns" (

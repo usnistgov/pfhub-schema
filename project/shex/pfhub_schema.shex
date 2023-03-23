@@ -44,6 +44,7 @@ linkml:Nodeidentifier NONLITERAL
           <https://schema.org/SoftwareApplication> @<Software> * ;
           <implementation> @<SourceCode> ? ;
           <results> @<Results> ? ;
+          <schema> @<SourceCode> ? ;
           <https://schema.org/abstract> @linkml:String ?
        ) ;
        rdf:type [ <BenchmarkResult> ]

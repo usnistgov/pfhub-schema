@@ -9,6 +9,7 @@ message BenchmarkResult
  repeated  software framework = 0
   sourceCode implementation = 0
   results results = 0
+  sourceCode schema = 0
   string summary = 0
  }
 // Summary of the hardware used to execute the simulation.

@@ -1,5 +1,5 @@
 # Auto generated from pfhub_schema.yaml by pythongen.py version: 0.9.0
-# Generation date: 2023-03-22T21:52:39
+# Generation date: 2023-03-23T13:14:25
 # Schema: pfhub_schema
 #
 # id: https://w3id.org/usnistgov/pfhub-schema
@@ -96,6 +96,7 @@ class BenchmarkResult(YAMLRoot):
     framework: Optional[Union[Dict[Union[str, SoftwareUrl], Union[dict, "Software"]], List[Union[dict, "Software"]]]] = empty_dict()
     implementation: Optional[Union[dict, "SourceCode"]] = None
     results: Optional[Union[dict, "Results"]] = None
+    schema: Optional[Union[dict, "SourceCode"]] = None
     summary: Optional[str] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
@@ -126,6 +127,9 @@ class BenchmarkResult(YAMLRoot):
 
         if self.results is not None and not isinstance(self.results, Results):
             self.results = Results(**as_dict(self.results))
+
+        if self.schema is not None and not isinstance(self.schema, SourceCode):
+            self.schema = SourceCode(**as_dict(self.schema))
 
         if self.summary is not None and not isinstance(self.summary, str):
             self.summary = str(self.summary)
@@ -464,10 +468,79 @@ class ValidBenchmarkProblem(EnumDefinitionImpl):
                                  description="Spinodal decomposition in a square domain with no-flux boundaries.") )
         setattr(cls, "1c",
                 PermissibleValue(text="1c",
-                                 description="Spinodal decomposition in a T domain with no-flux boundaries.") )
+                                 description="Spinodal decomposition in a T-shaped domain with no-flux boundaries.") )
         setattr(cls, "1d",
                 PermissibleValue(text="1d",
-                                 description="Spinodal decomposition on a spherical shell with periodic boundaries.") )
+                                 description="Spinodal decomposition on a closed spherical shell.") )
+        setattr(cls, "2a",
+                PermissibleValue(text="2a",
+                                 description="Ostwald ripening in a square domain with periodic boundaries.") )
+        setattr(cls, "2b",
+                PermissibleValue(text="2b",
+                                 description="Ostwald ripening in a square domain with no-flux boundaries.") )
+        setattr(cls, "2c",
+                PermissibleValue(text="2c",
+                                 description="Ostwald ripening in a T-shaped domain with no-flux boundaries.") )
+        setattr(cls, "2d",
+                PermissibleValue(text="2d",
+                                 description="Ostwald ripening on a closed spherical shell.") )
+        setattr(cls, "3a",
+                PermissibleValue(text="3a",
+                                 description="Dendritic growth in a square domain.") )
+        setattr(cls, "4a",
+                PermissibleValue(text="4a",
+                                 description="Elastic precipitate with radii (20 nm, 20 nm), C₁₁₁₁=250 aJ/nm³, C₁₁₂₂=150 aJ/nm³, C₁₂₁₂=100 aJ/nm³.") )
+        setattr(cls, "4b",
+                PermissibleValue(text="4b",
+                                 description="Elastic precipitate with radii (75 nm, 75 nm), C₁₁₁₁=250 aJ/nm³, C₁₁₂₂=150 aJ/nm³, C₁₂₁₂=100 aJ/nm³.") )
+        setattr(cls, "4c",
+                PermissibleValue(text="4c",
+                                 description="Elastic precipitate with radii (20 nm, 20 nm), C₁₁₁₁=275 aJ/nm³, C₁₁₂₂=165 aJ/nm³, C₁₂₁₂=110 aJ/nm³.") )
+        setattr(cls, "4d",
+                PermissibleValue(text="4d",
+                                 description="Elastic precipitate with radii (75 nm, 75 nm), C₁₁₁₁=275 aJ/nm³, C₁₁₂₂=165 aJ/nm³, C₁₂₁₂=110 aJ/nm³.") )
+        setattr(cls, "4e",
+                PermissibleValue(text="4e",
+                                 description="Elastic precipitate with radii (20/0.9 nm, 0.9*20 nm), C₁₁₁₁=250 aJ/nm³, C₁₁₂₂=150 aJ/nm³, C₁₂₁₂=100 aJ/nm³.") )
+        setattr(cls, "4f",
+                PermissibleValue(text="4f",
+                                 description="Elastic precipitate with radii (75/0.9 nm, 0.9*75 nm), C₁₁₁₁=250 aJ/nm³, C₁₁₂₂=150 aJ/nm³, C₁₂₁₂=100 aJ/nm³.") )
+        setattr(cls, "4g",
+                PermissibleValue(text="4g",
+                                 description="Elastic precipitate with radii (20/0.9 nm, 0.9*20 nm), C₁₁₁₁=275 aJ/nm³, C₁₁₂₂=165 aJ/nm³, C₁₂₁₂=110 aJ/nm³.") )
+        setattr(cls, "4h",
+                PermissibleValue(text="4h",
+                                 description="Elastic precipitate with radii (75/0.9 nm, 0.9*75 nm), C₁₁₁₁=275 aJ/nm³, C₁₁₂₂=165 aJ/nm³, C₁₂₁₂=110 aJ/nm³.") )
+        setattr(cls, "5a",
+                PermissibleValue(text="5a",
+                                 description="Stokes flow in an un-obstructed channel.") )
+        setattr(cls, "5b",
+                PermissibleValue(text="5b",
+                                 description="Stokes flow in a channel with elliptical obstruction.") )
+        setattr(cls, "6a",
+                PermissibleValue(text="6a",
+                                 description="Electrostatics in a square domain.") )
+        setattr(cls, "6b",
+                PermissibleValue(text="6b",
+                                 description="Electrostatics in a domain comprised of a rectangle and half-circle.") )
+        setattr(cls, "7a",
+                PermissibleValue(text="7a",
+                                 description="Method of Manufactured Solutions: order of accuracy test.") )
+        setattr(cls, "7b",
+                PermissibleValue(text="7b",
+                                 description="Method of Manufactured Solutions: performance with fixed error.") )
+        setattr(cls, "7c",
+                PermissibleValue(text="7c",
+                                 description="Method of Manufactured Solutions: increased rate of change.") )
+        setattr(cls, "8a",
+                PermissibleValue(text="8a",
+                                 description="Homogeneous nucleation with a single initial seed.") )
+        setattr(cls, "8b",
+                PermissibleValue(text="8b",
+                                 description="Homogeneous nucleation with multiple initial seeds.") )
+        setattr(cls, "8c",
+                PermissibleValue(text="8c",
+                                 description="Homogeneous nucleation with seeds at random times.") )
 
 class ValidBenchmarkVersion(EnumDefinitionImpl):
     """
@@ -579,15 +652,15 @@ slots.nodes = Slot(uri="str(uriorcurie)", name="nodes", curie=None,
 slots.summary = Slot(uri="str(uriorcurie)", name="summary", curie=None,
                    model_uri=PFHUB.summary, domain=None, range=Optional[str])
 
-slots.version = Slot(uri="str(uriorcurie)", name="version", curie=None,
-                   model_uri=PFHUB.version, domain=None, range=Optional[str],
-                   pattern=re.compile(r'^[\d+\.]+'))
-
 slots.time_in_s = Slot(uri="str(uriorcurie)", name="time_in_s", curie=None,
                    model_uri=PFHUB.time_in_s, domain=None, range=Optional[int])
 
 slots.url = Slot(uri="str(uriorcurie)", name="url", curie=None,
                    model_uri=PFHUB.url, domain=None, range=Optional[Union[str, URIorCURIE]])
+
+slots.version = Slot(uri="str(uriorcurie)", name="version", curie=None,
+                   model_uri=PFHUB.version, domain=None, range=Optional[str],
+                   pattern=re.compile(r'^[\d+\.]+'))
 
 slots.contributors = Slot(uri="str(uriorcurie)", name="contributors", curie=None,
                    model_uri=PFHUB.contributors, domain=None, range=Optional[Union[Dict[Union[str, ContributorId], Union[dict, Contributor]], List[Union[dict, Contributor]]]])
@@ -603,6 +676,9 @@ slots.implementation = Slot(uri=PFHUB.implementation, name="implementation", cur
 
 slots.results = Slot(uri=PFHUB.results, name="results", curie=PFHUB.curie('results'),
                    model_uri=PFHUB.results, domain=None, range=Optional[Union[dict, Results]])
+
+slots.schema = Slot(uri=PFHUB.schema, name="schema", curie=PFHUB.curie('schema'),
+                   model_uri=PFHUB.schema, domain=None, range=Optional[Union[dict, SourceCode]])
 
 slots.csv_data = Slot(uri=PFHUB.csv_data, name="csv_data", curie=PFHUB.curie('csv_data'),
                    model_uri=PFHUB.csv_data, domain=None, range=Optional[Union[Dict[Union[str, CsvFileName], Union[dict, CsvFile]], List[Union[dict, CsvFile]]]])

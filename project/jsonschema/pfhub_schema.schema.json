@@ -44,6 +44,10 @@
                     "$ref": "#/$defs/Results",
                     "description": "Collection of outputs and summary data from a simulation."
                 },
+                "schema": {
+                    "$ref": "#/$defs/SourceCode",
+                    "description": "Version of the PFHub Schema this record conforms to."
+                },
                 "summary": {
                     "description": "Text description, abstract, or narrative.",
                     "type": "string"
@@ -304,7 +308,30 @@
                 "1a",
                 "1b",
                 "1c",
-                "1d"
+                "1d",
+                "2a",
+                "2b",
+                "2c",
+                "2d",
+                "3a",
+                "4a",
+                "4b",
+                "4c",
+                "4d",
+                "4e",
+                "4f",
+                "4g",
+                "4h",
+                "5a",
+                "5b",
+                "6a",
+                "6b",
+                "7a",
+                "7b",
+                "7c",
+                "8a",
+                "8b",
+                "8c"
             ],
             "title": "ValidBenchmarkProblem",
             "type": "string"
@@ -382,6 +409,10 @@
         "results": {
             "$ref": "#/$defs/Results",
             "description": "Collection of outputs and summary data from a simulation."
+        },
+        "schema": {
+            "$ref": "#/$defs/SourceCode",
+            "description": "Version of the PFHub Schema this record conforms to."
         },
         "summary": {
             "description": "Text description, abstract, or narrative.",
