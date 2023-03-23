@@ -6,7 +6,7 @@ benchmark_version: 0
 date_created: 2016-06-28
 schema:
   url: >-
-    https://github.com/usnistgov/pfhub-schema/tree/335a94b/project
+    https://github.com/usnistgov/pfhub-schema/tree/2b06531/project
 summary: >-
   MOOSE, IA solver, periodic domain.
 
@@ -39,5 +39,6 @@ results:
     - architecture: cpu
       cores: 6
       nodes: 1
+  fictive_time: 935803.78997793
   memory_in_kb: 815104
   time_in_s: 3720
