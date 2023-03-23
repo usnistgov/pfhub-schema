@@ -45,6 +45,7 @@ classes:
       - framework
       - implementation
       - results
+      - schema
       - summary
     tree_root: true
 
@@ -269,14 +270,6 @@ slots:
     range: string
     slot_uri: https://schema.org/abstract
 
-  version:
-    description: >-
-      Semantic version of a software project.
-    pattern: "^[\\d+\\.]+"
-    range: string
-    recommended: true
-    slot_uri: https://schema.org/softwareVersion
-
   time_in_s:
     description: >-
       Amount of time required to execute the simulation.
@@ -291,6 +284,14 @@ slots:
       URL of an online resource or website.
     range: uriorcurie
     slot_uri: https://schema.org/url
+
+  version:
+    description: >-
+      Semantic version of a software project.
+    pattern: "^[\\d+\\.]+"
+    range: string
+    recommended: true
+    slot_uri: https://schema.org/softwareVersion
 
   # ~~ derived slots ~~
 
@@ -329,6 +330,13 @@ slots:
     multivalued: false
     range: Results
 
+  schema:
+    description: >-
+      Version of the PFHub Schema this record conforms to.
+    inlined_as_list: true
+    multivalued: false
+    range: SourceCode
+
   csv_data:
     description: >-
       Tabular output from a simulation.
@@ -365,10 +373,94 @@ enums:
           Spinodal decomposition in a square domain with no-flux boundaries.
       1c:
         description: >-
-          Spinodal decomposition in a T domain with no-flux boundaries.
+          Spinodal decomposition in a T-shaped domain with no-flux boundaries.
       1d:
         description: >-
-          Spinodal decomposition on a spherical shell with periodic boundaries.
+          Spinodal decomposition on a closed spherical shell.
+
+      2a:
+        description: >-
+          Ostwald ripening in a square domain with periodic boundaries.
+      2b:
+        description: >-
+          Ostwald ripening in a square domain with no-flux boundaries.
+      2c:
+        description: >-
+          Ostwald ripening in a T-shaped domain with no-flux boundaries.
+      2d:
+        description: >-
+          Ostwald ripening on a closed spherical shell.
+
+      3a:
+        description: >-
+          Dendritic growth in a square domain.
+
+      4a:
+        description: >-
+          Elastic precipitate with radii (20 nm, 20 nm),
+          C₁₁₁₁=250 aJ/nm³, C₁₁₂₂=150 aJ/nm³, C₁₂₁₂=100 aJ/nm³.
+      4b:
+        description: >-
+          Elastic precipitate with radii (75 nm, 75 nm),
+          C₁₁₁₁=250 aJ/nm³, C₁₁₂₂=150 aJ/nm³, C₁₂₁₂=100 aJ/nm³.
+      4c:
+        description: >-
+          Elastic precipitate with radii (20 nm, 20 nm),
+          C₁₁₁₁=275 aJ/nm³, C₁₁₂₂=165 aJ/nm³, C₁₂₁₂=110 aJ/nm³.
+      4d:
+        description: >-
+          Elastic precipitate with radii (75 nm, 75 nm),
+          C₁₁₁₁=275 aJ/nm³, C₁₁₂₂=165 aJ/nm³, C₁₂₁₂=110 aJ/nm³.
+      4e:
+        description: >-
+          Elastic precipitate with radii (20/0.9 nm, 0.9*20 nm),
+          C₁₁₁₁=250 aJ/nm³, C₁₁₂₂=150 aJ/nm³, C₁₂₁₂=100 aJ/nm³.
+      4f:
+        description: >-
+          Elastic precipitate with radii (75/0.9 nm, 0.9*75 nm),
+          C₁₁₁₁=250 aJ/nm³, C₁₁₂₂=150 aJ/nm³, C₁₂₁₂=100 aJ/nm³.
+      4g:
+        description: >-
+          Elastic precipitate with radii (20/0.9 nm, 0.9*20 nm),
+          C₁₁₁₁=275 aJ/nm³, C₁₁₂₂=165 aJ/nm³, C₁₂₁₂=110 aJ/nm³.
+      4h:
+        description: >-
+          Elastic precipitate with radii (75/0.9 nm, 0.9*75 nm),
+          C₁₁₁₁=275 aJ/nm³, C₁₁₂₂=165 aJ/nm³, C₁₂₁₂=110 aJ/nm³.
+
+      5a:
+        description: >-
+          Stokes flow in an un-obstructed channel.
+      5b:
+        description: >-
+          Stokes flow in a channel with elliptical obstruction.
+
+      6a:
+        description: >-
+          Electrostatics in a square domain.
+      6b:
+        description: >-
+          Electrostatics in a domain comprised of a rectangle and half-circle.
+
+      7a:
+        description: >-
+          Method of Manufactured Solutions: order of accuracy test.
+      7b:
+        description: >-
+          Method of Manufactured Solutions: performance with fixed error.
+      7c:
+        description: >-
+          Method of Manufactured Solutions: increased rate of change.
+
+      8a:
+        description: >-
+          Homogeneous nucleation with a single initial seed.
+      8b:
+        description: >-
+          Homogeneous nucleation with multiple initial seeds.
+      8c:
+        description: >-
+          Homogeneous nucleation with seeds at random times.
 
   ValidBenchmarkVersion:
     description: >-
