@@ -24,20 +24,6 @@ version: 0.1.0
 prefixes:
   pfhub: https://w3id.org/usnistgov/pfhub-schema/
   linkml: https://w3id.org/linkml/  # LinkML itself
-  dcterms: http://purl.org/dc/terms/  # Dublin Core Metadata Terms
-  doi: https://doi.org/  # Digital Object Identifier
-  iana_text: https://www.iana.org/assignments/media-types/text/  # MIME types
-  iana_app: https://www.iana.org/assignments/media-types/application/
-  NCIT: http://purl.obolibrary.org/obo/NCIT_
-  orcid: https://orcid.org/  # Open Researcher & Contributor ID
-  qudt: http://qudt.org/schema/qudt/  # Quantities, Units, Dimensions, Types
-  schema: http://schema.org/  # a schema so broad they just call it "schema"
-  SRAO: http://www.fairsharing.org/ontology/subject/SRAO_  # Subject Ontology
-  UO: http://purl.obolibrary.org/obo/UO_  # Units of Measure Ontology
-  # social media
-  bitbucket: https://bitbucket.org/
-  github: https://github.com/
-  gitlab: https://gitlab.com/
 
 default_curi_maps:
   - semweb_context
@@ -63,7 +49,7 @@ classes:
     tree_root: true
 
   ComputeResource:
-    class_uri: schema:softwareRequirements
+    class_uri: https://schema.org/softwareRequirements
     description: >-
       Summary of the hardware used to execute the simulation.
     slots:
@@ -72,7 +58,7 @@ classes:
       - nodes
 
   Contributor:
-    class_uri: schema:Person
+    class_uri: https://schema.org/Person
     description: >-
       Someone who contributed to this solution.
     slots:
@@ -84,7 +70,7 @@ classes:
 
   File:
     abstract: true
-    class_uri: schema:DigitalDocument
+    class_uri: https://schema.org/DigitalDocument
     description: >-
       A generic electronic information container.
     slots:
@@ -95,16 +81,28 @@ classes:
         identifier: true
 
   CsvFile:
+    class_uri: https://en.wikipedia.org/wiki/Comma-separated_values
     description: >-
-      Comma-separated values.
+      Data represented by Comma-separated values in plain text.
     is_a: File
     slots:
       - columns
+    slot_usage:
+      format:
+        range: CsvFileTypes
 
   DataFile:
     description: >-
-      Raw data.
+      Data represented in an application-specific or binary format.
     is_a: File
+
+  Tarball:
+    description: >-
+      Gzip-compressed Tar data archive.
+    is_a: File
+    slot_usage:
+      format:
+        range: TarballTypes
 
   VisualizationFile:
     description: >-
@@ -112,7 +110,7 @@ classes:
     is_a: File
 
   Results:
-    class_uri: schema:Dataset
+    class_uri: https://schema.org/Dataset
     description: >-
       Runtime information and output from a simulation.
     slots:
@@ -126,12 +124,12 @@ classes:
   Software:
     description: >-
       A software product, download, or repository.
-    class_uri: schema:SoftwareApplication
+    class_uri: https://schema.org/SoftwareApplication
     slots:
       - url
       - name
+      - commit
       - download
-      - repository
       - version
     slot_usage:
       url:
@@ -140,11 +138,11 @@ classes:
   SourceCode:
     description: >-
       Link to the authors' implementation of the benchmark problem.
-    class_uri: schema:SoftwareSourceCode
+    class_uri: https://schema.org/SoftwareSourceCode
     slots:
       - url
       - name
-      - repository
+      - commit
     slot_usage:
       url:
         identifier: true
@@ -157,7 +155,7 @@ slots:
     multivalued: false
     range: uriorcurie
     required: true
-    slot_uri: schema:identifier
+    slot_uri: https://schema.org/identifier
 
   affiliation:
     description: >-
@@ -170,7 +168,7 @@ slots:
     description: >-
       Computer processor architecture required for this simulation.
     range: string
-    slot_uri: SRAO:0000258
+    slot_uri: http://www.fairsharing.org/ontology/subject/SRAO_0000258
 
   benchmark_problem:
     description: >-
@@ -195,36 +193,43 @@ slots:
     pattern: "^\\S+"  # no whitespace allowed
     range: string
 
+  commit:
+    description: >-
+      Commit hash in a repository of source code.
+    pattern: "^\\S+"  # no whitespace allowed
+    range: string
+    slot_uri: https://en.wikipedia.org/wiki/Commit_(version_control)
+
   cores:
     description: >-
       Number of parallel cores or threads of execution used by the
       simulation on a CPU, GPU, or accelerator device.
     range: integer
-    slot_uri: NCIT:C64194
+    slot_uri: http://purl.obolibrary.org/obo/NCIT_C64194
 
   date_created:
     description: >-
       Day when an item was uploaded, released, or published.
     range: date
-    slot_uri: schema:dateCreated
+    slot_uri: https://schema.org/dateCreated
 
   download:
     description: >-
       Link to a download URL.
     range: uriorcurie
-    slot_uri: schema:downloadUrl
+    slot_uri: https://schema.org/downloadUrl
 
   email:
     description: >-
       A person's electronic mailing address.
     pattern: "^\\S+@[\\S+\\.]+\\S+"
     range: string
-    slot_uri: schema:email
+    slot_uri: https://schema.org/email
 
   format:
     description: >-
       Format of data contained in a file.
-    slot_uri: schema:encodingFormat
+    slot_uri: https://schema.org/encodingFormat
 
   handle:
     description: >-
@@ -232,7 +237,7 @@ slots:
     inlined_as_list: true
     multivalued: true
     range: uriorcurie
-    slot_uri: schema:member
+    slot_uri: https://schema.org/member
 
   memory_in_kb:
     description: >-
@@ -240,14 +245,14 @@ slots:
     range: integer
     unit:
       ucum_code: "KIB*BY"
-      has_quantity_kind: UO:0000245
+      has_quantity_kind: http://purl.obolibrary.org/obo/UO_0000245
 
   name:
     description: >-
       Informal or human-memorable identifier that may collide with others.
     multivalued: false
     range: string
-    slot_uri: schema:name
+    slot_uri: https://schema.org/name
 
   nodes:
     description: >-
@@ -255,20 +260,14 @@ slots:
       environment.
     multivalued: false
     range: integer
-    slot_uri: NCIT:C18132
-
-  repository:
-    description: >-
-      A repository of source code.
-    range: uriorcurie
-    slot_uri: schema:codeRepository
+    slot_uri: http://purl.obolibrary.org/obo/NCIT_C18132
 
   summary:
     description: >-
       Text description, abstract, or narrative.
     multivalued: false
     range: string
-    slot_uri: schema:abstract
+    slot_uri: https://schema.org/abstract
 
   version:
     description: >-
@@ -276,22 +275,22 @@ slots:
     pattern: "^[\\d+\\.]+"
     range: string
     recommended: true
-    slot_uri: schema:softwareVersion
+    slot_uri: https://schema.org/softwareVersion
 
   time_in_s:
     description: >-
       Amount of time required to execute the simulation.
     range: integer
-    slot_uri: schema:Number
+    slot_uri: https://schema.org/Number
     unit:
       ucum_code: S
-      has_quantity_kind: NCIT:C42535
+      has_quantity_kind: http://purl.obolibrary.org/obo/NCIT_C42535
 
   url:
     description: >-
       URL of an online resource or website.
     range: uriorcurie
-    slot_uri: schema:url
+    slot_uri: https://schema.org/url
 
   # ~~ derived slots ~~
 
@@ -301,7 +300,7 @@ slots:
     inlined_as_list: true
     multivalued: true
     range: Contributor
-    slot_uri: schema:contributor
+    slot_uri: https://schema.org/contributor
 
   framework:
     description: >-
@@ -309,7 +308,7 @@ slots:
     inlined_as_list: true
     multivalued: true
     range: Software
-    slot_uri: schema:SoftwareApplication
+    slot_uri: https://schema.org/SoftwareApplication
 
   hardware:
     description: >-
@@ -381,3 +380,25 @@ enums:
       1:
         description: >-
           Published version.
+
+  CsvFileTypes:
+    description: >-
+      Valid CSV file extensions.
+    permissible_values:
+      csv:
+        description: >-
+          Comma-separated values.
+        meaning: https://www.iana.org/assignments/media-types/text/csv
+
+  TarballTypes:
+    description: >-
+      Valid tarball file extensions.
+    permissible_values:
+      tgz:
+        description: >-
+          Shorthand tarball extension.
+        meaning: https://www.iana.org/assignments/media-types/application/x-gtar
+      tar.gz:
+        description: >-
+          Gzipped Tar extension.
+        meaning: https://www.iana.org/assignments/media-types/application/x-gtar

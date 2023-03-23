@@ -1,35 +1,25 @@
 {
-   "NCIT": "http://purl.obolibrary.org/obo/NCIT_",
-   "SRAO": "http://www.fairsharing.org/ontology/subject/SRAO_",
-   "UO": "http://purl.obolibrary.org/obo/UO_",
-   "bitbucket": "https://bitbucket.org/",
-   "dcterms": "http://purl.org/dc/terms/",
-   "doi": "https://doi.org/",
-   "github": "https://github.com/",
-   "gitlab": "https://gitlab.com/",
-   "iana_app": "https://www.iana.org/assignments/media-types/application/",
-   "iana_text": "https://www.iana.org/assignments/media-types/text/",
    "linkml": "https://w3id.org/linkml/",
-   "orcid": "https://orcid.org/",
    "pfhub": "https://w3id.org/usnistgov/pfhub-schema/",
-   "qudt": "http://qudt.org/schema/qudt/",
-   "schema": "http://schema.org/",
    "ComputeResource": {
-      "@id": "schema:softwareRequirements"
+      "@id": "https://schema.org/softwareRequirements"
    },
    "Contributor": {
-      "@id": "schema:Person"
+      "@id": "https://schema.org/Person"
+   },
+   "CsvFile": {
+      "@id": "https://en.wikipedia.org/wiki/Comma-separated_values"
    },
    "File": {
-      "@id": "schema:DigitalDocument"
+      "@id": "https://schema.org/DigitalDocument"
    },
    "Results": {
-      "@id": "schema:Dataset"
+      "@id": "https://schema.org/Dataset"
    },
    "Software": {
-      "@id": "schema:SoftwareApplication"
+      "@id": "https://schema.org/SoftwareApplication"
    },
    "SourceCode": {
-      "@id": "schema:SoftwareSourceCode"
+      "@id": "https://schema.org/SoftwareSourceCode"
    }
 }

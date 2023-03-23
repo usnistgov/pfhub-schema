@@ -1,45 +1,32 @@
-@prefix NCIT: <http://purl.obolibrary.org/obo/NCIT_> .
-@prefix SRAO: <http://www.fairsharing.org/ontology/subject/SRAO_> .
 @prefix pfhub: <https://w3id.org/usnistgov/pfhub-schema/> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix schema: <http://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-schema:DigitalDocument a sh:NodeShape ;
+<https://schema.org/DigitalDocument> a sh:NodeShape ;
     sh:closed false ;
     sh:description "A generic electronic information container." ;
     sh:ignoredProperties ( rdf:type ) ;
     sh:property [ sh:description "Format of data contained in a file." ;
             sh:maxCount 1 ;
             sh:order 1 ;
-            sh:path schema:encodingFormat ],
+            sh:path <https://schema.org/encodingFormat> ],
         [ sh:description "Informal or human-memorable identifier that may collide with others." ;
             sh:maxCount 1 ;
             sh:order 0 ;
-            sh:path schema:name ] ;
-    sh:targetClass schema:DigitalDocument .
+            sh:path <https://schema.org/name> ] ;
+    sh:targetClass <https://schema.org/DigitalDocument> .
 
 pfhub:BenchmarkResult a sh:NodeShape ;
     sh:closed true ;
     sh:description "Root and context for this Benchmark Problem solution." ;
     sh:ignoredProperties ( rdf:type ) ;
-    sh:property [ sh:class schema:SoftwareSourceCode ;
+    sh:property [ sh:class <https://schema.org/SoftwareSourceCode> ;
             sh:description "Source code implementing the solution." ;
             sh:maxCount 1 ;
             sh:nodeKind sh:IRI ;
             sh:order 6 ;
             sh:path pfhub:implementation ],
-        [ sh:class schema:SoftwareApplication ;
-            sh:description "A computer program or library" ;
-            sh:nodeKind sh:IRI ;
-            sh:order 5 ;
-            sh:path schema:SoftwareApplication ],
-        [ sh:description "Numerical identifier for a Benchmark Problem version." ;
-            sh:maxCount 1 ;
-            sh:minCount 1 ;
-            sh:order 2 ;
-            sh:path pfhub:benchmark_version ],
         [ sh:description "Alphanumerical identifier for part of a Benchmark Problem." ;
             sh:in ( "1a" "1b" "1c" "1d" ) ;
             sh:maxCount 1 ;
@@ -47,42 +34,86 @@ pfhub:BenchmarkResult a sh:NodeShape ;
             sh:order 1 ;
             sh:path pfhub:benchmark_problem ;
             sh:pattern "^\\d\\a" ],
-        [ sh:description "Day when an item was uploaded, released, or published." ;
+        [ sh:class <https://schema.org/SoftwareApplication> ;
+            sh:description "A computer program or library" ;
+            sh:nodeKind sh:IRI ;
+            sh:order 5 ;
+            sh:path <https://schema.org/SoftwareApplication> ],
+        [ sh:description "Numerical identifier for a Benchmark Problem version." ;
             sh:maxCount 1 ;
-            sh:order 4 ;
-            sh:path schema:dateCreated ],
-        [ sh:class schema:Dataset ;
+            sh:minCount 1 ;
+            sh:order 2 ;
+            sh:path pfhub:benchmark_version ],
+        [ sh:class <https://schema.org/Dataset> ;
             sh:description "Collection of outputs and summary data from a simulation." ;
             sh:maxCount 1 ;
             sh:nodeKind sh:BlankNode ;
             sh:order 7 ;
             sh:path pfhub:results ],
-        [ sh:class schema:Person ;
+        [ sh:class <https://schema.org/Person> ;
             sh:description "Collection of people who worked on this solution." ;
             sh:nodeKind sh:IRI ;
             sh:order 3 ;
-            sh:path schema:contributor ],
+            sh:path <https://schema.org/contributor> ],
         [ sh:description "Unique identifier that must not collide with any other." ;
             sh:maxCount 1 ;
             sh:minCount 1 ;
             sh:order 0 ;
-            sh:path schema:identifier ],
+            sh:path <https://schema.org/identifier> ],
+        [ sh:description "Day when an item was uploaded, released, or published." ;
+            sh:maxCount 1 ;
+            sh:order 4 ;
+            sh:path <https://schema.org/dateCreated> ],
         [ sh:description "Text description, abstract, or narrative." ;
             sh:maxCount 1 ;
             sh:order 8 ;
-            sh:path schema:abstract ] ;
+            sh:path <https://schema.org/abstract> ] ;
     sh:targetClass pfhub:BenchmarkResult .
 
-schema:Dataset a sh:NodeShape ;
+pfhub:Tarball a sh:NodeShape ;
+    sh:closed true ;
+    sh:description "Gzip-compressed Tar data archive." ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:description "Informal or human-memorable identifier that may collide with others." ;
+            sh:maxCount 1 ;
+            sh:order 0 ;
+            sh:path <https://schema.org/name> ],
+        [ sh:description "Format of data contained in a file." ;
+            sh:in ( <https://www.iana.org/assignments/media-types/application/x-gtar> <https://www.iana.org/assignments/media-types/application/x-gtar> ) ;
+            sh:maxCount 1 ;
+            sh:order 1 ;
+            sh:path <https://schema.org/encodingFormat> ] ;
+    sh:targetClass pfhub:Tarball .
+
+<https://en.wikipedia.org/wiki/Comma-separated_values> a sh:NodeShape ;
+    sh:closed true ;
+    sh:description "Data represented by Comma-separated values in plain text." ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:description "Column names applied to tabular data." ;
+            sh:order 0 ;
+            sh:path pfhub:columns ;
+            sh:pattern "^\\S+" ],
+        [ sh:description "Informal or human-memorable identifier that may collide with others." ;
+            sh:maxCount 1 ;
+            sh:order 1 ;
+            sh:path <https://schema.org/name> ],
+        [ sh:description "Format of data contained in a file." ;
+            sh:in ( <https://www.iana.org/assignments/media-types/text/csv> ) ;
+            sh:maxCount 1 ;
+            sh:order 2 ;
+            sh:path <https://schema.org/encodingFormat> ] ;
+    sh:targetClass <https://en.wikipedia.org/wiki/Comma-separated_values> .
+
+<https://schema.org/Dataset> a sh:NodeShape ;
     sh:closed true ;
     sh:description "Runtime information and output from a simulation." ;
     sh:ignoredProperties ( rdf:type ) ;
-    sh:property [ sh:class pfhub:DataFile ;
-            sh:description "Raw data output from a simulation." ;
+    sh:property [ sh:class pfhub:VisualizationFile ;
+            sh:description "Visualization output from a simulation." ;
             sh:nodeKind sh:IRI ;
-            sh:order 1 ;
-            sh:path pfhub:raw_data ],
-        [ sh:class pfhub:CsvFile ;
+            sh:order 2 ;
+            sh:path pfhub:viz_data ],
+        [ sh:class <https://en.wikipedia.org/wiki/Comma-separated_values> ;
             sh:description "Tabular output from a simulation." ;
             sh:nodeKind sh:IRI ;
             sh:order 0 ;
@@ -90,155 +121,139 @@ schema:Dataset a sh:NodeShape ;
         [ sh:description "Amount of time required to execute the simulation." ;
             sh:maxCount 1 ;
             sh:order 5 ;
-            sh:path schema:Number ],
-        [ sh:class pfhub:VisualizationFile ;
-            sh:description "Visualization output from a simulation." ;
-            sh:nodeKind sh:IRI ;
-            sh:order 2 ;
-            sh:path pfhub:viz_data ],
-        [ sh:class schema:softwareRequirements ;
+            sh:path <https://schema.org/Number> ],
+        [ sh:class <https://schema.org/softwareRequirements> ;
             sh:description "Computer hardware used to run the simulation." ;
             sh:nodeKind sh:BlankNode ;
             sh:order 3 ;
             sh:path pfhub:hardware ],
+        [ sh:class pfhub:DataFile ;
+            sh:description "Raw data output from a simulation." ;
+            sh:nodeKind sh:IRI ;
+            sh:order 1 ;
+            sh:path pfhub:raw_data ],
         [ sh:description "Memory capacity required for this simulation." ;
             sh:maxCount 1 ;
             sh:order 4 ;
             sh:path pfhub:memory_in_kb ] ;
-    sh:targetClass schema:Dataset .
+    sh:targetClass <https://schema.org/Dataset> .
 
-schema:Person a sh:NodeShape ;
+<https://schema.org/Person> a sh:NodeShape ;
     sh:closed true ;
     sh:description "Someone who contributed to this solution." ;
     sh:ignoredProperties ( rdf:type ) ;
-    sh:property [ sh:description "Informal or human-memorable identifier that may collide with others." ;
+    sh:property [ sh:description "A person's electronic mailing address." ;
+            sh:maxCount 1 ;
+            sh:order 4 ;
+            sh:path <https://schema.org/email> ;
+            sh:pattern "^\\S+@[\\S+\\.]+\\S+" ],
+        [ sh:description "Informal or human-memorable identifier that may collide with others." ;
             sh:maxCount 1 ;
             sh:order 1 ;
-            sh:path schema:name ],
+            sh:path <https://schema.org/name> ],
         [ sh:description "Unique identifier that must not collide with any other." ;
             sh:maxCount 1 ;
             sh:minCount 1 ;
             sh:order 0 ;
-            sh:path schema:identifier ],
-        [ sh:description "A person's identifier on a website, without the \"at\" symbol." ;
-            sh:order 2 ;
-            sh:path schema:member ],
+            sh:path <https://schema.org/identifier> ],
         [ sh:description "Institution, company, or agency a person works with." ;
             sh:order 3 ;
             sh:path pfhub:affiliation ],
-        [ sh:description "A person's electronic mailing address." ;
-            sh:maxCount 1 ;
-            sh:order 4 ;
-            sh:path schema:email ;
-            sh:pattern "^\\S+@[\\S+\\.]+\\S+" ] ;
-    sh:targetClass schema:Person .
+        [ sh:description "A person's identifier on a website, without the \"at\" symbol." ;
+            sh:order 2 ;
+            sh:path <https://schema.org/member> ] ;
+    sh:targetClass <https://schema.org/Person> .
 
-schema:SoftwareSourceCode a sh:NodeShape ;
+<https://schema.org/SoftwareSourceCode> a sh:NodeShape ;
     sh:closed true ;
     sh:description "Link to the authors' implementation of the benchmark problem." ;
     sh:ignoredProperties ( rdf:type ) ;
     sh:property [ sh:description "Informal or human-memorable identifier that may collide with others." ;
             sh:maxCount 1 ;
             sh:order 1 ;
-            sh:path schema:name ],
+            sh:path <https://schema.org/name> ],
         [ sh:description "URL of an online resource or website." ;
             sh:maxCount 1 ;
             sh:order 0 ;
-            sh:path schema:url ],
-        [ sh:description "A repository of source code." ;
+            sh:path <https://schema.org/url> ],
+        [ sh:description "Commit hash in a repository of source code." ;
             sh:maxCount 1 ;
             sh:order 2 ;
-            sh:path schema:codeRepository ] ;
-    sh:targetClass schema:SoftwareSourceCode .
+            sh:path <https://en.wikipedia.org/wiki/Commit_(version_control)> ;
+            sh:pattern "^\\S+" ] ;
+    sh:targetClass <https://schema.org/SoftwareSourceCode> .
 
-schema:softwareRequirements a sh:NodeShape ;
+<https://schema.org/softwareRequirements> a sh:NodeShape ;
     sh:closed true ;
     sh:description "Summary of the hardware used to execute the simulation." ;
     sh:ignoredProperties ( rdf:type ) ;
-    sh:property [ sh:description "Number of machines allocated for the simulation in a computer cluster environment." ;
+    sh:property [ sh:description "Computer processor architecture required for this simulation." ;
             sh:maxCount 1 ;
-            sh:order 2 ;
-            sh:path NCIT:C18132 ],
+            sh:order 0 ;
+            sh:path <http://www.fairsharing.org/ontology/subject/SRAO_0000258> ],
         [ sh:description "Number of parallel cores or threads of execution used by the simulation on a CPU, GPU, or accelerator device." ;
             sh:maxCount 1 ;
             sh:order 1 ;
-            sh:path NCIT:C64194 ],
-        [ sh:description "Computer processor architecture required for this simulation." ;
-            sh:maxCount 1 ;
-            sh:order 0 ;
-            sh:path SRAO:0000258 ] ;
-    sh:targetClass schema:softwareRequirements .
-
-pfhub:CsvFile a sh:NodeShape ;
-    sh:closed true ;
-    sh:description "Comma-separated values." ;
-    sh:ignoredProperties ( rdf:type ) ;
-    sh:property [ sh:description "Format of data contained in a file." ;
+            sh:path <http://purl.obolibrary.org/obo/NCIT_C64194> ],
+        [ sh:description "Number of machines allocated for the simulation in a computer cluster environment." ;
             sh:maxCount 1 ;
             sh:order 2 ;
-            sh:path schema:encodingFormat ],
-        [ sh:description "Informal or human-memorable identifier that may collide with others." ;
-            sh:maxCount 1 ;
-            sh:order 1 ;
-            sh:path schema:name ],
-        [ sh:description "Column names applied to tabular data." ;
-            sh:order 0 ;
-            sh:path pfhub:columns ;
-            sh:pattern "^\\S+" ] ;
-    sh:targetClass pfhub:CsvFile .
+            sh:path <http://purl.obolibrary.org/obo/NCIT_C18132> ] ;
+    sh:targetClass <https://schema.org/softwareRequirements> .
 
 pfhub:DataFile a sh:NodeShape ;
     sh:closed true ;
-    sh:description "Raw data." ;
+    sh:description "Data represented in an application-specific or binary format." ;
     sh:ignoredProperties ( rdf:type ) ;
     sh:property [ sh:description "Informal or human-memorable identifier that may collide with others." ;
             sh:maxCount 1 ;
             sh:order 0 ;
-            sh:path schema:name ],
+            sh:path <https://schema.org/name> ],
         [ sh:description "Format of data contained in a file." ;
             sh:maxCount 1 ;
             sh:order 1 ;
-            sh:path schema:encodingFormat ] ;
+            sh:path <https://schema.org/encodingFormat> ] ;
     sh:targetClass pfhub:DataFile .
 
 pfhub:VisualizationFile a sh:NodeShape ;
     sh:closed true ;
     sh:description "Visualization data." ;
     sh:ignoredProperties ( rdf:type ) ;
-    sh:property [ sh:description "Format of data contained in a file." ;
-            sh:maxCount 1 ;
-            sh:order 1 ;
-            sh:path schema:encodingFormat ],
-        [ sh:description "Informal or human-memorable identifier that may collide with others." ;
+    sh:property [ sh:description "Informal or human-memorable identifier that may collide with others." ;
             sh:maxCount 1 ;
             sh:order 0 ;
-            sh:path schema:name ] ;
+            sh:path <https://schema.org/name> ],
+        [ sh:description "Format of data contained in a file." ;
+            sh:maxCount 1 ;
+            sh:order 1 ;
+            sh:path <https://schema.org/encodingFormat> ] ;
     sh:targetClass pfhub:VisualizationFile .
 
-schema:SoftwareApplication a sh:NodeShape ;
+<https://schema.org/SoftwareApplication> a sh:NodeShape ;
     sh:closed true ;
     sh:description "A software product, download, or repository." ;
     sh:ignoredProperties ( rdf:type ) ;
-    sh:property [ sh:description "URL of an online resource or website." ;
-            sh:maxCount 1 ;
-            sh:order 0 ;
-            sh:path schema:url ],
-        [ sh:description "Semantic version of a software project." ;
+    sh:property [ sh:description "Semantic version of a software project." ;
             sh:maxCount 1 ;
             sh:order 4 ;
-            sh:path schema:softwareVersion ;
+            sh:path <https://schema.org/softwareVersion> ;
             sh:pattern "^[\\d+\\.]+" ],
+        [ sh:description "URL of an online resource or website." ;
+            sh:maxCount 1 ;
+            sh:order 0 ;
+            sh:path <https://schema.org/url> ],
         [ sh:description "Informal or human-memorable identifier that may collide with others." ;
             sh:maxCount 1 ;
             sh:order 1 ;
-            sh:path schema:name ],
-        [ sh:description "A repository of source code." ;
-            sh:maxCount 1 ;
-            sh:order 3 ;
-            sh:path schema:codeRepository ],
-        [ sh:description "Link to a download URL." ;
+            sh:path <https://schema.org/name> ],
+        [ sh:description "Commit hash in a repository of source code." ;
             sh:maxCount 1 ;
             sh:order 2 ;
-            sh:path schema:downloadUrl ] ;
-    sh:targetClass schema:SoftwareApplication .
+            sh:path <https://en.wikipedia.org/wiki/Commit_(version_control)> ;
+            sh:pattern "^\\S+" ],
+        [ sh:description "Link to a download URL." ;
+            sh:maxCount 1 ;
+            sh:order 3 ;
+            sh:path <https://schema.org/downloadUrl> ] ;
+    sh:targetClass <https://schema.org/SoftwareApplication> .
 

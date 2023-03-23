@@ -1,5 +1,5 @@
 # Auto generated from pfhub_schema.yaml by pythongen.py version: 0.9.0
-# Generation date: 2023-03-17T18:15:52
+# Generation date: 2023-03-22T21:52:39
 # Schema: pfhub_schema
 #
 # id: https://w3id.org/usnistgov/pfhub-schema
@@ -32,21 +32,8 @@ version = "0.1.0"
 dataclasses._init_fn = dataclasses_init_fn_with_kwargs
 
 # Namespaces
-NCIT = CurieNamespace('NCIT', 'http://purl.obolibrary.org/obo/NCIT_')
-SRAO = CurieNamespace('SRAO', 'http://www.fairsharing.org/ontology/subject/SRAO_')
-UO = CurieNamespace('UO', 'http://purl.obolibrary.org/obo/UO_')
-BITBUCKET = CurieNamespace('bitbucket', 'https://bitbucket.org/')
-DCTERMS = CurieNamespace('dcterms', 'http://purl.org/dc/terms/')
-DOI = CurieNamespace('doi', 'https://doi.org/')
-GITHUB = CurieNamespace('github', 'https://github.com/')
-GITLAB = CurieNamespace('gitlab', 'https://gitlab.com/')
-IANA_APP = CurieNamespace('iana_app', 'https://www.iana.org/assignments/media-types/application/')
-IANA_TEXT = CurieNamespace('iana_text', 'https://www.iana.org/assignments/media-types/text/')
 LINKML = CurieNamespace('linkml', 'https://w3id.org/linkml/')
-ORCID = CurieNamespace('orcid', 'https://orcid.org/')
 PFHUB = CurieNamespace('pfhub', 'https://w3id.org/usnistgov/pfhub-schema/')
-QUDT = CurieNamespace('qudt', 'http://qudt.org/schema/qudt/')
-SCHEMA = CurieNamespace('schema', 'http://schema.org/')
 DEFAULT_ = PFHUB
 
 
@@ -70,6 +57,10 @@ class CsvFileName(FileName):
 
 
 class DataFileName(FileName):
+    pass
+
+
+class TarballName(FileName):
     pass
 
 
@@ -149,8 +140,8 @@ class ComputeResource(YAMLRoot):
     """
     _inherited_slots: ClassVar[List[str]] = []
 
-    class_class_uri: ClassVar[URIRef] = SCHEMA.softwareRequirements
-    class_class_curie: ClassVar[str] = "schema:softwareRequirements"
+    class_class_uri: ClassVar[URIRef] = URIRef("https://schema.org/softwareRequirements")
+    class_class_curie: ClassVar[str] = None
     class_name: ClassVar[str] = "ComputeResource"
     class_model_uri: ClassVar[URIRef] = PFHUB.ComputeResource
 
@@ -178,8 +169,8 @@ class Contributor(YAMLRoot):
     """
     _inherited_slots: ClassVar[List[str]] = []
 
-    class_class_uri: ClassVar[URIRef] = SCHEMA.Person
-    class_class_curie: ClassVar[str] = "schema:Person"
+    class_class_uri: ClassVar[URIRef] = URIRef("https://schema.org/Person")
+    class_class_curie: ClassVar[str] = None
     class_name: ClassVar[str] = "Contributor"
     class_model_uri: ClassVar[URIRef] = PFHUB.Contributor
 
@@ -219,8 +210,8 @@ class File(YAMLRoot):
     """
     _inherited_slots: ClassVar[List[str]] = []
 
-    class_class_uri: ClassVar[URIRef] = SCHEMA.DigitalDocument
-    class_class_curie: ClassVar[str] = "schema:DigitalDocument"
+    class_class_uri: ClassVar[URIRef] = URIRef("https://schema.org/DigitalDocument")
+    class_class_curie: ClassVar[str] = None
     class_name: ClassVar[str] = "File"
     class_model_uri: ClassVar[URIRef] = PFHUB.File
 
@@ -242,17 +233,18 @@ class File(YAMLRoot):
 @dataclass
 class CsvFile(File):
     """
-    Comma-separated values.
+    Data represented by Comma-separated values in plain text.
     """
     _inherited_slots: ClassVar[List[str]] = []
 
-    class_class_uri: ClassVar[URIRef] = PFHUB.CsvFile
-    class_class_curie: ClassVar[str] = "pfhub:CsvFile"
+    class_class_uri: ClassVar[URIRef] = URIRef("https://en.wikipedia.org/wiki/Comma-separated_values")
+    class_class_curie: ClassVar[str] = None
     class_name: ClassVar[str] = "CsvFile"
     class_model_uri: ClassVar[URIRef] = PFHUB.CsvFile
 
     name: Union[str, CsvFileName] = None
     columns: Optional[Union[str, List[str]]] = empty_list()
+    format: Optional[Union[str, "CsvFileTypes"]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.name):
@@ -264,13 +256,16 @@ class CsvFile(File):
             self.columns = [self.columns] if self.columns is not None else []
         self.columns = [v if isinstance(v, str) else str(v) for v in self.columns]
 
+        if self.format is not None and not isinstance(self.format, CsvFileTypes):
+            self.format = CsvFileTypes(self.format)
+
         super().__post_init__(**kwargs)
 
 
 @dataclass
 class DataFile(File):
     """
-    Raw data.
+    Data represented in an application-specific or binary format.
     """
     _inherited_slots: ClassVar[List[str]] = []
 
@@ -286,6 +281,33 @@ class DataFile(File):
             self.MissingRequiredField("name")
         if not isinstance(self.name, DataFileName):
             self.name = DataFileName(self.name)
+
+        super().__post_init__(**kwargs)
+
+
+@dataclass
+class Tarball(File):
+    """
+    Gzip-compressed Tar data archive.
+    """
+    _inherited_slots: ClassVar[List[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = PFHUB.Tarball
+    class_class_curie: ClassVar[str] = "pfhub:Tarball"
+    class_name: ClassVar[str] = "Tarball"
+    class_model_uri: ClassVar[URIRef] = PFHUB.Tarball
+
+    name: Union[str, TarballName] = None
+    format: Optional[Union[str, "TarballTypes"]] = None
+
+    def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
+        if self._is_empty(self.name):
+            self.MissingRequiredField("name")
+        if not isinstance(self.name, TarballName):
+            self.name = TarballName(self.name)
+
+        if self.format is not None and not isinstance(self.format, TarballTypes):
+            self.format = TarballTypes(self.format)
 
         super().__post_init__(**kwargs)
 
@@ -320,8 +342,8 @@ class Results(YAMLRoot):
     """
     _inherited_slots: ClassVar[List[str]] = []
 
-    class_class_uri: ClassVar[URIRef] = SCHEMA.Dataset
-    class_class_curie: ClassVar[str] = "schema:Dataset"
+    class_class_uri: ClassVar[URIRef] = URIRef("https://schema.org/Dataset")
+    class_class_curie: ClassVar[str] = None
     class_name: ClassVar[str] = "Results"
     class_model_uri: ClassVar[URIRef] = PFHUB.Results
 
@@ -359,15 +381,15 @@ class Software(YAMLRoot):
     """
     _inherited_slots: ClassVar[List[str]] = []
 
-    class_class_uri: ClassVar[URIRef] = SCHEMA.SoftwareApplication
-    class_class_curie: ClassVar[str] = "schema:SoftwareApplication"
+    class_class_uri: ClassVar[URIRef] = URIRef("https://schema.org/SoftwareApplication")
+    class_class_curie: ClassVar[str] = None
     class_name: ClassVar[str] = "Software"
     class_model_uri: ClassVar[URIRef] = PFHUB.Software
 
     url: Union[str, SoftwareUrl] = None
     name: Optional[str] = None
+    commit: Optional[str] = None
     download: Optional[Union[str, URIorCURIE]] = None
-    repository: Optional[Union[str, URIorCURIE]] = None
     version: Optional[str] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
@@ -379,11 +401,11 @@ class Software(YAMLRoot):
         if self.name is not None and not isinstance(self.name, str):
             self.name = str(self.name)
 
+        if self.commit is not None and not isinstance(self.commit, str):
+            self.commit = str(self.commit)
+
         if self.download is not None and not isinstance(self.download, URIorCURIE):
             self.download = URIorCURIE(self.download)
-
-        if self.repository is not None and not isinstance(self.repository, URIorCURIE):
-            self.repository = URIorCURIE(self.repository)
 
         if self.version is not None and not isinstance(self.version, str):
             self.version = str(self.version)
@@ -398,14 +420,14 @@ class SourceCode(YAMLRoot):
     """
     _inherited_slots: ClassVar[List[str]] = []
 
-    class_class_uri: ClassVar[URIRef] = SCHEMA.SoftwareSourceCode
-    class_class_curie: ClassVar[str] = "schema:SoftwareSourceCode"
+    class_class_uri: ClassVar[URIRef] = URIRef("https://schema.org/SoftwareSourceCode")
+    class_class_curie: ClassVar[str] = None
     class_name: ClassVar[str] = "SourceCode"
     class_model_uri: ClassVar[URIRef] = PFHUB.SourceCode
 
     url: Union[str, SourceCodeUrl] = None
     name: Optional[str] = None
-    repository: Optional[Union[str, URIorCURIE]] = None
+    commit: Optional[str] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.url):
@@ -416,8 +438,8 @@ class SourceCode(YAMLRoot):
         if self.name is not None and not isinstance(self.name, str):
             self.name = str(self.name)
 
-        if self.repository is not None and not isinstance(self.repository, URIorCURIE):
-            self.repository = URIorCURIE(self.repository)
+        if self.commit is not None and not isinstance(self.commit, str):
+            self.commit = str(self.commit)
 
         super().__post_init__(**kwargs)
 
@@ -465,17 +487,50 @@ class ValidBenchmarkVersion(EnumDefinitionImpl):
                 PermissibleValue(text="1",
                                  description="Published version.") )
 
+class CsvFileTypes(EnumDefinitionImpl):
+    """
+    Valid CSV file extensions.
+    """
+    csv = PermissibleValue(text="csv",
+                             description="Comma-separated values.",
+                             meaning=None)
+
+    _defn = EnumDefinition(
+        name="CsvFileTypes",
+        description="Valid CSV file extensions.",
+    )
+
+class TarballTypes(EnumDefinitionImpl):
+    """
+    Valid tarball file extensions.
+    """
+    tgz = PermissibleValue(text="tgz",
+                             description="Shorthand tarball extension.",
+                             meaning=None)
+
+    _defn = EnumDefinition(
+        name="TarballTypes",
+        description="Valid tarball file extensions.",
+    )
+
+    @classmethod
+    def _addvals(cls):
+        setattr(cls, "tar.gz",
+                PermissibleValue(text="tar.gz",
+                                 description="Gzipped Tar extension.",
+                                 meaning=None) )
+
 # Slots
 class slots:
     pass
 
-slots.id = Slot(uri=SCHEMA.identifier, name="id", curie=SCHEMA.curie('identifier'),
+slots.id = Slot(uri="str(uriorcurie)", name="id", curie=None,
                    model_uri=PFHUB.id, domain=None, range=URIRef)
 
 slots.affiliation = Slot(uri=PFHUB.affiliation, name="affiliation", curie=PFHUB.curie('affiliation'),
                    model_uri=PFHUB.affiliation, domain=None, range=Optional[Union[str, List[str]]])
 
-slots.architecture = Slot(uri=SRAO['0000258'], name="architecture", curie=SRAO.curie('0000258'),
+slots.architecture = Slot(uri="str(uriorcurie)", name="architecture", curie=None,
                    model_uri=PFHUB.architecture, domain=None, range=Optional[str])
 
 slots.benchmark_problem = Slot(uri=PFHUB.benchmark_problem, name="benchmark_problem", curie=PFHUB.curie('benchmark_problem'),
@@ -489,54 +544,55 @@ slots.columns = Slot(uri=PFHUB.columns, name="columns", curie=PFHUB.curie('colum
                    model_uri=PFHUB.columns, domain=None, range=Optional[Union[str, List[str]]],
                    pattern=re.compile(r'^\S+'))
 
-slots.cores = Slot(uri=NCIT.C64194, name="cores", curie=NCIT.curie('C64194'),
+slots.commit = Slot(uri="str(uriorcurie)", name="commit", curie=None,
+                   model_uri=PFHUB.commit, domain=None, range=Optional[str],
+                   pattern=re.compile(r'^\S+'))
+
+slots.cores = Slot(uri="str(uriorcurie)", name="cores", curie=None,
                    model_uri=PFHUB.cores, domain=None, range=Optional[int])
 
-slots.date_created = Slot(uri=SCHEMA.dateCreated, name="date_created", curie=SCHEMA.curie('dateCreated'),
+slots.date_created = Slot(uri="str(uriorcurie)", name="date_created", curie=None,
                    model_uri=PFHUB.date_created, domain=None, range=Optional[Union[str, XSDDate]])
 
-slots.download = Slot(uri=SCHEMA.downloadUrl, name="download", curie=SCHEMA.curie('downloadUrl'),
+slots.download = Slot(uri="str(uriorcurie)", name="download", curie=None,
                    model_uri=PFHUB.download, domain=None, range=Optional[Union[str, URIorCURIE]])
 
-slots.email = Slot(uri=SCHEMA.email, name="email", curie=SCHEMA.curie('email'),
+slots.email = Slot(uri="str(uriorcurie)", name="email", curie=None,
                    model_uri=PFHUB.email, domain=None, range=Optional[str],
                    pattern=re.compile(r'^\S+@[\S+\.]+\S+'))
 
-slots.format = Slot(uri=SCHEMA.encodingFormat, name="format", curie=SCHEMA.curie('encodingFormat'),
+slots.format = Slot(uri="str(uriorcurie)", name="format", curie=None,
                    model_uri=PFHUB.format, domain=None, range=Optional[str])
 
-slots.handle = Slot(uri=SCHEMA.member, name="handle", curie=SCHEMA.curie('member'),
+slots.handle = Slot(uri="str(uriorcurie)", name="handle", curie=None,
                    model_uri=PFHUB.handle, domain=None, range=Optional[Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]]])
 
 slots.memory_in_kb = Slot(uri=PFHUB.memory_in_kb, name="memory_in_kb", curie=PFHUB.curie('memory_in_kb'),
                    model_uri=PFHUB.memory_in_kb, domain=None, range=Optional[int])
 
-slots.name = Slot(uri=SCHEMA.name, name="name", curie=SCHEMA.curie('name'),
+slots.name = Slot(uri="str(uriorcurie)", name="name", curie=None,
                    model_uri=PFHUB.name, domain=None, range=Optional[str])
 
-slots.nodes = Slot(uri=NCIT.C18132, name="nodes", curie=NCIT.curie('C18132'),
+slots.nodes = Slot(uri="str(uriorcurie)", name="nodes", curie=None,
                    model_uri=PFHUB.nodes, domain=None, range=Optional[int])
 
-slots.repository = Slot(uri=SCHEMA.codeRepository, name="repository", curie=SCHEMA.curie('codeRepository'),
-                   model_uri=PFHUB.repository, domain=None, range=Optional[Union[str, URIorCURIE]])
-
-slots.summary = Slot(uri=SCHEMA.abstract, name="summary", curie=SCHEMA.curie('abstract'),
+slots.summary = Slot(uri="str(uriorcurie)", name="summary", curie=None,
                    model_uri=PFHUB.summary, domain=None, range=Optional[str])
 
-slots.version = Slot(uri=SCHEMA.softwareVersion, name="version", curie=SCHEMA.curie('softwareVersion'),
+slots.version = Slot(uri="str(uriorcurie)", name="version", curie=None,
                    model_uri=PFHUB.version, domain=None, range=Optional[str],
                    pattern=re.compile(r'^[\d+\.]+'))
 
-slots.time_in_s = Slot(uri=SCHEMA.Number, name="time_in_s", curie=SCHEMA.curie('Number'),
+slots.time_in_s = Slot(uri="str(uriorcurie)", name="time_in_s", curie=None,
                    model_uri=PFHUB.time_in_s, domain=None, range=Optional[int])
 
-slots.url = Slot(uri=SCHEMA.url, name="url", curie=SCHEMA.curie('url'),
+slots.url = Slot(uri="str(uriorcurie)", name="url", curie=None,
                    model_uri=PFHUB.url, domain=None, range=Optional[Union[str, URIorCURIE]])
 
-slots.contributors = Slot(uri=SCHEMA.contributor, name="contributors", curie=SCHEMA.curie('contributor'),
+slots.contributors = Slot(uri="str(uriorcurie)", name="contributors", curie=None,
                    model_uri=PFHUB.contributors, domain=None, range=Optional[Union[Dict[Union[str, ContributorId], Union[dict, Contributor]], List[Union[dict, Contributor]]]])
 
-slots.framework = Slot(uri=SCHEMA.SoftwareApplication, name="framework", curie=SCHEMA.curie('SoftwareApplication'),
+slots.framework = Slot(uri="str(uriorcurie)", name="framework", curie=None,
                    model_uri=PFHUB.framework, domain=None, range=Optional[Union[Dict[Union[str, SoftwareUrl], Union[dict, Software]], List[Union[dict, Software]]]])
 
 slots.hardware = Slot(uri=PFHUB.hardware, name="hardware", curie=PFHUB.curie('hardware'),
@@ -557,11 +613,17 @@ slots.raw_data = Slot(uri=PFHUB.raw_data, name="raw_data", curie=PFHUB.curie('ra
 slots.viz_data = Slot(uri=PFHUB.viz_data, name="viz_data", curie=PFHUB.curie('viz_data'),
                    model_uri=PFHUB.viz_data, domain=None, range=Optional[Union[Dict[Union[str, VisualizationFileName], Union[dict, VisualizationFile]], List[Union[dict, VisualizationFile]]]])
 
-slots.File_name = Slot(uri=SCHEMA.name, name="File_name", curie=SCHEMA.curie('name'),
+slots.File_name = Slot(uri="str(uriorcurie)", name="File_name", curie=None,
                    model_uri=PFHUB.File_name, domain=File, range=Union[str, FileName])
 
-slots.Software_url = Slot(uri=SCHEMA.url, name="Software_url", curie=SCHEMA.curie('url'),
+slots.CsvFile_format = Slot(uri="str(uriorcurie)", name="CsvFile_format", curie=None,
+                   model_uri=PFHUB.CsvFile_format, domain=CsvFile, range=Optional[Union[str, "CsvFileTypes"]])
+
+slots.Tarball_format = Slot(uri="str(uriorcurie)", name="Tarball_format", curie=None,
+                   model_uri=PFHUB.Tarball_format, domain=Tarball, range=Optional[Union[str, "TarballTypes"]])
+
+slots.Software_url = Slot(uri="str(uriorcurie)", name="Software_url", curie=None,
                    model_uri=PFHUB.Software_url, domain=Software, range=Union[str, SoftwareUrl])
 
-slots.SourceCode_url = Slot(uri=SCHEMA.url, name="SourceCode_url", curie=SCHEMA.curie('url'),
+slots.SourceCode_url = Slot(uri="str(uriorcurie)", name="SourceCode_url", curie=None,
                    model_uri=PFHUB.SourceCode_url, domain=SourceCode, range=Union[str, SourceCodeUrl])

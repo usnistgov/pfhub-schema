@@ -1,6 +1,4 @@
 @prefix IAO: <http://purl.obolibrary.org/obo/IAO_> .
-@prefix NCIT: <http://purl.obolibrary.org/obo/NCIT_> .
-@prefix SRAO: <http://www.fairsharing.org/ontology/subject/SRAO_> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix linkml: <https://w3id.org/linkml/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
@@ -8,7 +6,6 @@
 @prefix pfhub: <https://w3id.org/usnistgov/pfhub-schema/> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix schema: <http://schema.org/> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
@@ -35,29 +32,39 @@ linkml:topValue a owl:DatatypeProperty ;
     pav:version "0.1.0" ;
     rdfs:seeAlso "https://pages.nist.gov/pfhub",
         "https://pages.nist.gov/pfhub-schema" ;
-    linkml:generation_date "2023-03-17T18:15:51" ;
+    linkml:generation_date "2023-03-22T21:52:37" ;
     linkml:metamodel_version "1.7.0" ;
     linkml:source_file "pfhub_schema.yaml" ;
-    linkml:source_file_date "2023-03-17T18:14:45" ;
-    linkml:source_file_size 9262 .
+    linkml:source_file_date "2023-03-22T21:45:43" ;
+    linkml:source_file_size 9940 .
+
+pfhub:Tarball a owl:Class,
+        linkml:ClassDefinition ;
+    rdfs:label "Tarball" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
+            owl:onClass pfhub:TarballTypes ;
+            owl:onProperty <https://schema.org/encodingFormat> ],
+        pfhub:File ;
+    skos:definition "Gzip-compressed Tar data archive." .
 
 pfhub:BenchmarkResult a owl:Class,
         linkml:ClassDefinition ;
     rdfs:label "BenchmarkResult" ;
     rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom pfhub:Software ;
+            owl:onProperty <https://schema.org/SoftwareApplication> ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
+            owl:onClass linkml:String ;
+            owl:onProperty <https://schema.org/abstract> ],
+        [ a owl:Restriction ;
             owl:maxQualifiedCardinality 1 ;
             owl:onClass linkml:Date ;
-            owl:onProperty schema:dateCreated ],
+            owl:onProperty <https://schema.org/dateCreated> ],
         [ a owl:Restriction ;
-            owl:maxQualifiedCardinality 1 ;
-            owl:onClass pfhub:Results ;
-            owl:onProperty pfhub:results ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom pfhub:Software ;
-            owl:onProperty schema:SoftwareApplication ],
-        [ a owl:Restriction ;
-            owl:onClass linkml:Uriorcurie ;
-            owl:onProperty schema:identifier ;
+            owl:onClass linkml:Integer ;
+            owl:onProperty pfhub:benchmark_version ;
             owl:qualifiedCardinality 1 ],
         [ a owl:Restriction ;
             owl:maxQualifiedCardinality 1 ;
@@ -65,15 +72,15 @@ pfhub:BenchmarkResult a owl:Class,
             owl:onProperty pfhub:implementation ],
         [ a owl:Restriction ;
             owl:maxQualifiedCardinality 1 ;
-            owl:onClass linkml:String ;
-            owl:onProperty schema:abstract ],
+            owl:onClass pfhub:Results ;
+            owl:onProperty pfhub:results ],
         [ a owl:Restriction ;
-            owl:onClass linkml:Integer ;
-            owl:onProperty pfhub:benchmark_version ;
+            owl:onClass linkml:Uriorcurie ;
+            owl:onProperty <https://schema.org/identifier> ;
             owl:qualifiedCardinality 1 ],
         [ a owl:Restriction ;
             owl:allValuesFrom pfhub:Contributor ;
-            owl:onProperty schema:contributor ],
+            owl:onProperty <https://schema.org/contributor> ],
         [ a owl:Restriction ;
             owl:onClass pfhub:ValidBenchmarkProblem ;
             owl:onProperty pfhub:benchmark_problem ;
@@ -146,104 +153,114 @@ pfhub:viz_data a owl:ObjectProperty,
     rdfs:range pfhub:VisualizationFile ;
     skos:definition "Visualization output from a simulation." .
 
-NCIT:C18132 a owl:ObjectProperty,
+<http://purl.obolibrary.org/obo/NCIT_C18132> a owl:ObjectProperty,
         linkml:SlotDefinition ;
     rdfs:label "nodes" ;
     rdfs:range linkml:Integer ;
     skos:definition "Number of machines allocated for the simulation in a computer cluster environment." ;
-    skos:exactMatch NCIT:C18132 .
+    skos:exactMatch <http://purl.obolibrary.org/obo/NCIT_C18132> .
 
-NCIT:C64194 a owl:ObjectProperty,
+<http://purl.obolibrary.org/obo/NCIT_C64194> a owl:ObjectProperty,
         linkml:SlotDefinition ;
     rdfs:label "cores" ;
     rdfs:range linkml:Integer ;
     skos:definition "Number of parallel cores or threads of execution used by the simulation on a CPU, GPU, or accelerator device." ;
-    skos:exactMatch NCIT:C64194 .
+    skos:exactMatch <http://purl.obolibrary.org/obo/NCIT_C64194> .
 
-schema:Number a owl:ObjectProperty,
-        linkml:SlotDefinition ;
-    rdfs:label "time_in_s" ;
-    rdfs:range linkml:Integer ;
-    skos:definition "Amount of time required to execute the simulation." ;
-    skos:exactMatch schema:Number .
-
-schema:abstract a owl:ObjectProperty,
-        linkml:SlotDefinition ;
-    rdfs:label "summary" ;
-    rdfs:range linkml:String ;
-    skos:definition "Text description, abstract, or narrative." ;
-    skos:exactMatch schema:abstract .
-
-schema:contributor a owl:ObjectProperty,
-        linkml:SlotDefinition ;
-    rdfs:label "contributors" ;
-    rdfs:range pfhub:Contributor ;
-    skos:definition "Collection of people who worked on this solution." ;
-    skos:exactMatch schema:contributor .
-
-schema:dateCreated a owl:ObjectProperty,
-        linkml:SlotDefinition ;
-    rdfs:label "date_created" ;
-    rdfs:range linkml:Date ;
-    skos:definition "Day when an item was uploaded, released, or published." ;
-    skos:exactMatch schema:dateCreated .
-
-schema:downloadUrl a owl:ObjectProperty,
-        linkml:SlotDefinition ;
-    rdfs:label "download" ;
-    rdfs:range linkml:Uriorcurie ;
-    skos:definition "Link to a download URL." ;
-    skos:exactMatch schema:downloadUrl .
-
-schema:email a owl:ObjectProperty,
-        linkml:SlotDefinition ;
-    rdfs:label "email" ;
-    rdfs:range linkml:String ;
-    skos:definition "A person's electronic mailing address." ;
-    skos:exactMatch schema:email .
-
-schema:encodingFormat a owl:ObjectProperty,
-        linkml:SlotDefinition ;
-    rdfs:label "format" ;
-    rdfs:range linkml:String ;
-    skos:definition "Format of data contained in a file." ;
-    skos:exactMatch schema:encodingFormat .
-
-schema:member a owl:ObjectProperty,
-        linkml:SlotDefinition ;
-    rdfs:label "handle" ;
-    rdfs:range linkml:Uriorcurie ;
-    skos:definition "A person's identifier on a website, without the \"at\" symbol." ;
-    skos:exactMatch schema:member .
-
-schema:softwareVersion a owl:ObjectProperty,
-        linkml:SlotDefinition ;
-    rdfs:label "version" ;
-    rdfs:range linkml:String ;
-    skos:definition "Semantic version of a software project." ;
-    skos:exactMatch schema:softwareVersion .
-
-SRAO:0000258 a owl:ObjectProperty,
+<http://www.fairsharing.org/ontology/subject/SRAO_0000258> a owl:ObjectProperty,
         linkml:SlotDefinition ;
     rdfs:label "architecture" ;
     rdfs:range linkml:String ;
     skos:definition "Computer processor architecture required for this simulation." ;
-    skos:exactMatch SRAO:0000258 .
+    skos:exactMatch <http://www.fairsharing.org/ontology/subject/SRAO_0000258> .
+
+<https://schema.org/Number> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "time_in_s" ;
+    rdfs:range linkml:Integer ;
+    skos:definition "Amount of time required to execute the simulation." ;
+    skos:exactMatch <https://schema.org/Number> .
+
+<https://schema.org/abstract> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "summary" ;
+    rdfs:range linkml:String ;
+    skos:definition "Text description, abstract, or narrative." ;
+    skos:exactMatch <https://schema.org/abstract> .
+
+<https://schema.org/contributor> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "contributors" ;
+    rdfs:range pfhub:Contributor ;
+    skos:definition "Collection of people who worked on this solution." ;
+    skos:exactMatch <https://schema.org/contributor> .
+
+<https://schema.org/dateCreated> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "date_created" ;
+    rdfs:range linkml:Date ;
+    skos:definition "Day when an item was uploaded, released, or published." ;
+    skos:exactMatch <https://schema.org/dateCreated> .
+
+<https://schema.org/downloadUrl> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "download" ;
+    rdfs:range linkml:Uriorcurie ;
+    skos:definition "Link to a download URL." ;
+    skos:exactMatch <https://schema.org/downloadUrl> .
+
+<https://schema.org/email> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "email" ;
+    rdfs:range linkml:String ;
+    skos:definition "A person's electronic mailing address." ;
+    skos:exactMatch <https://schema.org/email> .
+
+<https://schema.org/member> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "handle" ;
+    rdfs:range linkml:Uriorcurie ;
+    skos:definition "A person's identifier on a website, without the \"at\" symbol." ;
+    skos:exactMatch <https://schema.org/member> .
+
+<https://schema.org/softwareVersion> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "version" ;
+    rdfs:range linkml:String ;
+    skos:definition "Semantic version of a software project." ;
+    skos:exactMatch <https://schema.org/softwareVersion> .
 
 pfhub:CsvFile a owl:Class,
         linkml:ClassDefinition ;
     rdfs:label "CsvFile" ;
     rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
+            owl:onClass pfhub:CsvFileTypes ;
+            owl:onProperty <https://schema.org/encodingFormat> ],
+        [ a owl:Restriction ;
             owl:allValuesFrom linkml:String ;
             owl:onProperty pfhub:columns ],
         pfhub:File ;
-    skos:definition "Comma-separated values." .
+    skos:definition "Data represented by Comma-separated values in plain text." ;
+    skos:exactMatch <https://en.wikipedia.org/wiki/Comma-separated_values> .
+
+pfhub:CsvFileTypes a owl:Class,
+        linkml:EnumDefinition ;
+    rdfs:label "CsvFileTypes" ;
+    owl:unionOf ( <https://www.iana.org/assignments/media-types/text/csv> ) ;
+    linkml:permissible_values <https://www.iana.org/assignments/media-types/text/csv> .
 
 pfhub:DataFile a owl:Class,
         linkml:ClassDefinition ;
     rdfs:label "DataFile" ;
     rdfs:subClassOf pfhub:File ;
-    skos:definition "Raw data." .
+    skos:definition "Data represented in an application-specific or binary format." .
+
+pfhub:TarballTypes a owl:Class,
+        linkml:EnumDefinition ;
+    rdfs:label "TarballTypes" ;
+    owl:unionOf ( <https://www.iana.org/assignments/media-types/application/x-gtar> <https://www.iana.org/assignments/media-types/application/x-gtar> ) ;
+    linkml:permissible_values <https://www.iana.org/assignments/media-types/application/x-gtar> .
 
 <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#1a> a owl:Class,
         pfhub:ValidBenchmarkProblem ;
@@ -282,33 +299,37 @@ pfhub:VisualizationFile a owl:Class,
     rdfs:subClassOf pfhub:File ;
     skos:definition "Visualization data." .
 
-schema:SoftwareApplication a owl:ObjectProperty,
+<https://www.iana.org/assignments/media-types/text/csv> a owl:Class,
+        pfhub:CsvFileTypes ;
+    rdfs:label "csv" .
+
+<https://en.wikipedia.org/wiki/Commit_(version_control)> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "commit" ;
+    rdfs:range linkml:String ;
+    skos:definition "Commit hash in a repository of source code." ;
+    skos:exactMatch <https://en.wikipedia.org/wiki/Commit_(version_control)> .
+
+<https://schema.org/SoftwareApplication> a owl:ObjectProperty,
         linkml:SlotDefinition ;
     rdfs:label "framework" ;
     rdfs:range pfhub:Software ;
     skos:definition "A computer program or library" ;
-    skos:exactMatch schema:SoftwareApplication .
+    skos:exactMatch <https://schema.org/SoftwareApplication> .
 
-schema:codeRepository a owl:ObjectProperty,
-        linkml:SlotDefinition ;
-    rdfs:label "repository" ;
-    rdfs:range linkml:Uriorcurie ;
-    skos:definition "A repository of source code." ;
-    skos:exactMatch schema:codeRepository .
-
-schema:identifier a owl:ObjectProperty,
+<https://schema.org/identifier> a owl:ObjectProperty,
         linkml:SlotDefinition ;
     rdfs:label "id" ;
     rdfs:range linkml:Uriorcurie ;
     skos:definition "Unique identifier that must not collide with any other." ;
-    skos:exactMatch schema:identifier .
+    skos:exactMatch <https://schema.org/identifier> .
 
-schema:url a owl:ObjectProperty,
+<https://schema.org/url> a owl:ObjectProperty,
         linkml:SlotDefinition ;
     rdfs:label "url" ;
     rdfs:range linkml:Uriorcurie ;
     skos:definition "URL of an online resource or website." ;
-    skos:exactMatch schema:url .
+    skos:exactMatch <https://schema.org/url> .
 
 pfhub:ComputeResource a owl:Class,
         linkml:ClassDefinition ;
@@ -316,46 +337,53 @@ pfhub:ComputeResource a owl:Class,
     rdfs:subClassOf [ a owl:Restriction ;
             owl:maxQualifiedCardinality 1 ;
             owl:onClass linkml:Integer ;
-            owl:onProperty NCIT:C64194 ],
+            owl:onProperty <http://purl.obolibrary.org/obo/NCIT_C18132> ],
         [ a owl:Restriction ;
             owl:maxQualifiedCardinality 1 ;
             owl:onClass linkml:String ;
-            owl:onProperty SRAO:0000258 ],
+            owl:onProperty <http://www.fairsharing.org/ontology/subject/SRAO_0000258> ],
         [ a owl:Restriction ;
             owl:maxQualifiedCardinality 1 ;
             owl:onClass linkml:Integer ;
-            owl:onProperty NCIT:C18132 ] ;
+            owl:onProperty <http://purl.obolibrary.org/obo/NCIT_C64194> ] ;
     skos:definition "Summary of the hardware used to execute the simulation." ;
-    skos:exactMatch schema:softwareRequirements .
+    skos:exactMatch <https://schema.org/softwareRequirements> .
 
 pfhub:Contributor a owl:Class,
         linkml:ClassDefinition ;
     rdfs:label "Contributor" ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:allValuesFrom linkml:Uriorcurie ;
-            owl:onProperty schema:member ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom linkml:String ;
-            owl:onProperty pfhub:affiliation ],
+            owl:onProperty <https://schema.org/member> ],
         [ a owl:Restriction ;
             owl:maxQualifiedCardinality 1 ;
             owl:onClass linkml:String ;
-            owl:onProperty schema:email ],
+            owl:onProperty <https://schema.org/email> ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
+            owl:onClass linkml:String ;
+            owl:onProperty <https://schema.org/name> ],
         [ a owl:Restriction ;
             owl:onClass linkml:Uriorcurie ;
-            owl:onProperty schema:identifier ;
+            owl:onProperty <https://schema.org/identifier> ;
             owl:qualifiedCardinality 1 ],
         [ a owl:Restriction ;
-            owl:maxQualifiedCardinality 1 ;
-            owl:onClass linkml:String ;
-            owl:onProperty schema:name ] ;
+            owl:allValuesFrom linkml:String ;
+            owl:onProperty pfhub:affiliation ] ;
     skos:definition "Someone who contributed to this solution." ;
-    skos:exactMatch schema:Person .
+    skos:exactMatch <https://schema.org/Person> .
 
 pfhub:Results a owl:Class,
         linkml:ClassDefinition ;
     rdfs:label "Results" ;
     rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
+            owl:onClass linkml:Integer ;
+            owl:onProperty <https://schema.org/Number> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom pfhub:VisualizationFile ;
+            owl:onProperty pfhub:viz_data ],
+        [ a owl:Restriction ;
             owl:allValuesFrom pfhub:ComputeResource ;
             owl:onProperty pfhub:hardware ],
         [ a owl:Restriction ;
@@ -364,84 +392,89 @@ pfhub:Results a owl:Class,
         [ a owl:Restriction ;
             owl:maxQualifiedCardinality 1 ;
             owl:onClass linkml:Integer ;
-            owl:onProperty schema:Number ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom pfhub:DataFile ;
-            owl:onProperty pfhub:raw_data ],
-        [ a owl:Restriction ;
-            owl:maxQualifiedCardinality 1 ;
-            owl:onClass linkml:Integer ;
             owl:onProperty pfhub:memory_in_kb ],
         [ a owl:Restriction ;
-            owl:allValuesFrom pfhub:VisualizationFile ;
-            owl:onProperty pfhub:viz_data ] ;
+            owl:allValuesFrom pfhub:DataFile ;
+            owl:onProperty pfhub:raw_data ] ;
     skos:definition "Runtime information and output from a simulation." ;
-    skos:exactMatch schema:Dataset .
+    skos:exactMatch <https://schema.org/Dataset> .
 
 pfhub:Software a owl:Class,
         linkml:ClassDefinition ;
     rdfs:label "Software" ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:maxQualifiedCardinality 1 ;
-            owl:onClass linkml:Uriorcurie ;
-            owl:onProperty schema:downloadUrl ],
+            owl:onClass linkml:String ;
+            owl:onProperty <https://en.wikipedia.org/wiki/Commit_(version_control)> ],
         [ a owl:Restriction ;
             owl:maxQualifiedCardinality 1 ;
             owl:onClass linkml:String ;
-            owl:onProperty schema:name ],
+            owl:onProperty <https://schema.org/name> ],
         [ a owl:Restriction ;
             owl:maxQualifiedCardinality 1 ;
             owl:onClass linkml:String ;
-            owl:onProperty schema:softwareVersion ],
+            owl:onProperty <https://schema.org/softwareVersion> ],
         [ a owl:Restriction ;
             owl:maxQualifiedCardinality 1 ;
             owl:onClass linkml:Uriorcurie ;
-            owl:onProperty schema:codeRepository ],
+            owl:onProperty <https://schema.org/downloadUrl> ],
         [ a owl:Restriction ;
             owl:onClass linkml:Uriorcurie ;
-            owl:onProperty schema:url ;
+            owl:onProperty <https://schema.org/url> ;
             owl:qualifiedCardinality 1 ] ;
     skos:definition "A software product, download, or repository." ;
-    skos:exactMatch schema:SoftwareApplication .
+    skos:exactMatch <https://schema.org/SoftwareApplication> .
 
 pfhub:SourceCode a owl:Class,
         linkml:ClassDefinition ;
     rdfs:label "SourceCode" ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:maxQualifiedCardinality 1 ;
-            owl:onClass linkml:Uriorcurie ;
-            owl:onProperty schema:codeRepository ],
+            owl:onClass linkml:String ;
+            owl:onProperty <https://en.wikipedia.org/wiki/Commit_(version_control)> ],
         [ a owl:Restriction ;
             owl:maxQualifiedCardinality 1 ;
             owl:onClass linkml:String ;
-            owl:onProperty schema:name ],
+            owl:onProperty <https://schema.org/name> ],
         [ a owl:Restriction ;
             owl:onClass linkml:Uriorcurie ;
-            owl:onProperty schema:url ;
+            owl:onProperty <https://schema.org/url> ;
             owl:qualifiedCardinality 1 ] ;
     skos:definition "Link to the authors' implementation of the benchmark problem." ;
-    skos:exactMatch schema:SoftwareSourceCode .
+    skos:exactMatch <https://schema.org/SoftwareSourceCode> .
+
+<https://www.iana.org/assignments/media-types/application/x-gtar> a owl:Class,
+        pfhub:TarballTypes ;
+    rdfs:label "tar.gz",
+        "tgz" .
+
+<https://schema.org/encodingFormat> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "format" ;
+    rdfs:range linkml:String ;
+    skos:definition "Format of data contained in a file." ;
+    skos:exactMatch <https://schema.org/encodingFormat> .
+
+<https://schema.org/name> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "name" ;
+    rdfs:range linkml:String ;
+    skos:definition "Informal or human-memorable identifier that may collide with others." ;
+    skos:exactMatch <https://schema.org/name> .
 
 pfhub:File a owl:Class,
         linkml:ClassDefinition ;
     rdfs:label "File" ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:onClass linkml:String ;
-            owl:onProperty schema:name ;
+            owl:onProperty <https://schema.org/name> ;
             owl:qualifiedCardinality 1 ],
         [ a owl:Restriction ;
             owl:maxQualifiedCardinality 1 ;
             owl:onClass linkml:String ;
-            owl:onProperty schema:encodingFormat ] ;
+            owl:onProperty <https://schema.org/encodingFormat> ] ;
     skos:definition "A generic electronic information container." ;
-    skos:exactMatch schema:DigitalDocument .
-
-schema:name a owl:ObjectProperty,
-        linkml:SlotDefinition ;
-    rdfs:label "name" ;
-    rdfs:range linkml:String ;
-    skos:definition "Informal or human-memorable identifier that may collide with others." ;
-    skos:exactMatch schema:name .
+    skos:exactMatch <https://schema.org/DigitalDocument> .
 
 pfhub:ValidBenchmarkProblem a owl:Class,
         linkml:EnumDefinition ;

@@ -9,11 +9,11 @@ summary: >-
   Serial Travis CI benchmark with FiPy, periodic domain
 
 contributors:
-  - id: orcid:0000-0002-2920-8302
+  - id: https://orcid.org/0000-0002-2920-8302
     name: Trevor Keller
     affiliation: NIST
     email: trevor.keller@nist.gov
-  - id: orcid:0000-0002-2653-7418
+  - id: https://orcid.org/0000-0002-2653-7418
     name: Daniel Wheeler
     affiliation: NIST
     email: daniel.wheeler@nist.gov
@@ -21,25 +21,21 @@ contributors:
 framework:
   - url: https://www.ctcms.nist.gov/fipy/
     name: FiPy
-    download: https://anaconda.org/conda-forge/fipy
-    repository: https://github.com/usnistgov/fipy
+    download: https://github.com/usnistgov/fipy
     version: 3.1.2
   - url: https://github.com/usnistgov/steppyngstounes
     name: steppyngstounes
     download: https://github.com/usnistgov/steppyngstounes
-    repository: https://github.com/usnistgov/steppyngstounes
     version: 0.0
 
 implementation:
   url: >-
     https://github.com/usnistgov/FiPy-spinodal-decomposition-benchmark/tree/master/periodic
-  repository: >-
-    https://github.com/usnistgov/FiPy-spinodal-decomposition-benchmark
 
 results:
   csv_data:
     - name: free_energy.csv
-      format: iana_text:csv
+      format: csv
       columns:
         - time
         - free_energy

@@ -9,7 +9,7 @@ CREATE TABLE "ComputeResource" (
 
 CREATE TABLE "CsvFile" (
 	name TEXT NOT NULL, 
-	format TEXT, 
+	format VARCHAR(3), 
 	PRIMARY KEY (name)
 );
 
@@ -32,8 +32,14 @@ CREATE TABLE "Results" (
 CREATE TABLE "SourceCode" (
 	url TEXT NOT NULL, 
 	name TEXT, 
-	repository TEXT, 
+	"commit" TEXT, 
 	PRIMARY KEY (url)
+);
+
+CREATE TABLE "Tarball" (
+	name TEXT NOT NULL, 
+	format VARCHAR(6), 
+	PRIMARY KEY (name)
 );
 
 CREATE TABLE "VisualizationFile" (
@@ -73,8 +79,8 @@ CREATE TABLE "Contributor" (
 CREATE TABLE "Software" (
 	url TEXT NOT NULL, 
 	name TEXT, 
+	"commit" TEXT, 
 	download TEXT, 
-	repository TEXT, 
 	version TEXT, 
 	"BenchmarkResult_id" TEXT, 
 	PRIMARY KEY (url), 

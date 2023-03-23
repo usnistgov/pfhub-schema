@@ -117,7 +117,7 @@
         },
         "CsvFile": {
             "additionalProperties": false,
-            "description": "Comma-separated values.",
+            "description": "Data represented by Comma-separated values in plain text.",
             "properties": {
                 "columns": {
                     "description": "Column names applied to tabular data.",
@@ -128,8 +128,8 @@
                     "type": "array"
                 },
                 "format": {
-                    "description": "Format of data contained in a file.",
-                    "type": "string"
+                    "$ref": "#/$defs/CsvFileTypes",
+                    "description": "Format of data contained in a file."
                 },
                 "name": {
                     "description": "Informal or human-memorable identifier that may collide with others.",
@@ -142,9 +142,17 @@
             "title": "CsvFile",
             "type": "object"
         },
+        "CsvFileTypes": {
+            "description": "Valid CSV file extensions.",
+            "enum": [
+                "csv"
+            ],
+            "title": "CsvFileTypes",
+            "type": "string"
+        },
         "DataFile": {
             "additionalProperties": false,
-            "description": "Raw data.",
+            "description": "Data represented in an application-specific or binary format.",
             "properties": {
                 "format": {
                     "description": "Format of data contained in a file.",
@@ -209,16 +217,17 @@
             "additionalProperties": false,
             "description": "A software product, download, or repository.",
             "properties": {
+                "commit": {
+                    "description": "Commit hash in a repository of source code.",
+                    "pattern": "^\\S+",
+                    "type": "string"
+                },
                 "download": {
                     "description": "Link to a download URL.",
                     "type": "string"
                 },
                 "name": {
                     "description": "Informal or human-memorable identifier that may collide with others.",
-                    "type": "string"
-                },
-                "repository": {
-                    "description": "A repository of source code.",
                     "type": "string"
                 },
                 "url": {
@@ -241,12 +250,13 @@
             "additionalProperties": false,
             "description": "Link to the authors' implementation of the benchmark problem.",
             "properties": {
-                "name": {
-                    "description": "Informal or human-memorable identifier that may collide with others.",
+                "commit": {
+                    "description": "Commit hash in a repository of source code.",
+                    "pattern": "^\\S+",
                     "type": "string"
                 },
-                "repository": {
-                    "description": "A repository of source code.",
+                "name": {
+                    "description": "Informal or human-memorable identifier that may collide with others.",
                     "type": "string"
                 },
                 "url": {
@@ -259,6 +269,34 @@
             ],
             "title": "SourceCode",
             "type": "object"
+        },
+        "Tarball": {
+            "additionalProperties": false,
+            "description": "Gzip-compressed Tar data archive.",
+            "properties": {
+                "format": {
+                    "$ref": "#/$defs/TarballTypes",
+                    "description": "Format of data contained in a file."
+                },
+                "name": {
+                    "description": "Informal or human-memorable identifier that may collide with others.",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name"
+            ],
+            "title": "Tarball",
+            "type": "object"
+        },
+        "TarballTypes": {
+            "description": "Valid tarball file extensions.",
+            "enum": [
+                "tgz",
+                "tar.gz"
+            ],
+            "title": "TarballTypes",
+            "type": "string"
         },
         "ValidBenchmarkProblem": {
             "description": "Known parts of the accepted PFHub Benchmark Problems.",

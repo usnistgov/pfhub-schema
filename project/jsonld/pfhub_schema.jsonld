@@ -20,58 +20,6 @@
     {
       "prefix_prefix": "linkml",
       "prefix_reference": "https://w3id.org/linkml/"
-    },
-    {
-      "prefix_prefix": "dcterms",
-      "prefix_reference": "http://purl.org/dc/terms/"
-    },
-    {
-      "prefix_prefix": "doi",
-      "prefix_reference": "https://doi.org/"
-    },
-    {
-      "prefix_prefix": "iana_text",
-      "prefix_reference": "https://www.iana.org/assignments/media-types/text/"
-    },
-    {
-      "prefix_prefix": "iana_app",
-      "prefix_reference": "https://www.iana.org/assignments/media-types/application/"
-    },
-    {
-      "prefix_prefix": "NCIT",
-      "prefix_reference": "http://purl.obolibrary.org/obo/NCIT_"
-    },
-    {
-      "prefix_prefix": "orcid",
-      "prefix_reference": "https://orcid.org/"
-    },
-    {
-      "prefix_prefix": "qudt",
-      "prefix_reference": "http://qudt.org/schema/qudt/"
-    },
-    {
-      "prefix_prefix": "schema",
-      "prefix_reference": "http://schema.org/"
-    },
-    {
-      "prefix_prefix": "SRAO",
-      "prefix_reference": "http://www.fairsharing.org/ontology/subject/SRAO_"
-    },
-    {
-      "prefix_prefix": "UO",
-      "prefix_reference": "http://purl.obolibrary.org/obo/UO_"
-    },
-    {
-      "prefix_prefix": "bitbucket",
-      "prefix_reference": "https://bitbucket.org/"
-    },
-    {
-      "prefix_prefix": "github",
-      "prefix_reference": "https://github.com/"
-    },
-    {
-      "prefix_prefix": "gitlab",
-      "prefix_reference": "https://gitlab.com/"
     }
   ],
   "default_curi_maps": [
@@ -340,6 +288,37 @@
           "description": "Published version."
         }
       ]
+    },
+    {
+      "name": "CsvFileTypes",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/CsvFileTypes",
+      "description": "Valid CSV file extensions.",
+      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
+      "permissible_values": [
+        {
+          "text": "csv",
+          "description": "Comma-separated values.",
+          "meaning": "https://www.iana.org/assignments/media-types/text/csv"
+        }
+      ]
+    },
+    {
+      "name": "TarballTypes",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/TarballTypes",
+      "description": "Valid tarball file extensions.",
+      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
+      "permissible_values": [
+        {
+          "text": "tgz",
+          "description": "Shorthand tarball extension.",
+          "meaning": "https://www.iana.org/assignments/media-types/application/x-gtar"
+        },
+        {
+          "text": "tar.gz",
+          "description": "Gzipped Tar extension.",
+          "meaning": "https://www.iana.org/assignments/media-types/application/x-gtar"
+        }
+      ]
     }
   ],
   "slots": [
@@ -349,9 +328,9 @@
       "description": "Unique identifier that must not collide with any other.",
       "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
       "mappings": [
-        "http://schema.org/identifier"
+        "https://schema.org/identifier"
       ],
-      "slot_uri": "http://schema.org/identifier",
+      "slot_uri": "https://schema.org/identifier",
       "identifier": true,
       "owner": "Contributor",
       "domain_of": [
@@ -439,6 +418,24 @@
       "@type": "SlotDefinition"
     },
     {
+      "name": "commit",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/commit",
+      "description": "Commit hash in a repository of source code.",
+      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
+      "mappings": [
+        "https://en.wikipedia.org/wiki/Commit_(version_control)"
+      ],
+      "slot_uri": "https://en.wikipedia.org/wiki/Commit_(version_control)",
+      "owner": "SourceCode",
+      "domain_of": [
+        "Software",
+        "SourceCode"
+      ],
+      "range": "string",
+      "pattern": "^\\S+",
+      "@type": "SlotDefinition"
+    },
+    {
       "name": "cores",
       "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/cores",
       "description": "Number of parallel cores or threads of execution used by the simulation on a CPU, GPU, or accelerator device.",
@@ -460,9 +457,9 @@
       "description": "Day when an item was uploaded, released, or published.",
       "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
       "mappings": [
-        "http://schema.org/dateCreated"
+        "https://schema.org/dateCreated"
       ],
-      "slot_uri": "http://schema.org/dateCreated",
+      "slot_uri": "https://schema.org/dateCreated",
       "owner": "BenchmarkResult",
       "domain_of": [
         "BenchmarkResult"
@@ -476,9 +473,9 @@
       "description": "Link to a download URL.",
       "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
       "mappings": [
-        "http://schema.org/downloadUrl"
+        "https://schema.org/downloadUrl"
       ],
-      "slot_uri": "http://schema.org/downloadUrl",
+      "slot_uri": "https://schema.org/downloadUrl",
       "owner": "Software",
       "domain_of": [
         "Software"
@@ -492,9 +489,9 @@
       "description": "A person's electronic mailing address.",
       "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
       "mappings": [
-        "http://schema.org/email"
+        "https://schema.org/email"
       ],
-      "slot_uri": "http://schema.org/email",
+      "slot_uri": "https://schema.org/email",
       "owner": "Contributor",
       "domain_of": [
         "Contributor"
@@ -509,9 +506,9 @@
       "description": "Format of data contained in a file.",
       "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
       "mappings": [
-        "http://schema.org/encodingFormat"
+        "https://schema.org/encodingFormat"
       ],
-      "slot_uri": "http://schema.org/encodingFormat",
+      "slot_uri": "https://schema.org/encodingFormat",
       "owner": "File",
       "domain_of": [
         "File"
@@ -525,9 +522,9 @@
       "description": "A person's identifier on a website, without the \"at\" symbol.",
       "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
       "mappings": [
-        "http://schema.org/member"
+        "https://schema.org/member"
       ],
-      "slot_uri": "http://schema.org/member",
+      "slot_uri": "https://schema.org/member",
       "multivalued": true,
       "owner": "Contributor",
       "domain_of": [
@@ -550,7 +547,7 @@
       "range": "integer",
       "unit": {
         "ucum_code": "KIB*BY",
-        "has_quantity_kind": "UO:0000245",
+        "has_quantity_kind": "http://purl.obolibrary.org/obo/UO_0000245",
         "@type": "UnitOfMeasure"
       },
       "@type": "SlotDefinition"
@@ -561,9 +558,9 @@
       "description": "Informal or human-memorable identifier that may collide with others.",
       "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
       "mappings": [
-        "http://schema.org/name"
+        "https://schema.org/name"
       ],
-      "slot_uri": "http://schema.org/name",
+      "slot_uri": "https://schema.org/name",
       "owner": "SourceCode",
       "domain_of": [
         "Contributor",
@@ -591,31 +588,14 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "repository",
-      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/repository",
-      "description": "A repository of source code.",
-      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
-      "mappings": [
-        "http://schema.org/codeRepository"
-      ],
-      "slot_uri": "http://schema.org/codeRepository",
-      "owner": "SourceCode",
-      "domain_of": [
-        "Software",
-        "SourceCode"
-      ],
-      "range": "uriorcurie",
-      "@type": "SlotDefinition"
-    },
-    {
       "name": "summary",
       "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/summary",
       "description": "Text description, abstract, or narrative.",
       "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
       "mappings": [
-        "http://schema.org/abstract"
+        "https://schema.org/abstract"
       ],
-      "slot_uri": "http://schema.org/abstract",
+      "slot_uri": "https://schema.org/abstract",
       "owner": "BenchmarkResult",
       "domain_of": [
         "BenchmarkResult"
@@ -629,9 +609,9 @@
       "description": "Semantic version of a software project.",
       "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
       "mappings": [
-        "http://schema.org/softwareVersion"
+        "https://schema.org/softwareVersion"
       ],
-      "slot_uri": "http://schema.org/softwareVersion",
+      "slot_uri": "https://schema.org/softwareVersion",
       "owner": "Software",
       "domain_of": [
         "Software"
@@ -647,9 +627,9 @@
       "description": "Amount of time required to execute the simulation.",
       "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
       "mappings": [
-        "http://schema.org/Number"
+        "https://schema.org/Number"
       ],
-      "slot_uri": "http://schema.org/Number",
+      "slot_uri": "https://schema.org/Number",
       "owner": "Results",
       "domain_of": [
         "Results"
@@ -657,7 +637,7 @@
       "range": "integer",
       "unit": {
         "ucum_code": "S",
-        "has_quantity_kind": "NCIT:C42535",
+        "has_quantity_kind": "http://purl.obolibrary.org/obo/NCIT_C42535",
         "@type": "UnitOfMeasure"
       },
       "@type": "SlotDefinition"
@@ -668,9 +648,9 @@
       "description": "URL of an online resource or website.",
       "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
       "mappings": [
-        "http://schema.org/url"
+        "https://schema.org/url"
       ],
-      "slot_uri": "http://schema.org/url",
+      "slot_uri": "https://schema.org/url",
       "owner": "SourceCode",
       "domain_of": [
         "Software",
@@ -685,9 +665,9 @@
       "description": "Collection of people who worked on this solution.",
       "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
       "mappings": [
-        "http://schema.org/contributor"
+        "https://schema.org/contributor"
       ],
-      "slot_uri": "http://schema.org/contributor",
+      "slot_uri": "https://schema.org/contributor",
       "multivalued": true,
       "owner": "BenchmarkResult",
       "domain_of": [
@@ -704,9 +684,9 @@
       "description": "A computer program or library",
       "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
       "mappings": [
-        "http://schema.org/SoftwareApplication"
+        "https://schema.org/SoftwareApplication"
       ],
-      "slot_uri": "http://schema.org/SoftwareApplication",
+      "slot_uri": "https://schema.org/SoftwareApplication",
       "multivalued": true,
       "owner": "BenchmarkResult",
       "domain_of": [
@@ -815,11 +795,11 @@
       "description": "Informal or human-memorable identifier that may collide with others.",
       "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
       "mappings": [
-        "http://schema.org/name"
+        "https://schema.org/name"
       ],
       "is_a": "name",
       "domain": "File",
-      "slot_uri": "http://schema.org/name",
+      "slot_uri": "https://schema.org/name",
       "identifier": true,
       "alias": "name",
       "owner": "File",
@@ -833,16 +813,58 @@
       "@type": "SlotDefinition"
     },
     {
+      "name": "CsvFile_format",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/format",
+      "description": "Format of data contained in a file.",
+      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
+      "mappings": [
+        "https://schema.org/encodingFormat"
+      ],
+      "is_a": "format",
+      "domain": "CsvFile",
+      "slot_uri": "https://schema.org/encodingFormat",
+      "alias": "format",
+      "owner": "CsvFile",
+      "domain_of": [
+        "CsvFile"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "format",
+      "range": "CsvFileTypes",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "Tarball_format",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/format",
+      "description": "Format of data contained in a file.",
+      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
+      "mappings": [
+        "https://schema.org/encodingFormat"
+      ],
+      "is_a": "format",
+      "domain": "Tarball",
+      "slot_uri": "https://schema.org/encodingFormat",
+      "alias": "format",
+      "owner": "Tarball",
+      "domain_of": [
+        "Tarball"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "format",
+      "range": "TarballTypes",
+      "@type": "SlotDefinition"
+    },
+    {
       "name": "Software_url",
       "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/url",
       "description": "URL of an online resource or website.",
       "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
       "mappings": [
-        "http://schema.org/url"
+        "https://schema.org/url"
       ],
       "is_a": "url",
       "domain": "Software",
-      "slot_uri": "http://schema.org/url",
+      "slot_uri": "https://schema.org/url",
       "identifier": true,
       "alias": "url",
       "owner": "Software",
@@ -861,11 +883,11 @@
       "description": "URL of an online resource or website.",
       "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
       "mappings": [
-        "http://schema.org/url"
+        "https://schema.org/url"
       ],
       "is_a": "url",
       "domain": "SourceCode",
-      "slot_uri": "http://schema.org/url",
+      "slot_uri": "https://schema.org/url",
       "identifier": true,
       "alias": "url",
       "owner": "SourceCode",
@@ -907,7 +929,7 @@
       "description": "Summary of the hardware used to execute the simulation.",
       "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
       "mappings": [
-        "schema:softwareRequirements"
+        "https://schema.org/softwareRequirements"
       ],
       "slots": [
         "architecture",
@@ -915,7 +937,7 @@
         "nodes"
       ],
       "slot_usage": {},
-      "class_uri": "http://schema.org/softwareRequirements",
+      "class_uri": "https://schema.org/softwareRequirements",
       "@type": "ClassDefinition"
     },
     {
@@ -924,7 +946,7 @@
       "description": "Someone who contributed to this solution.",
       "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
       "mappings": [
-        "schema:Person"
+        "https://schema.org/Person"
       ],
       "slots": [
         "id",
@@ -934,7 +956,7 @@
         "email"
       ],
       "slot_usage": {},
-      "class_uri": "http://schema.org/Person",
+      "class_uri": "https://schema.org/Person",
       "@type": "ClassDefinition"
     },
     {
@@ -943,7 +965,7 @@
       "description": "A generic electronic information container.",
       "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
       "mappings": [
-        "schema:DigitalDocument"
+        "https://schema.org/DigitalDocument"
       ],
       "abstract": true,
       "slots": [
@@ -951,28 +973,31 @@
         "format"
       ],
       "slot_usage": {},
-      "class_uri": "http://schema.org/DigitalDocument",
+      "class_uri": "https://schema.org/DigitalDocument",
       "@type": "ClassDefinition"
     },
     {
       "name": "CsvFile",
       "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/CsvFile",
-      "description": "Comma-separated values.",
+      "description": "Data represented by Comma-separated values in plain text.",
       "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
+      "mappings": [
+        "https://en.wikipedia.org/wiki/Comma-separated_values"
+      ],
       "is_a": "File",
       "slots": [
         "File_name",
-        "format",
-        "columns"
+        "columns",
+        "CsvFile_format"
       ],
       "slot_usage": {},
-      "class_uri": "https://w3id.org/usnistgov/pfhub-schema/CsvFile",
+      "class_uri": "https://en.wikipedia.org/wiki/Comma-separated_values",
       "@type": "ClassDefinition"
     },
     {
       "name": "DataFile",
       "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/DataFile",
-      "description": "Raw data.",
+      "description": "Data represented in an application-specific or binary format.",
       "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
       "is_a": "File",
       "slots": [
@@ -981,6 +1006,20 @@
       ],
       "slot_usage": {},
       "class_uri": "https://w3id.org/usnistgov/pfhub-schema/DataFile",
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "Tarball",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/Tarball",
+      "description": "Gzip-compressed Tar data archive.",
+      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
+      "is_a": "File",
+      "slots": [
+        "File_name",
+        "Tarball_format"
+      ],
+      "slot_usage": {},
+      "class_uri": "https://w3id.org/usnistgov/pfhub-schema/Tarball",
       "@type": "ClassDefinition"
     },
     {
@@ -1003,7 +1042,7 @@
       "description": "Runtime information and output from a simulation.",
       "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
       "mappings": [
-        "schema:Dataset"
+        "https://schema.org/Dataset"
       ],
       "slots": [
         "csv_data",
@@ -1014,7 +1053,7 @@
         "time_in_s"
       ],
       "slot_usage": {},
-      "class_uri": "http://schema.org/Dataset",
+      "class_uri": "https://schema.org/Dataset",
       "@type": "ClassDefinition"
     },
     {
@@ -1023,17 +1062,17 @@
       "description": "A software product, download, or repository.",
       "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
       "mappings": [
-        "schema:SoftwareApplication"
+        "https://schema.org/SoftwareApplication"
       ],
       "slots": [
         "Software_url",
         "name",
+        "commit",
         "download",
-        "repository",
         "version"
       ],
       "slot_usage": {},
-      "class_uri": "http://schema.org/SoftwareApplication",
+      "class_uri": "https://schema.org/SoftwareApplication",
       "@type": "ClassDefinition"
     },
     {
@@ -1042,23 +1081,23 @@
       "description": "Link to the authors' implementation of the benchmark problem.",
       "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
       "mappings": [
-        "schema:SoftwareSourceCode"
+        "https://schema.org/SoftwareSourceCode"
       ],
       "slots": [
         "SourceCode_url",
         "name",
-        "repository"
+        "commit"
       ],
       "slot_usage": {},
-      "class_uri": "http://schema.org/SoftwareSourceCode",
+      "class_uri": "https://schema.org/SoftwareSourceCode",
       "@type": "ClassDefinition"
     }
   ],
   "metamodel_version": "1.7.0",
   "source_file": "pfhub_schema.yaml",
-  "source_file_date": "2023-03-17T18:14:45",
-  "source_file_size": 9262,
-  "generation_date": "2023-03-17T18:15:45",
+  "source_file_date": "2023-03-22T21:45:43",
+  "source_file_size": 9940,
+  "generation_date": "2023-03-22T21:52:31",
   "@type": "SchemaDefinition",
   "@context": [
     "project/jsonld/pfhub_schema.context.jsonld",

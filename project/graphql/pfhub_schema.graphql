@@ -30,8 +30,8 @@ type Contributor
 type CsvFile
   {
     name: String!
-    format: String
     columns: [String]
+    format: CsvFileTypes
   }
 
 type DataFile
@@ -60,8 +60,8 @@ type Software
   {
     url: Uriorcurie!
     name: String
+    commit: String
     download: Uriorcurie
-    repository: Uriorcurie
     version: String
   }
 
@@ -69,7 +69,13 @@ type SourceCode
   {
     url: Uriorcurie!
     name: String
-    repository: Uriorcurie
+    commit: String
+  }
+
+type Tarball
+  {
+    name: String!
+    format: TarballTypes
   }
 
 type VisualizationFile

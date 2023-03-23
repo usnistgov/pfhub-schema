@@ -27,14 +27,14 @@ message Contributor
  repeated  string affiliation = 0
   string email = 0
  }
-// Comma-separated values.
+// Data represented by Comma-separated values in plain text.
 message CsvFile
  {
   string name = 0
-  string format = 0
  repeated  string columns = 0
+  csvFileTypes format = 0
  }
-// Raw data.
+// Data represented in an application-specific or binary format.
 message DataFile
  {
   string name = 0
@@ -55,8 +55,8 @@ message Software
  {
   uriorcurie url = 0
   string name = 0
+  string commit = 0
   uriorcurie download = 0
-  uriorcurie repository = 0
   string version = 0
  }
 // Link to the authors' implementation of the benchmark problem.
@@ -64,7 +64,13 @@ message SourceCode
  {
   uriorcurie url = 0
   string name = 0
-  uriorcurie repository = 0
+  string commit = 0
+ }
+// Gzip-compressed Tar data archive.
+message Tarball
+ {
+  string name = 0
+  tarballTypes format = 0
  }
 // Visualization data.
 message VisualizationFile

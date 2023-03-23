@@ -2,7 +2,6 @@ BASE <https://w3id.org/usnistgov/pfhub-schema/>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX linkml: <https://w3id.org/linkml/>
-PREFIX schema: <http://schema.org/>
 
 
 linkml:String xsd:string
@@ -40,12 +39,12 @@ linkml:Nodeidentifier NONLITERAL
 <BenchmarkResult> CLOSED {
     (  $<BenchmarkResult_tes> (  <benchmark_problem> @<ValidBenchmarkProblem> ;
           <benchmark_version> @linkml:Integer ;
-          schema:contributor @<Contributor> * ;
-          schema:dateCreated @linkml:Date ? ;
-          schema:SoftwareApplication @<Software> * ;
+          <https://schema.org/contributor> @<Contributor> * ;
+          <https://schema.org/dateCreated> @linkml:Date ? ;
+          <https://schema.org/SoftwareApplication> @<Software> * ;
           <implementation> @<SourceCode> ? ;
           <results> @<Results> ? ;
-          schema:abstract @linkml:String ?
+          <https://schema.org/abstract> @linkml:String ?
        ) ;
        rdf:type [ <BenchmarkResult> ]
     )
@@ -56,44 +55,45 @@ linkml:Nodeidentifier NONLITERAL
           <http://purl.obolibrary.org/obo/NCIT_C64194> @linkml:Integer ? ;
           <http://purl.obolibrary.org/obo/NCIT_C18132> @linkml:Integer ?
        ) ;
-       rdf:type [ schema:softwareRequirements ] ?
+       rdf:type [ <https://schema.org/softwareRequirements> ] ?
     )
 }
 
 <Contributor> CLOSED {
-    (  $<Contributor_tes> (  schema:name @linkml:String ? ;
-          schema:member @linkml:Uriorcurie * ;
+    (  $<Contributor_tes> (  <https://schema.org/name> @linkml:String ? ;
+          <https://schema.org/member> @linkml:Uriorcurie * ;
           <affiliation> @linkml:String * ;
-          schema:email @linkml:String ?
+          <https://schema.org/email> @linkml:String ?
        ) ;
-       rdf:type [ schema:Person ]
+       rdf:type [ <https://schema.org/Person> ]
     )
 }
 
 <CsvFile> CLOSED {
     (  $<CsvFile_tes> (  &<File_tes> ;
-          rdf:type [ schema:DigitalDocument ] ? ;
-          <columns> @linkml:String *
+          rdf:type [ <https://schema.org/DigitalDocument> ] ? ;
+          <columns> @linkml:String * ;
+          <https://schema.org/encodingFormat> @<CsvFileTypes> ?
        ) ;
-       rdf:type [ <CsvFile> ]
+       rdf:type [ <https://en.wikipedia.org/wiki/Comma-separated_values> ]
     )
 }
 
 <DataFile> CLOSED {
     (  $<DataFile_tes> (  &<File_tes> ;
-          rdf:type [ schema:DigitalDocument ] ?
+          rdf:type [ <https://schema.org/DigitalDocument> ] ?
        ) ;
        rdf:type [ <DataFile> ]
     )
 }
 
 <File>  (
-    @<CsvFile> OR @<DataFile> OR @<VisualizationFile>
+    @<CsvFile> OR @<DataFile> OR @<Tarball> OR @<VisualizationFile>
 )
 
 <File_struct> {
-    (  $<File_tes> schema:encodingFormat @linkml:String ? ;
-       rdf:type [ schema:DigitalDocument ]
+    (  $<File_tes> <https://schema.org/encodingFormat> @linkml:String ? ;
+       rdf:type [ <https://schema.org/DigitalDocument> ]
     )
 }
 
@@ -103,33 +103,42 @@ linkml:Nodeidentifier NONLITERAL
           <viz_data> @<VisualizationFile> * ;
           <hardware> @<ComputeResource> * ;
           <memory_in_kb> @linkml:Integer ? ;
-          schema:Number @linkml:Integer ?
+          <https://schema.org/Number> @linkml:Integer ?
        ) ;
-       rdf:type [ schema:Dataset ] ?
+       rdf:type [ <https://schema.org/Dataset> ] ?
     )
 }
 
 <Software> CLOSED {
-    (  $<Software_tes> (  schema:name @linkml:String ? ;
-          schema:downloadUrl @linkml:Uriorcurie ? ;
-          schema:codeRepository @linkml:Uriorcurie ? ;
-          schema:softwareVersion @linkml:String ?
+    (  $<Software_tes> (  <https://schema.org/name> @linkml:String ? ;
+          <https://en.wikipedia.org/wiki/Commit_(version_control)> @linkml:String ? ;
+          <https://schema.org/downloadUrl> @linkml:Uriorcurie ? ;
+          <https://schema.org/softwareVersion> @linkml:String ?
        ) ;
-       rdf:type [ schema:SoftwareApplication ]
+       rdf:type [ <https://schema.org/SoftwareApplication> ]
     )
 }
 
 <SourceCode> CLOSED {
-    (  $<SourceCode_tes> (  schema:name @linkml:String ? ;
-          schema:codeRepository @linkml:Uriorcurie ?
+    (  $<SourceCode_tes> (  <https://schema.org/name> @linkml:String ? ;
+          <https://en.wikipedia.org/wiki/Commit_(version_control)> @linkml:String ?
        ) ;
-       rdf:type [ schema:SoftwareSourceCode ]
+       rdf:type [ <https://schema.org/SoftwareSourceCode> ]
+    )
+}
+
+<Tarball> CLOSED {
+    (  $<Tarball_tes> (  &<File_tes> ;
+          rdf:type [ <https://schema.org/DigitalDocument> ] ? ;
+          <https://schema.org/encodingFormat> @<TarballTypes> ?
+       ) ;
+       rdf:type [ <Tarball> ]
     )
 }
 
 <VisualizationFile> CLOSED {
     (  $<VisualizationFile_tes> (  &<File_tes> ;
-          rdf:type [ schema:DigitalDocument ] ?
+          rdf:type [ <https://schema.org/DigitalDocument> ] ?
        ) ;
        rdf:type [ <VisualizationFile> ]
     )
