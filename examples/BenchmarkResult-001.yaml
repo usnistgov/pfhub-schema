@@ -5,6 +5,9 @@ id: https://doi.org/10.5281/zenodo.7474506
 benchmark_problem: 1a
 benchmark_version: 0
 date_created: 2017-01-10
+schema:
+  url: >-
+    https://github.com/usnistgov/pfhub-schema/tree/bac250b/project
 summary: >-
   Serial Travis CI benchmark with FiPy, periodic domain
 
