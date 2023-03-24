@@ -1416,7 +1416,7 @@
   "source_file": "pfhub_schema.yaml",
   "source_file_date": "2023-03-24T14:24:19",
   "source_file_size": 18347,
-  "generation_date": "2023-03-24T14:24:38",
+  "generation_date": "2023-03-24T14:26:02",
   "@type": "SchemaDefinition",
   "@context": [
     "project/jsonld/pfhub_schema.context.jsonld",

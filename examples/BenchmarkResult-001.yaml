@@ -7,7 +7,7 @@ benchmark_version: 0
 date_created: 2017-01-10
 schema:
   url: >-
-    https://github.com/usnistgov/pfhub-schema/tree/2b06531/project
+    https://github.com/usnistgov/pfhub-schema/tree/2646573/project
 summary: >-
   Serial Travis CI benchmark with FiPy, periodic domain
 
