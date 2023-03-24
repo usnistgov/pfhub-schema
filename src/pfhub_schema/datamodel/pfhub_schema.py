@@ -1,5 +1,5 @@
 # Auto generated from pfhub_schema.yaml by pythongen.py version: 0.9.0
-# Generation date: 2023-03-23T13:28:13
+# Generation date: 2023-03-24T14:24:48
 # Schema: pfhub_schema
 #
 # id: https://w3id.org/usnistgov/pfhub-schema
@@ -52,19 +52,19 @@ class FileName(extended_str):
     pass
 
 
-class CsvFileName(FileName):
+class ArchiveDataName(FileName):
     pass
 
 
-class DataFileName(FileName):
+class FieldDataName(FileName):
     pass
 
 
-class TarballName(FileName):
+class TimeSeriesDataName(FileName):
     pass
 
 
-class VisualizationFileName(FileName):
+class ImageDataName(FileName):
     pass
 
 
@@ -235,106 +235,112 @@ class File(YAMLRoot):
 
 
 @dataclass
-class CsvFile(File):
+class ArchiveData(File):
     """
-    Data represented by Comma-separated values in plain text.
+    Specialization of a pfhub:File containing a compressed data archive.
+    """
+    _inherited_slots: ClassVar[List[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = PFHUB.ArchiveData
+    class_class_curie: ClassVar[str] = "pfhub:ArchiveData"
+    class_name: ClassVar[str] = "ArchiveData"
+    class_model_uri: ClassVar[URIRef] = PFHUB.ArchiveData
+
+    name: Union[str, ArchiveDataName] = None
+    format: Optional[Union[str, "CompressedFiles"]] = None
+
+    def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
+        if self._is_empty(self.name):
+            self.MissingRequiredField("name")
+        if not isinstance(self.name, ArchiveDataName):
+            self.name = ArchiveDataName(self.name)
+
+        if self.format is not None and not isinstance(self.format, CompressedFiles):
+            self.format = CompressedFiles(self.format)
+
+        super().__post_init__(**kwargs)
+
+
+@dataclass
+class FieldData(File):
+    """
+    Specialization of a pfhub:File representing field variables in a simulation domain using a format appropriate for
+    the application.
+    """
+    _inherited_slots: ClassVar[List[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = PFHUB.FieldData
+    class_class_curie: ClassVar[str] = "pfhub:FieldData"
+    class_name: ClassVar[str] = "FieldData"
+    class_model_uri: ClassVar[URIRef] = PFHUB.FieldData
+
+    name: Union[str, FieldDataName] = None
+
+    def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
+        if self._is_empty(self.name):
+            self.MissingRequiredField("name")
+        if not isinstance(self.name, FieldDataName):
+            self.name = FieldDataName(self.name)
+
+        super().__post_init__(**kwargs)
+
+
+@dataclass
+class TimeSeriesData(File):
+    """
+    Specialization of a pfhub:File representing a time series in plain text using named columns of comma-separated
+    values.
     """
     _inherited_slots: ClassVar[List[str]] = []
 
     class_class_uri: ClassVar[URIRef] = URIRef("https://en.wikipedia.org/wiki/Comma-separated_values")
     class_class_curie: ClassVar[str] = None
-    class_name: ClassVar[str] = "CsvFile"
-    class_model_uri: ClassVar[URIRef] = PFHUB.CsvFile
+    class_name: ClassVar[str] = "TimeSeriesData"
+    class_model_uri: ClassVar[URIRef] = PFHUB.TimeSeriesData
 
-    name: Union[str, CsvFileName] = None
+    name: Union[str, TimeSeriesDataName] = None
     columns: Optional[Union[str, List[str]]] = empty_list()
-    format: Optional[Union[str, "CsvFileTypes"]] = None
+    format: Optional[Union[str, "TabularFiles"]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.name):
             self.MissingRequiredField("name")
-        if not isinstance(self.name, CsvFileName):
-            self.name = CsvFileName(self.name)
+        if not isinstance(self.name, TimeSeriesDataName):
+            self.name = TimeSeriesDataName(self.name)
 
         if not isinstance(self.columns, list):
             self.columns = [self.columns] if self.columns is not None else []
         self.columns = [v if isinstance(v, str) else str(v) for v in self.columns]
 
-        if self.format is not None and not isinstance(self.format, CsvFileTypes):
-            self.format = CsvFileTypes(self.format)
+        if self.format is not None and not isinstance(self.format, TabularFiles):
+            self.format = TabularFiles(self.format)
 
         super().__post_init__(**kwargs)
 
 
 @dataclass
-class DataFile(File):
+class ImageData(File):
     """
-    Data represented in an application-specific or binary format.
+    Specialization of a pfhub:File for images and visualization data.
     """
     _inherited_slots: ClassVar[List[str]] = []
 
-    class_class_uri: ClassVar[URIRef] = PFHUB.DataFile
-    class_class_curie: ClassVar[str] = "pfhub:DataFile"
-    class_name: ClassVar[str] = "DataFile"
-    class_model_uri: ClassVar[URIRef] = PFHUB.DataFile
+    class_class_uri: ClassVar[URIRef] = PFHUB.ImageData
+    class_class_curie: ClassVar[str] = "pfhub:ImageData"
+    class_name: ClassVar[str] = "ImageData"
+    class_model_uri: ClassVar[URIRef] = PFHUB.ImageData
 
-    name: Union[str, DataFileName] = None
+    name: Union[str, ImageDataName] = None
+    format: Optional[Union[str, "ImageFiles"]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.name):
             self.MissingRequiredField("name")
-        if not isinstance(self.name, DataFileName):
-            self.name = DataFileName(self.name)
+        if not isinstance(self.name, ImageDataName):
+            self.name = ImageDataName(self.name)
 
-        super().__post_init__(**kwargs)
-
-
-@dataclass
-class Tarball(File):
-    """
-    Gzip-compressed Tar data archive.
-    """
-    _inherited_slots: ClassVar[List[str]] = []
-
-    class_class_uri: ClassVar[URIRef] = PFHUB.Tarball
-    class_class_curie: ClassVar[str] = "pfhub:Tarball"
-    class_name: ClassVar[str] = "Tarball"
-    class_model_uri: ClassVar[URIRef] = PFHUB.Tarball
-
-    name: Union[str, TarballName] = None
-    format: Optional[Union[str, "TarballTypes"]] = None
-
-    def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
-        if self._is_empty(self.name):
-            self.MissingRequiredField("name")
-        if not isinstance(self.name, TarballName):
-            self.name = TarballName(self.name)
-
-        if self.format is not None and not isinstance(self.format, TarballTypes):
-            self.format = TarballTypes(self.format)
-
-        super().__post_init__(**kwargs)
-
-
-@dataclass
-class VisualizationFile(File):
-    """
-    Visualization data.
-    """
-    _inherited_slots: ClassVar[List[str]] = []
-
-    class_class_uri: ClassVar[URIRef] = PFHUB.VisualizationFile
-    class_class_curie: ClassVar[str] = "pfhub:VisualizationFile"
-    class_name: ClassVar[str] = "VisualizationFile"
-    class_model_uri: ClassVar[URIRef] = PFHUB.VisualizationFile
-
-    name: Union[str, VisualizationFileName] = None
-
-    def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
-        if self._is_empty(self.name):
-            self.MissingRequiredField("name")
-        if not isinstance(self.name, VisualizationFileName):
-            self.name = VisualizationFileName(self.name)
+        if self.format is not None and not isinstance(self.format, ImageFiles):
+            self.format = ImageFiles(self.format)
 
         super().__post_init__(**kwargs)
 
@@ -351,20 +357,23 @@ class Results(YAMLRoot):
     class_name: ClassVar[str] = "Results"
     class_model_uri: ClassVar[URIRef] = PFHUB.Results
 
-    csv_data: Optional[Union[Dict[Union[str, CsvFileName], Union[dict, CsvFile]], List[Union[dict, CsvFile]]]] = empty_dict()
-    raw_data: Optional[Union[Dict[Union[str, DataFileName], Union[dict, DataFile]], List[Union[dict, DataFile]]]] = empty_dict()
-    viz_data: Optional[Union[Dict[Union[str, VisualizationFileName], Union[dict, VisualizationFile]], List[Union[dict, VisualizationFile]]]] = empty_dict()
+    file_archive: Optional[Union[Dict[Union[str, ArchiveDataName], Union[dict, ArchiveData]], List[Union[dict, ArchiveData]]]] = empty_dict()
+    file_spatial: Optional[Union[Dict[Union[str, FieldDataName], Union[dict, FieldData]], List[Union[dict, FieldData]]]] = empty_dict()
+    file_timeseries: Optional[Union[Dict[Union[str, TimeSeriesDataName], Union[dict, TimeSeriesData]], List[Union[dict, TimeSeriesData]]]] = empty_dict()
+    file_visual: Optional[Union[Dict[Union[str, ImageDataName], Union[dict, ImageData]], List[Union[dict, ImageData]]]] = empty_dict()
     fictive_time: Optional[float] = None
     hardware: Optional[Union[Union[dict, ComputeResource], List[Union[dict, ComputeResource]]]] = empty_list()
     memory_in_kb: Optional[int] = None
     time_in_s: Optional[int] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
-        self._normalize_inlined_as_list(slot_name="csv_data", slot_type=CsvFile, key_name="name", keyed=True)
+        self._normalize_inlined_as_list(slot_name="file_archive", slot_type=ArchiveData, key_name="name", keyed=True)
 
-        self._normalize_inlined_as_list(slot_name="raw_data", slot_type=DataFile, key_name="name", keyed=True)
+        self._normalize_inlined_as_list(slot_name="file_spatial", slot_type=FieldData, key_name="name", keyed=True)
 
-        self._normalize_inlined_as_list(slot_name="viz_data", slot_type=VisualizationFile, key_name="name", keyed=True)
+        self._normalize_inlined_as_list(slot_name="file_timeseries", slot_type=TimeSeriesData, key_name="name", keyed=True)
+
+        self._normalize_inlined_as_list(slot_name="file_visual", slot_type=ImageData, key_name="name", keyed=True)
 
         if self.fictive_time is not None and not isinstance(self.fictive_time, float):
             self.fictive_time = float(self.fictive_time)
@@ -564,38 +573,143 @@ class ValidBenchmarkVersion(EnumDefinitionImpl):
                 PermissibleValue(text="1",
                                  description="Published version.") )
 
-class CsvFileTypes(EnumDefinitionImpl):
+class CompressedFiles(EnumDefinitionImpl):
     """
-    Valid CSV file extensions.
+    Valid compressed archive file extensions.
     """
-    csv = PermissibleValue(text="csv",
-                             description="Comma-separated values.",
+    bz2 = PermissibleValue(text="bz2",
+                             description="Bzip-2 file extension.",
                              meaning=None)
-
-    _defn = EnumDefinition(
-        name="CsvFileTypes",
-        description="Valid CSV file extensions.",
-    )
-
-class TarballTypes(EnumDefinitionImpl):
-    """
-    Valid tarball file extensions.
-    """
+    gz = PermissibleValue(text="gz",
+                           description="GZip file extension.",
+                           meaning=None)
     tgz = PermissibleValue(text="tgz",
                              description="Shorthand tarball extension.",
                              meaning=None)
+    zip = PermissibleValue(text="zip",
+                             description="Zip file extension.",
+                             meaning=None)
 
     _defn = EnumDefinition(
-        name="TarballTypes",
-        description="Valid tarball file extensions.",
+        name="CompressedFiles",
+        description="Valid compressed archive file extensions.",
     )
 
     @classmethod
     def _addvals(cls):
+        setattr(cls, "7z",
+                PermissibleValue(text="7z",
+                                 description="7zip file extension.",
+                                 meaning=None) )
         setattr(cls, "tar.gz",
                 PermissibleValue(text="tar.gz",
                                  description="Gzipped Tar extension.",
                                  meaning=None) )
+
+class DataFiles(EnumDefinitionImpl):
+    """
+    Valid raw or transformed spatial phase-field data file extensions.
+    """
+    csv = PermissibleValue(text="csv",
+                             description="Comma-separated values.",
+                             meaning=None)
+    hdf5 = PermissibleValue(text="hdf5",
+                               description="Hierarchical HDF5 data.",
+                               meaning=None)
+    pvti = PermissibleValue(text="pvti",
+                               description="Parallel VTK ImageData file.",
+                               meaning=None)
+    pvtr = PermissibleValue(text="pvtr",
+                               description="Parallel VTK RectilinearGrid file.",
+                               meaning=None)
+    pvts = PermissibleValue(text="pvts",
+                               description="Parallel VTK StructuredGrid file.",
+                               meaning=None)
+    pvtu = PermissibleValue(text="pvtu",
+                               description="Parallel VTK UnstructuredGrid file.",
+                               meaning=None)
+    tsv = PermissibleValue(text="tsv",
+                             description="Tab-delimited values.",
+                             meaning=None)
+    vti = PermissibleValue(text="vti",
+                             description="VTK ImageData file.",
+                             meaning=None)
+    vtr = PermissibleValue(text="vtr",
+                             description="VTK RectilinearGrid file.",
+                             meaning=None)
+    vts = PermissibleValue(text="vts",
+                             description="VTK StructuredGrid file.",
+                             meaning=None)
+    vtu = PermissibleValue(text="vtu",
+                             description="VTK UnstructuredGrid file.",
+                             meaning=None)
+    xdmf = PermissibleValue(text="xdmf",
+                               description="XML summary with HDF5 data.",
+                               meaning=None)
+
+    _defn = EnumDefinition(
+        name="DataFiles",
+        description="Valid raw or transformed spatial phase-field data file extensions.",
+    )
+
+class ImageFiles(EnumDefinitionImpl):
+    """
+    Valid image and visualization file extensions.
+    """
+    png = PermissibleValue(text="png",
+                             description="Portable Network Graphics image file format.",
+                             meaning=None)
+    pvti = PermissibleValue(text="pvti",
+                               description="Parallel VTK ImageData file.",
+                               meaning=None)
+    pvtr = PermissibleValue(text="pvtr",
+                               description="Parallel VTK RectilinearGrid file.",
+                               meaning=None)
+    pvts = PermissibleValue(text="pvts",
+                               description="Parallel VTK StructuredGrid file.",
+                               meaning=None)
+    pvtu = PermissibleValue(text="pvtu",
+                               description="Parallel VTK UnstructuredGrid file.",
+                               meaning=None)
+    tif = PermissibleValue(text="tif",
+                             description="Tagged Image File Format file.",
+                             meaning=None)
+    tsv = PermissibleValue(text="tsv",
+                             description="Tab-delimited values.",
+                             meaning=None)
+    vti = PermissibleValue(text="vti",
+                             description="VTK ImageData file.",
+                             meaning=None)
+    vtr = PermissibleValue(text="vtr",
+                             description="VTK RectilinearGrid file.",
+                             meaning=None)
+    vts = PermissibleValue(text="vts",
+                             description="VTK StructuredGrid file.",
+                             meaning=None)
+    vtu = PermissibleValue(text="vtu",
+                             description="VTK UnstructuredGrid file.",
+                             meaning=None)
+
+    _defn = EnumDefinition(
+        name="ImageFiles",
+        description="Valid image and visualization file extensions.",
+    )
+
+class TabularFiles(EnumDefinitionImpl):
+    """
+    Valid tabular file extensions.
+    """
+    csv = PermissibleValue(text="csv",
+                             description="Comma-separated values.",
+                             meaning=None)
+    tsv = PermissibleValue(text="tsv",
+                             description="Tab-delimited values.",
+                             meaning=None)
+
+    _defn = EnumDefinition(
+        name="TabularFiles",
+        description="Valid tabular file extensions.",
+    )
 
 # Slots
 class slots:
@@ -672,6 +786,18 @@ slots.version = Slot(uri="str(uriorcurie)", name="version", curie=None,
 slots.contributors = Slot(uri="str(uriorcurie)", name="contributors", curie=None,
                    model_uri=PFHUB.contributors, domain=None, range=Optional[Union[Dict[Union[str, ContributorId], Union[dict, Contributor]], List[Union[dict, Contributor]]]])
 
+slots.file_archive = Slot(uri=PFHUB.file_archive, name="file_archive", curie=PFHUB.curie('file_archive'),
+                   model_uri=PFHUB.file_archive, domain=None, range=Optional[Union[Dict[Union[str, ArchiveDataName], Union[dict, ArchiveData]], List[Union[dict, ArchiveData]]]])
+
+slots.file_spatial = Slot(uri=PFHUB.file_spatial, name="file_spatial", curie=PFHUB.curie('file_spatial'),
+                   model_uri=PFHUB.file_spatial, domain=None, range=Optional[Union[Dict[Union[str, FieldDataName], Union[dict, FieldData]], List[Union[dict, FieldData]]]])
+
+slots.file_timeseries = Slot(uri=PFHUB.file_timeseries, name="file_timeseries", curie=PFHUB.curie('file_timeseries'),
+                   model_uri=PFHUB.file_timeseries, domain=None, range=Optional[Union[Dict[Union[str, TimeSeriesDataName], Union[dict, TimeSeriesData]], List[Union[dict, TimeSeriesData]]]])
+
+slots.file_visual = Slot(uri=PFHUB.file_visual, name="file_visual", curie=PFHUB.curie('file_visual'),
+                   model_uri=PFHUB.file_visual, domain=None, range=Optional[Union[Dict[Union[str, ImageDataName], Union[dict, ImageData]], List[Union[dict, ImageData]]]])
+
 slots.framework = Slot(uri="str(uriorcurie)", name="framework", curie=None,
                    model_uri=PFHUB.framework, domain=None, range=Optional[Union[Dict[Union[str, SoftwareUrl], Union[dict, Software]], List[Union[dict, Software]]]])
 
@@ -687,23 +813,17 @@ slots.results = Slot(uri=PFHUB.results, name="results", curie=PFHUB.curie('resul
 slots.schema = Slot(uri=PFHUB.schema, name="schema", curie=PFHUB.curie('schema'),
                    model_uri=PFHUB.schema, domain=None, range=Optional[Union[dict, SourceCode]])
 
-slots.csv_data = Slot(uri=PFHUB.csv_data, name="csv_data", curie=PFHUB.curie('csv_data'),
-                   model_uri=PFHUB.csv_data, domain=None, range=Optional[Union[Dict[Union[str, CsvFileName], Union[dict, CsvFile]], List[Union[dict, CsvFile]]]])
-
-slots.raw_data = Slot(uri=PFHUB.raw_data, name="raw_data", curie=PFHUB.curie('raw_data'),
-                   model_uri=PFHUB.raw_data, domain=None, range=Optional[Union[Dict[Union[str, DataFileName], Union[dict, DataFile]], List[Union[dict, DataFile]]]])
-
-slots.viz_data = Slot(uri=PFHUB.viz_data, name="viz_data", curie=PFHUB.curie('viz_data'),
-                   model_uri=PFHUB.viz_data, domain=None, range=Optional[Union[Dict[Union[str, VisualizationFileName], Union[dict, VisualizationFile]], List[Union[dict, VisualizationFile]]]])
-
 slots.File_name = Slot(uri="str(uriorcurie)", name="File_name", curie=None,
                    model_uri=PFHUB.File_name, domain=File, range=Union[str, FileName])
 
-slots.CsvFile_format = Slot(uri="str(uriorcurie)", name="CsvFile_format", curie=None,
-                   model_uri=PFHUB.CsvFile_format, domain=CsvFile, range=Optional[Union[str, "CsvFileTypes"]])
+slots.ArchiveData_format = Slot(uri="str(uriorcurie)", name="ArchiveData_format", curie=None,
+                   model_uri=PFHUB.ArchiveData_format, domain=ArchiveData, range=Optional[Union[str, "CompressedFiles"]])
 
-slots.Tarball_format = Slot(uri="str(uriorcurie)", name="Tarball_format", curie=None,
-                   model_uri=PFHUB.Tarball_format, domain=Tarball, range=Optional[Union[str, "TarballTypes"]])
+slots.TimeSeriesData_format = Slot(uri="str(uriorcurie)", name="TimeSeriesData_format", curie=None,
+                   model_uri=PFHUB.TimeSeriesData_format, domain=TimeSeriesData, range=Optional[Union[str, "TabularFiles"]])
+
+slots.ImageData_format = Slot(uri="str(uriorcurie)", name="ImageData_format", curie=None,
+                   model_uri=PFHUB.ImageData_format, domain=ImageData, range=Optional[Union[str, "ImageFiles"]])
 
 slots.Software_url = Slot(uri="str(uriorcurie)", name="Software_url", curie=None,
                    model_uri=PFHUB.Software_url, domain=Software, range=Union[str, SoftwareUrl])

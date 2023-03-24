@@ -81,43 +81,49 @@ classes:
       name:
         identifier: true
 
-  CsvFile:
+  ArchiveData:
+    description: >-
+      Specialization of a pfhub:File containing a compressed data archive.
+    is_a: File
+    slot_usage:
+      format:
+        range: CompressedFiles
+
+  FieldData:
+    description: >-
+      Specialization of a pfhub:File representing field variables in a
+      simulation domain using a format appropriate for the application.
+    is_a: File
+
+  TimeSeriesData:
     class_uri: https://en.wikipedia.org/wiki/Comma-separated_values
     description: >-
-      Data represented by Comma-separated values in plain text.
+      Specialization of a pfhub:File representing a time series in
+      plain text using named columns of comma-separated values.
     is_a: File
     slots:
       - columns
     slot_usage:
       format:
-        range: CsvFileTypes
+        range: TabularFiles
 
-  DataFile:
+  ImageData:
     description: >-
-      Data represented in an application-specific or binary format.
-    is_a: File
-
-  Tarball:
-    description: >-
-      Gzip-compressed Tar data archive.
+      Specialization of a pfhub:File for images and visualization data.
     is_a: File
     slot_usage:
       format:
-        range: TarballTypes
-
-  VisualizationFile:
-    description: >-
-      Visualization data.
-    is_a: File
+        range: ImageFiles
 
   Results:
     class_uri: https://schema.org/Dataset
     description: >-
       Runtime information and output from a simulation.
     slots:
-      - csv_data
-      - raw_data
-      - viz_data
+      - file_archive
+      - file_spatial
+      - file_timeseries
+      - file_visual
       - fictive_time
       - hardware
       - memory_in_kb
@@ -148,6 +154,7 @@ classes:
     slot_usage:
       url:
         identifier: true
+
 
 slots:
   id:
@@ -310,6 +317,34 @@ slots:
     range: Contributor
     slot_uri: https://schema.org/contributor
 
+  file_archive:
+    description: >-
+      Compressed data.
+    inlined_as_list: true
+    multivalued: true
+    range: ArchiveData
+
+  file_spatial:
+    description: >-
+      Raw data output from a simulation.
+    inlined_as_list: true
+    multivalued: true
+    range: FieldData
+
+  file_timeseries:
+    description: >-
+      Columnar timeseries data from a simulation.
+    inlined_as_list: true
+    multivalued: true
+    range: TimeSeriesData
+
+  file_visual:
+    description: >-
+      Visualization output from a simulation.
+    inlined_as_list: true
+    multivalued: true
+    range: ImageData
+
   framework:
     description: >-
       A computer program or library
@@ -344,26 +379,6 @@ slots:
     multivalued: false
     range: SourceCode
 
-  csv_data:
-    description: >-
-      Tabular output from a simulation.
-    inlined_as_list: true
-    multivalued: true
-    range: CsvFile
-
-  raw_data:
-    description: >-
-      Raw data output from a simulation.
-    inlined_as_list: true
-    multivalued: true
-    range: DataFile
-
-  viz_data:
-    description: >-
-      Visualization output from a simulation.
-    inlined_as_list: true
-    multivalued: true
-    range: VisualizationFile
 
 # === Enums ===
 
@@ -469,6 +484,7 @@ enums:
         description: >-
           Homogeneous nucleation with seeds at random times.
 
+
   ValidBenchmarkVersion:
     description: >-
       Known versions of the accepted PFHub Benchmark Problems.
@@ -480,19 +496,23 @@ enums:
         description: >-
           Published version.
 
-  CsvFileTypes:
-    description: >-
-      Valid CSV file extensions.
-    permissible_values:
-      csv:
-        description: >-
-          Comma-separated values.
-        meaning: https://www.iana.org/assignments/media-types/text/csv
 
-  TarballTypes:
+  CompressedFiles:
     description: >-
-      Valid tarball file extensions.
+      Valid compressed archive file extensions.
     permissible_values:
+      7z:
+        description: >-
+          7zip file extension.
+        meaning: https://www.iana.org/assignments/media-types/application/x-7z-compressed
+      bz2:
+        description: >-
+          Bzip-2 file extension.
+        meaning: https://www.iana.org/assignments/media-types/application/x-bzip2
+      gz:
+        description: >-
+          GZip file extension.
+        meaning: https://www.iana.org/assignments/media-types/application/gzip
       tgz:
         description: >-
           Shorthand tarball extension.
@@ -501,3 +521,123 @@ enums:
         description: >-
           Gzipped Tar extension.
         meaning: https://www.iana.org/assignments/media-types/application/x-gtar
+      zip:
+        description: >-
+          Zip file extension.
+        meaning: https://www.iana.org/assignments/media-types/application/zip
+
+
+  DataFiles:
+    description: >-
+      Valid raw or transformed spatial phase-field data file extensions.
+    permissible_values:
+      csv:
+        description: >-
+          Comma-separated values.
+        meaning: https://www.iana.org/assignments/media-types/text/csv
+      hdf5:
+        description: >-
+          Hierarchical HDF5 data.
+        meaning: https://docs.hdfgroup.org/hdf5/develop/_intro_h_d_f5.html
+      pvti:
+        description: >-
+          Parallel VTK ImageData file.
+        meaning: https://www.vtk.org/doc/nightly/html/classvtkImageData.html#details
+      pvtr:
+        description: >-
+          Parallel VTK RectilinearGrid file.
+        meaning: https://www.vtk.org/doc/nightly/html/classvtkRectilinearGrid.html#details
+      pvts:
+        description: >-
+          Parallel VTK StructuredGrid file.
+        meaning: https://www.vtk.org/doc/nightly/html/classvtkStructuredGrid.html#details
+      pvtu:
+        description: >-
+          Parallel VTK UnstructuredGrid file.
+        meaning: https://www.vtk.org/doc/nightly/html/classvtkUnstructuredGrid.html#details
+      tsv:
+        description: >-
+          Tab-delimited values.
+        meaning: https://www.iana.org/assignments/media-types/text/tsv
+      vti:
+        description: >-
+          VTK ImageData file.
+        meaning: https://www.vtk.org/doc/nightly/html/classvtkImageData.html#details
+      vtr:
+        description: >-
+          VTK RectilinearGrid file.
+        meaning: https://www.vtk.org/doc/nightly/html/classvtkRectilinearGrid.html#details
+      vts:
+        description: >-
+          VTK StructuredGrid file.
+        meaning: https://www.vtk.org/doc/nightly/html/classvtkStructuredGrid.htmOAl#details
+      vtu:
+        description: >-
+          VTK UnstructuredGrid file.
+        meaning: https://www.vtk.org/doc/nightly/html/classvtkUnstructuredGrid.html#details
+      xdmf:
+        description: >-
+          XML summary with HDF5 data.
+        meaning: https://www.xdmf.org/index.php/XDMF_Model_and_Format
+
+  ImageFiles:
+    description: >-
+      Valid image and visualization file extensions.
+    permissible_values:
+      png:
+        description: >-
+          Portable Network Graphics image file format.
+        meaning: https://www.iana.org/assignments/media-types/image/png
+      pvti:
+        description: >-
+          Parallel VTK ImageData file.
+        meaning: https://www.vtk.org/doc/nightly/html/classvtkImageData.html#details
+      pvtr:
+        description: >-
+          Parallel VTK RectilinearGrid file.
+        meaning: https://www.vtk.org/doc/nightly/html/classvtkRectilinearGrid.html#details
+      pvts:
+        description: >-
+          Parallel VTK StructuredGrid file.
+        meaning: https://www.vtk.org/doc/nightly/html/classvtkStructuredGrid.html#details
+      pvtu:
+        description: >-
+          Parallel VTK UnstructuredGrid file.
+        meaning: https://www.vtk.org/doc/nightly/html/classvtkUnstructuredGrid.html#details
+      tif:
+        description: >-
+          Tagged Image File Format file.
+        meaning: https://www.iana.org/assignments/media-types/image/tif
+      tsv:
+        description: >-
+          Tab-delimited values.
+        meaning: https://www.iana.org/assignments/media-types/text/tsv
+      vti:
+        description: >-
+          VTK ImageData file.
+        meaning: https://www.vtk.org/doc/nightly/html/classvtkImageData.html#details
+      vtr:
+        description: >-
+          VTK RectilinearGrid file.
+        meaning: https://www.vtk.org/doc/nightly/html/classvtkRectilinearGrid.html#details
+      vts:
+        description: >-
+          VTK StructuredGrid file.
+        meaning: https://www.vtk.org/doc/nightly/html/classvtkStructuredGrid.htmOAl#details
+      vtu:
+        description: >-
+          VTK UnstructuredGrid file.
+        meaning: https://www.vtk.org/doc/nightly/html/classvtkUnstructuredGrid.html#details
+
+  TabularFiles:
+    description: >-
+      Valid tabular file extensions.
+    permissible_values:
+      csv:
+        description: >-
+          Comma-separated values.
+        meaning: https://www.iana.org/assignments/media-types/text/csv
+      tsv:
+        description: >-
+          Tab-delimited values.
+        meaning: https://www.iana.org/assignments/media-types/text/tsv

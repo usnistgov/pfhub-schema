@@ -28,7 +28,7 @@ implementation:
   commit: e8fc74f
 
 results:
-  csv_data:
+  file_timeseries:
     - name: >-
         free_energy_1a.csv
       format: csv

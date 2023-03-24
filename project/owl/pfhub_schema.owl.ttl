@@ -32,63 +32,53 @@ linkml:topValue a owl:DatatypeProperty ;
     pav:version "0.1.0" ;
     rdfs:seeAlso "https://pages.nist.gov/pfhub",
         "https://pages.nist.gov/pfhub-schema" ;
-    linkml:generation_date "2023-03-23T13:28:11" ;
+    linkml:generation_date "2023-03-24T14:24:46" ;
     linkml:metamodel_version "1.7.0" ;
     linkml:source_file "pfhub_schema.yaml" ;
-    linkml:source_file_date "2023-03-23T13:22:54" ;
-    linkml:source_file_size 13232 .
-
-pfhub:Tarball a owl:Class,
-        linkml:ClassDefinition ;
-    rdfs:label "Tarball" ;
-    rdfs:subClassOf [ a owl:Restriction ;
-            owl:maxQualifiedCardinality 1 ;
-            owl:onClass pfhub:TarballTypes ;
-            owl:onProperty <https://schema.org/encodingFormat> ],
-        pfhub:File ;
-    skos:definition "Gzip-compressed Tar data archive." .
+    linkml:source_file_date "2023-03-24T14:24:19" ;
+    linkml:source_file_size 18347 .
 
 pfhub:BenchmarkResult a owl:Class,
         linkml:ClassDefinition ;
     rdfs:label "BenchmarkResult" ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:maxQualifiedCardinality 1 ;
-            owl:onClass linkml:String ;
-            owl:onProperty <https://schema.org/abstract> ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom pfhub:Contributor ;
-            owl:onProperty <https://schema.org/contributor> ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom pfhub:Software ;
-            owl:onProperty <https://schema.org/SoftwareApplication> ],
+            owl:onClass pfhub:Results ;
+            owl:onProperty pfhub:results ],
         [ a owl:Restriction ;
             owl:maxQualifiedCardinality 1 ;
             owl:onClass linkml:Date ;
             owl:onProperty <https://schema.org/dateCreated> ],
         [ a owl:Restriction ;
+            owl:allValuesFrom pfhub:Software ;
+            owl:onProperty <https://schema.org/SoftwareApplication> ],
+        [ a owl:Restriction ;
+            owl:onClass pfhub:ValidBenchmarkProblem ;
+            owl:onProperty pfhub:benchmark_problem ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom pfhub:Contributor ;
+            owl:onProperty <https://schema.org/contributor> ],
+        [ a owl:Restriction ;
             owl:maxQualifiedCardinality 1 ;
-            owl:onClass pfhub:Results ;
-            owl:onProperty pfhub:results ],
+            owl:onClass pfhub:SourceCode ;
+            owl:onProperty pfhub:schema ],
+        [ a owl:Restriction ;
+            owl:onClass linkml:Uriorcurie ;
+            owl:onProperty <https://schema.org/identifier> ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
+            owl:onClass pfhub:SourceCode ;
+            owl:onProperty pfhub:implementation ],
         [ a owl:Restriction ;
             owl:onClass linkml:Integer ;
             owl:onProperty pfhub:benchmark_version ;
             owl:qualifiedCardinality 1 ],
         [ a owl:Restriction ;
             owl:maxQualifiedCardinality 1 ;
-            owl:onClass pfhub:SourceCode ;
-            owl:onProperty pfhub:schema ],
-        [ a owl:Restriction ;
-            owl:maxQualifiedCardinality 1 ;
-            owl:onClass pfhub:SourceCode ;
-            owl:onProperty pfhub:implementation ],
-        [ a owl:Restriction ;
-            owl:onClass pfhub:ValidBenchmarkProblem ;
-            owl:onProperty pfhub:benchmark_problem ;
-            owl:qualifiedCardinality 1 ],
-        [ a owl:Restriction ;
-            owl:onClass linkml:Uriorcurie ;
-            owl:onProperty <https://schema.org/identifier> ;
-            owl:qualifiedCardinality 1 ] ;
+            owl:onClass linkml:String ;
+            owl:onProperty <https://schema.org/abstract> ] ;
     skos:definition "Root and context for this Benchmark Problem solution." .
 
 pfhub:affiliation a owl:ObjectProperty,
@@ -115,11 +105,29 @@ pfhub:columns a owl:ObjectProperty,
     rdfs:range linkml:String ;
     skos:definition "Column names applied to tabular data." .
 
-pfhub:csv_data a owl:ObjectProperty,
+pfhub:file_archive a owl:ObjectProperty,
         linkml:SlotDefinition ;
-    rdfs:label "csv_data" ;
-    rdfs:range pfhub:CsvFile ;
-    skos:definition "Tabular output from a simulation." .
+    rdfs:label "file_archive" ;
+    rdfs:range pfhub:ArchiveData ;
+    skos:definition "Compressed data." .
+
+pfhub:file_spatial a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "file_spatial" ;
+    rdfs:range pfhub:FieldData ;
+    skos:definition "Raw data output from a simulation." .
+
+pfhub:file_timeseries a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "file_timeseries" ;
+    rdfs:range pfhub:TimeSeriesData ;
+    skos:definition "Columnar timeseries data from a simulation." .
+
+pfhub:file_visual a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "file_visual" ;
+    rdfs:range pfhub:ImageData ;
+    skos:definition "Visualization output from a simulation." .
 
 pfhub:hardware a owl:ObjectProperty,
         linkml:SlotDefinition ;
@@ -139,12 +147,6 @@ pfhub:memory_in_kb a owl:ObjectProperty,
     rdfs:range linkml:Integer ;
     skos:definition "Memory capacity required for this simulation." .
 
-pfhub:raw_data a owl:ObjectProperty,
-        linkml:SlotDefinition ;
-    rdfs:label "raw_data" ;
-    rdfs:range pfhub:DataFile ;
-    skos:definition "Raw data output from a simulation." .
-
 pfhub:results a owl:ObjectProperty,
         linkml:SlotDefinition ;
     rdfs:label "results" ;
@@ -156,12 +158,6 @@ pfhub:schema a owl:ObjectProperty,
     rdfs:label "schema" ;
     rdfs:range pfhub:SourceCode ;
     skos:definition "Version of the PFHub Schema this record conforms to." .
-
-pfhub:viz_data a owl:ObjectProperty,
-        linkml:SlotDefinition ;
-    rdfs:label "viz_data" ;
-    rdfs:range pfhub:VisualizationFile ;
-    skos:definition "Visualization output from a simulation." .
 
 <http://purl.obolibrary.org/obo/NCIT_C18132> a owl:ObjectProperty,
         linkml:SlotDefinition ;
@@ -183,6 +179,10 @@ pfhub:viz_data a owl:ObjectProperty,
     rdfs:range linkml:String ;
     skos:definition "Computer processor architecture required for this simulation." ;
     skos:exactMatch <http://www.fairsharing.org/ontology/subject/SRAO_0000258> .
+
+<https://docs.hdfgroup.org/hdf5/develop/_intro_h_d_f5.html> a owl:Class,
+        pfhub:DataFiles ;
+    rdfs:label "hdf5" .
 
 <https://schema.org/Number> a owl:ObjectProperty,
         linkml:SlotDefinition .
@@ -236,37 +236,45 @@ pfhub:viz_data a owl:ObjectProperty,
     skos:definition "Semantic version of a software project." ;
     skos:exactMatch <https://schema.org/softwareVersion> .
 
-pfhub:CsvFile a owl:Class,
+pfhub:ArchiveData a owl:Class,
         linkml:ClassDefinition ;
-    rdfs:label "CsvFile" ;
+    rdfs:label "ArchiveData" ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:maxQualifiedCardinality 1 ;
-            owl:onClass pfhub:CsvFileTypes ;
+            owl:onClass pfhub:CompressedFiles ;
             owl:onProperty <https://schema.org/encodingFormat> ],
-        [ a owl:Restriction ;
+        pfhub:File ;
+    skos:definition "Specialization of a pfhub:File containing a compressed data archive." .
+
+pfhub:FieldData a owl:Class,
+        linkml:ClassDefinition ;
+    rdfs:label "FieldData" ;
+    rdfs:subClassOf pfhub:File ;
+    skos:definition "Specialization of a pfhub:File representing field variables in a simulation domain using a format appropriate for the application." .
+
+pfhub:ImageData a owl:Class,
+        linkml:ClassDefinition ;
+    rdfs:label "ImageData" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
+            owl:onClass pfhub:ImageFiles ;
+            owl:onProperty <https://schema.org/encodingFormat> ],
+        pfhub:File ;
+    skos:definition "Specialization of a pfhub:File for images and visualization data." .
+
+pfhub:TimeSeriesData a owl:Class,
+        linkml:ClassDefinition ;
+    rdfs:label "TimeSeriesData" ;
+    rdfs:subClassOf [ a owl:Restriction ;
             owl:allValuesFrom linkml:String ;
             owl:onProperty pfhub:columns ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
+            owl:onClass pfhub:TabularFiles ;
+            owl:onProperty <https://schema.org/encodingFormat> ],
         pfhub:File ;
-    skos:definition "Data represented by Comma-separated values in plain text." ;
+    skos:definition "Specialization of a pfhub:File representing a time series in plain text using named columns of comma-separated values." ;
     skos:exactMatch <https://en.wikipedia.org/wiki/Comma-separated_values> .
-
-pfhub:CsvFileTypes a owl:Class,
-        linkml:EnumDefinition ;
-    rdfs:label "CsvFileTypes" ;
-    owl:unionOf ( <https://www.iana.org/assignments/media-types/text/csv> ) ;
-    linkml:permissible_values <https://www.iana.org/assignments/media-types/text/csv> .
-
-pfhub:DataFile a owl:Class,
-        linkml:ClassDefinition ;
-    rdfs:label "DataFile" ;
-    rdfs:subClassOf pfhub:File ;
-    skos:definition "Data represented in an application-specific or binary format." .
-
-pfhub:TarballTypes a owl:Class,
-        linkml:EnumDefinition ;
-    rdfs:label "TarballTypes" ;
-    owl:unionOf ( <https://www.iana.org/assignments/media-types/application/x-gtar> <https://www.iana.org/assignments/media-types/application/x-gtar> ) ;
-    linkml:permissible_values <https://www.iana.org/assignments/media-types/application/x-gtar> .
 
 <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#1a> a owl:Class,
         pfhub:ValidBenchmarkProblem ;
@@ -391,15 +399,33 @@ pfhub:ValidBenchmarkVersion a owl:Class,
         pfhub:ValidBenchmarkVersion ;
     rdfs:label "1" .
 
-pfhub:VisualizationFile a owl:Class,
-        linkml:ClassDefinition ;
-    rdfs:label "VisualizationFile" ;
-    rdfs:subClassOf pfhub:File ;
-    skos:definition "Visualization data." .
+<https://www.iana.org/assignments/media-types/application/gzip> a owl:Class,
+        pfhub:CompressedFiles ;
+    rdfs:label "gz" .
 
-<https://www.iana.org/assignments/media-types/text/csv> a owl:Class,
-        pfhub:CsvFileTypes ;
-    rdfs:label "csv" .
+<https://www.iana.org/assignments/media-types/application/x-7z-compressed> a owl:Class,
+        pfhub:CompressedFiles ;
+    rdfs:label "7z" .
+
+<https://www.iana.org/assignments/media-types/application/x-bzip2> a owl:Class,
+        pfhub:CompressedFiles ;
+    rdfs:label "bz2" .
+
+<https://www.iana.org/assignments/media-types/application/zip> a owl:Class,
+        pfhub:CompressedFiles ;
+    rdfs:label "zip" .
+
+<https://www.iana.org/assignments/media-types/image/png> a owl:Class,
+        pfhub:ImageFiles ;
+    rdfs:label "png" .
+
+<https://www.iana.org/assignments/media-types/image/tif> a owl:Class,
+        pfhub:ImageFiles ;
+    rdfs:label "tif" .
+
+<https://www.xdmf.org/index.php/XDMF_Model_and_Format> a owl:Class,
+        pfhub:DataFiles ;
+    rdfs:label "xdmf" .
 
 <https://en.wikipedia.org/wiki/Commit_(version_control)> a owl:ObjectProperty,
         linkml:SlotDefinition ;
@@ -434,16 +460,16 @@ pfhub:ComputeResource a owl:Class,
     rdfs:label "ComputeResource" ;
     rdfs:subClassOf [ a owl:Restriction ;
             owl:maxQualifiedCardinality 1 ;
-            owl:onClass linkml:Integer ;
-            owl:onProperty <http://purl.obolibrary.org/obo/NCIT_C64194> ],
+            owl:onClass linkml:String ;
+            owl:onProperty <http://www.fairsharing.org/ontology/subject/SRAO_0000258> ],
         [ a owl:Restriction ;
             owl:maxQualifiedCardinality 1 ;
             owl:onClass linkml:Integer ;
             owl:onProperty <http://purl.obolibrary.org/obo/NCIT_C18132> ],
         [ a owl:Restriction ;
             owl:maxQualifiedCardinality 1 ;
-            owl:onClass linkml:String ;
-            owl:onProperty <http://www.fairsharing.org/ontology/subject/SRAO_0000258> ] ;
+            owl:onClass linkml:Integer ;
+            owl:onProperty <http://purl.obolibrary.org/obo/NCIT_C64194> ] ;
     skos:definition "Summary of the hardware used to execute the simulation." ;
     skos:exactMatch <https://schema.org/softwareRequirements> .
 
@@ -451,23 +477,23 @@ pfhub:Contributor a owl:Class,
         linkml:ClassDefinition ;
     rdfs:label "Contributor" ;
     rdfs:subClassOf [ a owl:Restriction ;
-            owl:allValuesFrom linkml:String ;
-            owl:onProperty pfhub:affiliation ],
+            owl:maxQualifiedCardinality 1 ;
+            owl:onClass linkml:String ;
+            owl:onProperty <https://schema.org/email> ],
         [ a owl:Restriction ;
             owl:allValuesFrom linkml:Uriorcurie ;
             owl:onProperty <https://schema.org/member> ],
-        [ a owl:Restriction ;
-            owl:onClass linkml:Uriorcurie ;
-            owl:onProperty <https://schema.org/identifier> ;
-            owl:qualifiedCardinality 1 ],
         [ a owl:Restriction ;
             owl:maxQualifiedCardinality 1 ;
             owl:onClass linkml:String ;
             owl:onProperty <https://schema.org/name> ],
         [ a owl:Restriction ;
-            owl:maxQualifiedCardinality 1 ;
-            owl:onClass linkml:String ;
-            owl:onProperty <https://schema.org/email> ] ;
+            owl:allValuesFrom linkml:String ;
+            owl:onProperty pfhub:affiliation ],
+        [ a owl:Restriction ;
+            owl:onClass linkml:Uriorcurie ;
+            owl:onProperty <https://schema.org/identifier> ;
+            owl:qualifiedCardinality 1 ] ;
     skos:definition "Someone who contributed to this solution." ;
     skos:exactMatch <https://schema.org/Person> .
 
@@ -475,18 +501,8 @@ pfhub:Results a owl:Class,
         linkml:ClassDefinition ;
     rdfs:label "Results" ;
     rdfs:subClassOf [ a owl:Restriction ;
-            owl:allValuesFrom pfhub:CsvFile ;
-            owl:onProperty pfhub:csv_data ],
-        [ a owl:Restriction ;
-            owl:maxQualifiedCardinality 1 ;
-            owl:onClass linkml:Integer ;
-            owl:onProperty pfhub:memory_in_kb ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom pfhub:DataFile ;
-            owl:onProperty pfhub:raw_data ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom pfhub:VisualizationFile ;
-            owl:onProperty pfhub:viz_data ],
+            owl:allValuesFrom pfhub:TimeSeriesData ;
+            owl:onProperty pfhub:file_timeseries ],
         [ a owl:Restriction ;
             owl:maxQualifiedCardinality 1 ;
             owl:onClass linkml:Float ;
@@ -497,7 +513,20 @@ pfhub:Results a owl:Class,
             owl:onProperty <https://schema.org/Number> ],
         [ a owl:Restriction ;
             owl:allValuesFrom pfhub:ComputeResource ;
-            owl:onProperty pfhub:hardware ] ;
+            owl:onProperty pfhub:hardware ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom pfhub:FieldData ;
+            owl:onProperty pfhub:file_spatial ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
+            owl:onClass linkml:Integer ;
+            owl:onProperty pfhub:memory_in_kb ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom pfhub:ArchiveData ;
+            owl:onProperty pfhub:file_archive ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom pfhub:ImageData ;
+            owl:onProperty pfhub:file_visual ] ;
     skos:definition "Runtime information and output from a simulation." ;
     skos:exactMatch <https://schema.org/Dataset> .
 
@@ -505,9 +534,13 @@ pfhub:Software a owl:Class,
         linkml:ClassDefinition ;
     rdfs:label "Software" ;
     rdfs:subClassOf [ a owl:Restriction ;
+            owl:onClass linkml:Uriorcurie ;
+            owl:onProperty <https://schema.org/url> ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
             owl:maxQualifiedCardinality 1 ;
-            owl:onClass linkml:String ;
-            owl:onProperty <https://schema.org/softwareVersion> ],
+            owl:onClass linkml:Uriorcurie ;
+            owl:onProperty <https://schema.org/downloadUrl> ],
         [ a owl:Restriction ;
             owl:maxQualifiedCardinality 1 ;
             owl:onClass linkml:String ;
@@ -515,22 +548,40 @@ pfhub:Software a owl:Class,
         [ a owl:Restriction ;
             owl:maxQualifiedCardinality 1 ;
             owl:onClass linkml:String ;
-            owl:onProperty <https://schema.org/name> ],
+            owl:onProperty <https://schema.org/softwareVersion> ],
         [ a owl:Restriction ;
             owl:maxQualifiedCardinality 1 ;
-            owl:onClass linkml:Uriorcurie ;
-            owl:onProperty <https://schema.org/downloadUrl> ],
-        [ a owl:Restriction ;
-            owl:onClass linkml:Uriorcurie ;
-            owl:onProperty <https://schema.org/url> ;
-            owl:qualifiedCardinality 1 ] ;
+            owl:onClass linkml:String ;
+            owl:onProperty <https://schema.org/name> ] ;
     skos:definition "A software product, download, or repository." ;
     skos:exactMatch <https://schema.org/SoftwareApplication> .
 
+pfhub:TabularFiles a owl:Class,
+        linkml:EnumDefinition ;
+    rdfs:label "TabularFiles" ;
+    owl:unionOf ( <https://www.iana.org/assignments/media-types/text/csv> <https://www.iana.org/assignments/media-types/text/tsv> ) ;
+    linkml:permissible_values <https://www.iana.org/assignments/media-types/text/csv>,
+        <https://www.iana.org/assignments/media-types/text/tsv> .
+
 <https://www.iana.org/assignments/media-types/application/x-gtar> a owl:Class,
-        pfhub:TarballTypes ;
+        pfhub:CompressedFiles ;
     rdfs:label "tar.gz",
         "tgz" .
+
+<https://www.iana.org/assignments/media-types/text/csv> a owl:Class,
+        pfhub:DataFiles,
+        pfhub:TabularFiles ;
+    rdfs:label "csv" .
+
+<https://www.vtk.org/doc/nightly/html/classvtkStructuredGrid.htmOAl#details> a owl:Class,
+        pfhub:DataFiles,
+        pfhub:ImageFiles ;
+    rdfs:label "vts" .
+
+<https://www.vtk.org/doc/nightly/html/classvtkStructuredGrid.html#details> a owl:Class,
+        pfhub:DataFiles,
+        pfhub:ImageFiles ;
+    rdfs:label "pvts" .
 
 <https://schema.org/encodingFormat> a owl:ObjectProperty,
         linkml:SlotDefinition ;
@@ -550,13 +601,13 @@ pfhub:File a owl:Class,
         linkml:ClassDefinition ;
     rdfs:label "File" ;
     rdfs:subClassOf [ a owl:Restriction ;
-            owl:maxQualifiedCardinality 1 ;
-            owl:onClass linkml:String ;
-            owl:onProperty <https://schema.org/encodingFormat> ],
-        [ a owl:Restriction ;
             owl:onClass linkml:String ;
             owl:onProperty <https://schema.org/name> ;
-            owl:qualifiedCardinality 1 ] ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
+            owl:onClass linkml:String ;
+            owl:onProperty <https://schema.org/encodingFormat> ] ;
     skos:definition "A generic electronic information container." ;
     skos:exactMatch <https://schema.org/DigitalDocument> .
 
@@ -564,13 +615,13 @@ pfhub:SourceCode a owl:Class,
         linkml:ClassDefinition ;
     rdfs:label "SourceCode" ;
     rdfs:subClassOf [ a owl:Restriction ;
-            owl:onClass linkml:Uriorcurie ;
-            owl:onProperty <https://schema.org/url> ;
-            owl:qualifiedCardinality 1 ],
-        [ a owl:Restriction ;
             owl:maxQualifiedCardinality 1 ;
             owl:onClass linkml:String ;
             owl:onProperty <https://schema.org/name> ],
+        [ a owl:Restriction ;
+            owl:onClass linkml:Uriorcurie ;
+            owl:onProperty <https://schema.org/url> ;
+            owl:qualifiedCardinality 1 ],
         [ a owl:Restriction ;
             owl:maxQualifiedCardinality 1 ;
             owl:onClass linkml:String ;
@@ -578,11 +629,69 @@ pfhub:SourceCode a owl:Class,
     skos:definition "Link to the authors' implementation of the benchmark problem." ;
     skos:exactMatch <https://schema.org/SoftwareSourceCode> .
 
+pfhub:CompressedFiles a owl:Class,
+        linkml:EnumDefinition ;
+    rdfs:label "CompressedFiles" ;
+    owl:unionOf ( <https://www.iana.org/assignments/media-types/application/x-7z-compressed> <https://www.iana.org/assignments/media-types/application/x-bzip2> <https://www.iana.org/assignments/media-types/application/gzip> <https://www.iana.org/assignments/media-types/application/x-gtar> <https://www.iana.org/assignments/media-types/application/x-gtar> <https://www.iana.org/assignments/media-types/application/zip> ) ;
+    linkml:permissible_values <https://www.iana.org/assignments/media-types/application/gzip>,
+        <https://www.iana.org/assignments/media-types/application/x-7z-compressed>,
+        <https://www.iana.org/assignments/media-types/application/x-bzip2>,
+        <https://www.iana.org/assignments/media-types/application/x-gtar>,
+        <https://www.iana.org/assignments/media-types/application/zip> .
+
+<https://www.iana.org/assignments/media-types/text/tsv> a owl:Class,
+        pfhub:DataFiles,
+        pfhub:ImageFiles,
+        pfhub:TabularFiles ;
+    rdfs:label "tsv" .
+
+<https://www.vtk.org/doc/nightly/html/classvtkImageData.html#details> a owl:Class,
+        pfhub:DataFiles,
+        pfhub:ImageFiles ;
+    rdfs:label "pvti",
+        "vti" .
+
+<https://www.vtk.org/doc/nightly/html/classvtkRectilinearGrid.html#details> a owl:Class,
+        pfhub:DataFiles,
+        pfhub:ImageFiles ;
+    rdfs:label "pvtr",
+        "vtr" .
+
+<https://www.vtk.org/doc/nightly/html/classvtkUnstructuredGrid.html#details> a owl:Class,
+        pfhub:DataFiles,
+        pfhub:ImageFiles ;
+    rdfs:label "pvtu",
+        "vtu" .
+
+pfhub:DataFiles a owl:Class,
+        linkml:EnumDefinition ;
+    rdfs:label "DataFiles" ;
+    owl:unionOf ( <https://www.iana.org/assignments/media-types/text/csv> <https://docs.hdfgroup.org/hdf5/develop/_intro_h_d_f5.html> <https://www.vtk.org/doc/nightly/html/classvtkImageData.html#details> <https://www.vtk.org/doc/nightly/html/classvtkRectilinearGrid.html#details> <https://www.vtk.org/doc/nightly/html/classvtkStructuredGrid.html#details> <https://www.vtk.org/doc/nightly/html/classvtkUnstructuredGrid.html#details> <https://www.iana.org/assignments/media-types/text/tsv> <https://www.vtk.org/doc/nightly/html/classvtkImageData.html#details> <https://www.vtk.org/doc/nightly/html/classvtkRectilinearGrid.html#details> <https://www.vtk.org/doc/nightly/html/classvtkStructuredGrid.htmOAl#details> <https://www.vtk.org/doc/nightly/html/classvtkUnstructuredGrid.html#details> <https://www.xdmf.org/index.php/XDMF_Model_and_Format> ) ;
+    linkml:permissible_values <https://docs.hdfgroup.org/hdf5/develop/_intro_h_d_f5.html>,
+        <https://www.iana.org/assignments/media-types/text/csv>,
+        <https://www.iana.org/assignments/media-types/text/tsv>,
+        <https://www.vtk.org/doc/nightly/html/classvtkImageData.html#details>,
+        <https://www.vtk.org/doc/nightly/html/classvtkRectilinearGrid.html#details>,
+        <https://www.vtk.org/doc/nightly/html/classvtkStructuredGrid.htmOAl#details>,
+        <https://www.vtk.org/doc/nightly/html/classvtkStructuredGrid.html#details>,
+        <https://www.vtk.org/doc/nightly/html/classvtkUnstructuredGrid.html#details>,
+        <https://www.xdmf.org/index.php/XDMF_Model_and_Format> .
+
+pfhub:ImageFiles a owl:Class,
+        linkml:EnumDefinition ;
+    rdfs:label "ImageFiles" ;
+    owl:unionOf ( <https://www.iana.org/assignments/media-types/image/png> <https://www.vtk.org/doc/nightly/html/classvtkImageData.html#details> <https://www.vtk.org/doc/nightly/html/classvtkRectilinearGrid.html#details> <https://www.vtk.org/doc/nightly/html/classvtkStructuredGrid.html#details> <https://www.vtk.org/doc/nightly/html/classvtkUnstructuredGrid.html#details> <https://www.iana.org/assignments/media-types/image/tif> <https://www.iana.org/assignments/media-types/text/tsv> <https://www.vtk.org/doc/nightly/html/classvtkImageData.html#details> <https://www.vtk.org/doc/nightly/html/classvtkRectilinearGrid.html#details> <https://www.vtk.org/doc/nightly/html/classvtkStructuredGrid.htmOAl#details> <https://www.vtk.org/doc/nightly/html/classvtkUnstructuredGrid.html#details> ) ;
+    linkml:permissible_values <https://www.iana.org/assignments/media-types/image/png>,
+        <https://www.iana.org/assignments/media-types/image/tif>,
+        <https://www.iana.org/assignments/media-types/text/tsv>,
+        <https://www.vtk.org/doc/nightly/html/classvtkImageData.html#details>,
+        <https://www.vtk.org/doc/nightly/html/classvtkRectilinearGrid.html#details>,
+        <https://www.vtk.org/doc/nightly/html/classvtkStructuredGrid.htmOAl#details>,
+        <https://www.vtk.org/doc/nightly/html/classvtkStructuredGrid.html#details>,
+        <https://www.vtk.org/doc/nightly/html/classvtkUnstructuredGrid.html#details> .
+
 linkml:ClassDefinition a owl:Class ;
     rdfs:label "class_definition" .
-
-linkml:SlotDefinition a owl:Class ;
-    rdfs:label "slot_definition" .
 
 pfhub:ValidBenchmarkProblem a owl:Class,
         linkml:EnumDefinition ;
@@ -615,5 +724,8 @@ pfhub:ValidBenchmarkProblem a owl:Class,
         <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#8a>,
         <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#8b>,
         <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#8c> .
+
+linkml:SlotDefinition a owl:Class ;
+    rdfs:label "slot_definition" .
 
 

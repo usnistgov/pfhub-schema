@@ -1,3 +1,9 @@
+type ArchiveData
+  {
+    name: String!
+    format: CompressedFiles
+  }
+
 type BenchmarkResult
   {
     id: Uriorcurie!
@@ -28,14 +34,7 @@ type Contributor
     email: String
   }
 
-type CsvFile
-  {
-    name: String!
-    columns: [String]
-    format: CsvFileTypes
-  }
-
-type DataFile
+type FieldData
   {
     name: String!
     format: String
@@ -47,11 +46,18 @@ interface File
     format: String
   }
 
+type ImageData
+  {
+    name: String!
+    format: ImageFiles
+  }
+
 type Results
   {
-    csvData: [CsvFile]
-    rawData: [DataFile]
-    vizData: [VisualizationFile]
+    fileArchive: [ArchiveData]
+    fileSpatial: [FieldData]
+    fileTimeseries: [TimeSeriesData]
+    fileVisual: [ImageData]
     fictiveTime: Float
     hardware: [ComputeResource]
     memoryInKb: Integer
@@ -74,15 +80,10 @@ type SourceCode
     commit: String
   }
 
-type Tarball
+type TimeSeriesData
   {
     name: String!
-    format: TarballTypes
-  }
-
-type VisualizationFile
-  {
-    name: String!
-    format: String
+    columns: [String]
+    format: TabularFiles
   }
 

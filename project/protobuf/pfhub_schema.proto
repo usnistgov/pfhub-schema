@@ -1,3 +1,9 @@
+// Specialization of a pfhub:File containing a compressed data archive.
+message ArchiveData
+ {
+  string name = 0
+  compressedFiles format = 0
+ }
 // Root and context for this Benchmark Problem solution.
 message BenchmarkResult
  {
@@ -28,25 +34,25 @@ message Contributor
  repeated  string affiliation = 0
   string email = 0
  }
-// Data represented by Comma-separated values in plain text.
-message CsvFile
- {
-  string name = 0
- repeated  string columns = 0
-  csvFileTypes format = 0
- }
-// Data represented in an application-specific or binary format.
-message DataFile
+// Specialization of a pfhub:File representing field variables in a simulation domain using a format appropriate for the application.
+message FieldData
  {
   string name = 0
   string format = 0
  }
+// Specialization of a pfhub:File for images and visualization data.
+message ImageData
+ {
+  string name = 0
+  imageFiles format = 0
+ }
 // Runtime information and output from a simulation.
 message Results
  {
- repeated  csvFile csvData = 0
- repeated  dataFile rawData = 0
- repeated  visualizationFile vizData = 0
+ repeated  archiveData fileArchive = 0
+ repeated  fieldData fileSpatial = 0
+ repeated  timeSeriesData fileTimeseries = 0
+ repeated  imageData fileVisual = 0
   float fictiveTime = 0
  repeated  computeResource hardware = 0
   integer memoryInKb = 0
@@ -68,15 +74,10 @@ message SourceCode
   string name = 0
   string commit = 0
  }
-// Gzip-compressed Tar data archive.
-message Tarball
+// Specialization of a pfhub:File representing a time series in plain text using named columns of comma-separated values.
+message TimeSeriesData
  {
   string name = 0
-  tarballTypes format = 0
- }
-// Visualization data.
-message VisualizationFile
- {
-  string name = 0
-  string format = 0
+ repeated  string columns = 0
+  tabularFiles format = 0
  }

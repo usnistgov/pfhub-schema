@@ -36,6 +36,15 @@ linkml:Objectidentifier IRI
 
 linkml:Nodeidentifier NONLITERAL
 
+<ArchiveData> CLOSED {
+    (  $<ArchiveData_tes> (  &<File_tes> ;
+          rdf:type [ <https://schema.org/DigitalDocument> ] ? ;
+          <https://schema.org/encodingFormat> @<CompressedFiles> ?
+       ) ;
+       rdf:type [ <ArchiveData> ]
+    )
+}
+
 <BenchmarkResult> CLOSED {
     (  $<BenchmarkResult_tes> (  <benchmark_problem> @<ValidBenchmarkProblem> ;
           <benchmark_version> @linkml:Integer ;
@@ -70,26 +79,16 @@ linkml:Nodeidentifier NONLITERAL
     )
 }
 
-<CsvFile> CLOSED {
-    (  $<CsvFile_tes> (  &<File_tes> ;
-          rdf:type [ <https://schema.org/DigitalDocument> ] ? ;
-          <columns> @linkml:String * ;
-          <https://schema.org/encodingFormat> @<CsvFileTypes> ?
-       ) ;
-       rdf:type [ <https://en.wikipedia.org/wiki/Comma-separated_values> ]
-    )
-}
-
-<DataFile> CLOSED {
-    (  $<DataFile_tes> (  &<File_tes> ;
+<FieldData> CLOSED {
+    (  $<FieldData_tes> (  &<File_tes> ;
           rdf:type [ <https://schema.org/DigitalDocument> ] ?
        ) ;
-       rdf:type [ <DataFile> ]
+       rdf:type [ <FieldData> ]
     )
 }
 
 <File>  (
-    @<CsvFile> OR @<DataFile> OR @<Tarball> OR @<VisualizationFile>
+    @<ArchiveData> OR @<FieldData> OR @<ImageData> OR @<TimeSeriesData>
 )
 
 <File_struct> {
@@ -98,10 +97,20 @@ linkml:Nodeidentifier NONLITERAL
     )
 }
 
+<ImageData> CLOSED {
+    (  $<ImageData_tes> (  &<File_tes> ;
+          rdf:type [ <https://schema.org/DigitalDocument> ] ? ;
+          <https://schema.org/encodingFormat> @<ImageFiles> ?
+       ) ;
+       rdf:type [ <ImageData> ]
+    )
+}
+
 <Results> CLOSED {
-    (  $<Results_tes> (  <csv_data> @<CsvFile> * ;
-          <raw_data> @<DataFile> * ;
-          <viz_data> @<VisualizationFile> * ;
+    (  $<Results_tes> (  <file_archive> @<ArchiveData> * ;
+          <file_spatial> @<FieldData> * ;
+          <file_timeseries> @<TimeSeriesData> * ;
+          <file_visual> @<ImageData> * ;
           <https://schema.org/Number> @linkml:Float ? ;
           <hardware> @<ComputeResource> * ;
           <memory_in_kb> @linkml:Integer ? ;
@@ -129,20 +138,13 @@ linkml:Nodeidentifier NONLITERAL
     )
 }
 
-<Tarball> CLOSED {
-    (  $<Tarball_tes> (  &<File_tes> ;
+<TimeSeriesData> CLOSED {
+    (  $<TimeSeriesData_tes> (  &<File_tes> ;
           rdf:type [ <https://schema.org/DigitalDocument> ] ? ;
-          <https://schema.org/encodingFormat> @<TarballTypes> ?
+          <columns> @linkml:String * ;
+          <https://schema.org/encodingFormat> @<TabularFiles> ?
        ) ;
-       rdf:type [ <Tarball> ]
-    )
-}
-
-<VisualizationFile> CLOSED {
-    (  $<VisualizationFile_tes> (  &<File_tes> ;
-          rdf:type [ <https://schema.org/DigitalDocument> ] ?
-       ) ;
-       rdf:type [ <VisualizationFile> ]
+       rdf:type [ <https://en.wikipedia.org/wiki/Comma-separated_values> ]
     )
 }
 

@@ -1,5 +1,11 @@
 
 
+CREATE TABLE "ArchiveData" (
+	name TEXT NOT NULL, 
+	format VARCHAR(6), 
+	PRIMARY KEY (name)
+);
+
 CREATE TABLE "ComputeResource" (
 	architecture TEXT, 
 	cores INTEGER, 
@@ -7,27 +13,28 @@ CREATE TABLE "ComputeResource" (
 	PRIMARY KEY (architecture, cores, nodes)
 );
 
-CREATE TABLE "CsvFile" (
-	name TEXT NOT NULL, 
-	format VARCHAR(3), 
-	PRIMARY KEY (name)
-);
-
-CREATE TABLE "DataFile" (
+CREATE TABLE "FieldData" (
 	name TEXT NOT NULL, 
 	format TEXT, 
 	PRIMARY KEY (name)
 );
 
+CREATE TABLE "ImageData" (
+	name TEXT NOT NULL, 
+	format VARCHAR(4), 
+	PRIMARY KEY (name)
+);
+
 CREATE TABLE "Results" (
-	csv_data TEXT, 
-	raw_data TEXT, 
-	viz_data TEXT, 
+	file_archive TEXT, 
+	file_spatial TEXT, 
+	file_timeseries TEXT, 
+	file_visual TEXT, 
 	fictive_time FLOAT, 
 	hardware TEXT, 
 	memory_in_kb INTEGER, 
 	time_in_s INTEGER, 
-	PRIMARY KEY (csv_data, raw_data, viz_data, fictive_time, hardware, memory_in_kb, time_in_s)
+	PRIMARY KEY (file_archive, file_spatial, file_timeseries, file_visual, fictive_time, hardware, memory_in_kb, time_in_s)
 );
 
 CREATE TABLE "SourceCode" (
@@ -37,15 +44,9 @@ CREATE TABLE "SourceCode" (
 	PRIMARY KEY (url)
 );
 
-CREATE TABLE "Tarball" (
+CREATE TABLE "TimeSeriesData" (
 	name TEXT NOT NULL, 
-	format VARCHAR(6), 
-	PRIMARY KEY (name)
-);
-
-CREATE TABLE "VisualizationFile" (
-	name TEXT NOT NULL, 
-	format TEXT, 
+	format VARCHAR(3), 
 	PRIMARY KEY (name)
 );
 
@@ -63,11 +64,11 @@ CREATE TABLE "BenchmarkResult" (
 	FOREIGN KEY(schema) REFERENCES "SourceCode" (url)
 );
 
-CREATE TABLE "CsvFile_columns" (
+CREATE TABLE "TimeSeriesData_columns" (
 	backref_id TEXT, 
 	columns TEXT, 
 	PRIMARY KEY (backref_id, columns), 
-	FOREIGN KEY(backref_id) REFERENCES "CsvFile" (name)
+	FOREIGN KEY(backref_id) REFERENCES "TimeSeriesData" (name)
 );
 
 CREATE TABLE "Contributor" (

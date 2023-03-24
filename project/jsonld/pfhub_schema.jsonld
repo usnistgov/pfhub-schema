@@ -382,24 +382,26 @@
       ]
     },
     {
-      "name": "CsvFileTypes",
-      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/CsvFileTypes",
-      "description": "Valid CSV file extensions.",
+      "name": "CompressedFiles",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/CompressedFiles",
+      "description": "Valid compressed archive file extensions.",
       "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
       "permissible_values": [
         {
-          "text": "csv",
-          "description": "Comma-separated values.",
-          "meaning": "https://www.iana.org/assignments/media-types/text/csv"
-        }
-      ]
-    },
-    {
-      "name": "TarballTypes",
-      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/TarballTypes",
-      "description": "Valid tarball file extensions.",
-      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
-      "permissible_values": [
+          "text": "7z",
+          "description": "7zip file extension.",
+          "meaning": "https://www.iana.org/assignments/media-types/application/x-7z-compressed"
+        },
+        {
+          "text": "bz2",
+          "description": "Bzip-2 file extension.",
+          "meaning": "https://www.iana.org/assignments/media-types/application/x-bzip2"
+        },
+        {
+          "text": "gz",
+          "description": "GZip file extension.",
+          "meaning": "https://www.iana.org/assignments/media-types/application/gzip"
+        },
         {
           "text": "tgz",
           "description": "Shorthand tarball extension.",
@@ -409,6 +411,160 @@
           "text": "tar.gz",
           "description": "Gzipped Tar extension.",
           "meaning": "https://www.iana.org/assignments/media-types/application/x-gtar"
+        },
+        {
+          "text": "zip",
+          "description": "Zip file extension.",
+          "meaning": "https://www.iana.org/assignments/media-types/application/zip"
+        }
+      ]
+    },
+    {
+      "name": "DataFiles",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/DataFiles",
+      "description": "Valid raw or transformed spatial phase-field data file extensions.",
+      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
+      "permissible_values": [
+        {
+          "text": "csv",
+          "description": "Comma-separated values.",
+          "meaning": "https://www.iana.org/assignments/media-types/text/csv"
+        },
+        {
+          "text": "hdf5",
+          "description": "Hierarchical HDF5 data.",
+          "meaning": "https://docs.hdfgroup.org/hdf5/develop/_intro_h_d_f5.html"
+        },
+        {
+          "text": "pvti",
+          "description": "Parallel VTK ImageData file.",
+          "meaning": "https://www.vtk.org/doc/nightly/html/classvtkImageData.html#details"
+        },
+        {
+          "text": "pvtr",
+          "description": "Parallel VTK RectilinearGrid file.",
+          "meaning": "https://www.vtk.org/doc/nightly/html/classvtkRectilinearGrid.html#details"
+        },
+        {
+          "text": "pvts",
+          "description": "Parallel VTK StructuredGrid file.",
+          "meaning": "https://www.vtk.org/doc/nightly/html/classvtkStructuredGrid.html#details"
+        },
+        {
+          "text": "pvtu",
+          "description": "Parallel VTK UnstructuredGrid file.",
+          "meaning": "https://www.vtk.org/doc/nightly/html/classvtkUnstructuredGrid.html#details"
+        },
+        {
+          "text": "tsv",
+          "description": "Tab-delimited values.",
+          "meaning": "https://www.iana.org/assignments/media-types/text/tsv"
+        },
+        {
+          "text": "vti",
+          "description": "VTK ImageData file.",
+          "meaning": "https://www.vtk.org/doc/nightly/html/classvtkImageData.html#details"
+        },
+        {
+          "text": "vtr",
+          "description": "VTK RectilinearGrid file.",
+          "meaning": "https://www.vtk.org/doc/nightly/html/classvtkRectilinearGrid.html#details"
+        },
+        {
+          "text": "vts",
+          "description": "VTK StructuredGrid file.",
+          "meaning": "https://www.vtk.org/doc/nightly/html/classvtkStructuredGrid.htmOAl#details"
+        },
+        {
+          "text": "vtu",
+          "description": "VTK UnstructuredGrid file.",
+          "meaning": "https://www.vtk.org/doc/nightly/html/classvtkUnstructuredGrid.html#details"
+        },
+        {
+          "text": "xdmf",
+          "description": "XML summary with HDF5 data.",
+          "meaning": "https://www.xdmf.org/index.php/XDMF_Model_and_Format"
+        }
+      ]
+    },
+    {
+      "name": "ImageFiles",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/ImageFiles",
+      "description": "Valid image and visualization file extensions.",
+      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
+      "permissible_values": [
+        {
+          "text": "png",
+          "description": "Portable Network Graphics image file format.",
+          "meaning": "https://www.iana.org/assignments/media-types/image/png"
+        },
+        {
+          "text": "pvti",
+          "description": "Parallel VTK ImageData file.",
+          "meaning": "https://www.vtk.org/doc/nightly/html/classvtkImageData.html#details"
+        },
+        {
+          "text": "pvtr",
+          "description": "Parallel VTK RectilinearGrid file.",
+          "meaning": "https://www.vtk.org/doc/nightly/html/classvtkRectilinearGrid.html#details"
+        },
+        {
+          "text": "pvts",
+          "description": "Parallel VTK StructuredGrid file.",
+          "meaning": "https://www.vtk.org/doc/nightly/html/classvtkStructuredGrid.html#details"
+        },
+        {
+          "text": "pvtu",
+          "description": "Parallel VTK UnstructuredGrid file.",
+          "meaning": "https://www.vtk.org/doc/nightly/html/classvtkUnstructuredGrid.html#details"
+        },
+        {
+          "text": "tif",
+          "description": "Tagged Image File Format file.",
+          "meaning": "https://www.iana.org/assignments/media-types/image/tif"
+        },
+        {
+          "text": "tsv",
+          "description": "Tab-delimited values.",
+          "meaning": "https://www.iana.org/assignments/media-types/text/tsv"
+        },
+        {
+          "text": "vti",
+          "description": "VTK ImageData file.",
+          "meaning": "https://www.vtk.org/doc/nightly/html/classvtkImageData.html#details"
+        },
+        {
+          "text": "vtr",
+          "description": "VTK RectilinearGrid file.",
+          "meaning": "https://www.vtk.org/doc/nightly/html/classvtkRectilinearGrid.html#details"
+        },
+        {
+          "text": "vts",
+          "description": "VTK StructuredGrid file.",
+          "meaning": "https://www.vtk.org/doc/nightly/html/classvtkStructuredGrid.htmOAl#details"
+        },
+        {
+          "text": "vtu",
+          "description": "VTK UnstructuredGrid file.",
+          "meaning": "https://www.vtk.org/doc/nightly/html/classvtkUnstructuredGrid.html#details"
+        }
+      ]
+    },
+    {
+      "name": "TabularFiles",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/TabularFiles",
+      "description": "Valid tabular file extensions.",
+      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
+      "permissible_values": [
+        {
+          "text": "csv",
+          "description": "Comma-separated values.",
+          "meaning": "https://www.iana.org/assignments/media-types/text/csv"
+        },
+        {
+          "text": "tsv",
+          "description": "Tab-delimited values.",
+          "meaning": "https://www.iana.org/assignments/media-types/text/tsv"
         }
       ]
     }
@@ -500,9 +656,9 @@
       "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
       "slot_uri": "https://w3id.org/usnistgov/pfhub-schema/columns",
       "multivalued": true,
-      "owner": "CsvFile",
+      "owner": "TimeSeriesData",
       "domain_of": [
-        "CsvFile"
+        "TimeSeriesData"
       ],
       "range": "string",
       "inlined_as_list": true,
@@ -787,6 +943,70 @@
       "@type": "SlotDefinition"
     },
     {
+      "name": "file_archive",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/file_archive",
+      "description": "Compressed data.",
+      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
+      "slot_uri": "https://w3id.org/usnistgov/pfhub-schema/file_archive",
+      "multivalued": true,
+      "owner": "Results",
+      "domain_of": [
+        "Results"
+      ],
+      "range": "ArchiveData",
+      "inlined": true,
+      "inlined_as_list": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "file_spatial",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/file_spatial",
+      "description": "Raw data output from a simulation.",
+      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
+      "slot_uri": "https://w3id.org/usnistgov/pfhub-schema/file_spatial",
+      "multivalued": true,
+      "owner": "Results",
+      "domain_of": [
+        "Results"
+      ],
+      "range": "FieldData",
+      "inlined": true,
+      "inlined_as_list": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "file_timeseries",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/file_timeseries",
+      "description": "Columnar timeseries data from a simulation.",
+      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
+      "slot_uri": "https://w3id.org/usnistgov/pfhub-schema/file_timeseries",
+      "multivalued": true,
+      "owner": "Results",
+      "domain_of": [
+        "Results"
+      ],
+      "range": "TimeSeriesData",
+      "inlined": true,
+      "inlined_as_list": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "file_visual",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/file_visual",
+      "description": "Visualization output from a simulation.",
+      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
+      "slot_uri": "https://w3id.org/usnistgov/pfhub-schema/file_visual",
+      "multivalued": true,
+      "owner": "Results",
+      "domain_of": [
+        "Results"
+      ],
+      "range": "ImageData",
+      "inlined": true,
+      "inlined_as_list": true,
+      "@type": "SlotDefinition"
+    },
+    {
       "name": "framework",
       "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/framework",
       "description": "A computer program or library",
@@ -865,54 +1085,6 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "csv_data",
-      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/csv_data",
-      "description": "Tabular output from a simulation.",
-      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
-      "slot_uri": "https://w3id.org/usnistgov/pfhub-schema/csv_data",
-      "multivalued": true,
-      "owner": "Results",
-      "domain_of": [
-        "Results"
-      ],
-      "range": "CsvFile",
-      "inlined": true,
-      "inlined_as_list": true,
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "raw_data",
-      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/raw_data",
-      "description": "Raw data output from a simulation.",
-      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
-      "slot_uri": "https://w3id.org/usnistgov/pfhub-schema/raw_data",
-      "multivalued": true,
-      "owner": "Results",
-      "domain_of": [
-        "Results"
-      ],
-      "range": "DataFile",
-      "inlined": true,
-      "inlined_as_list": true,
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "viz_data",
-      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/viz_data",
-      "description": "Visualization output from a simulation.",
-      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
-      "slot_uri": "https://w3id.org/usnistgov/pfhub-schema/viz_data",
-      "multivalued": true,
-      "owner": "Results",
-      "domain_of": [
-        "Results"
-      ],
-      "range": "VisualizationFile",
-      "inlined": true,
-      "inlined_as_list": true,
-      "@type": "SlotDefinition"
-    },
-    {
       "name": "File_name",
       "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/name",
       "description": "Informal or human-memorable identifier that may collide with others.",
@@ -936,7 +1108,7 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "CsvFile_format",
+      "name": "ArchiveData_format",
       "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/format",
       "description": "Format of data contained in a file.",
       "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
@@ -944,20 +1116,20 @@
         "https://schema.org/encodingFormat"
       ],
       "is_a": "format",
-      "domain": "CsvFile",
+      "domain": "ArchiveData",
       "slot_uri": "https://schema.org/encodingFormat",
       "alias": "format",
-      "owner": "CsvFile",
+      "owner": "ArchiveData",
       "domain_of": [
-        "CsvFile"
+        "ArchiveData"
       ],
       "is_usage_slot": true,
       "usage_slot_name": "format",
-      "range": "CsvFileTypes",
+      "range": "CompressedFiles",
       "@type": "SlotDefinition"
     },
     {
-      "name": "Tarball_format",
+      "name": "TimeSeriesData_format",
       "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/format",
       "description": "Format of data contained in a file.",
       "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
@@ -965,16 +1137,37 @@
         "https://schema.org/encodingFormat"
       ],
       "is_a": "format",
-      "domain": "Tarball",
+      "domain": "TimeSeriesData",
       "slot_uri": "https://schema.org/encodingFormat",
       "alias": "format",
-      "owner": "Tarball",
+      "owner": "TimeSeriesData",
       "domain_of": [
-        "Tarball"
+        "TimeSeriesData"
       ],
       "is_usage_slot": true,
       "usage_slot_name": "format",
-      "range": "TarballTypes",
+      "range": "TabularFiles",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "ImageData_format",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/format",
+      "description": "Format of data contained in a file.",
+      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
+      "mappings": [
+        "https://schema.org/encodingFormat"
+      ],
+      "is_a": "format",
+      "domain": "ImageData",
+      "slot_uri": "https://schema.org/encodingFormat",
+      "alias": "format",
+      "owner": "ImageData",
+      "domain_of": [
+        "ImageData"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "format",
+      "range": "ImageFiles",
       "@type": "SlotDefinition"
     },
     {
@@ -1101,9 +1294,37 @@
       "@type": "ClassDefinition"
     },
     {
-      "name": "CsvFile",
-      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/CsvFile",
-      "description": "Data represented by Comma-separated values in plain text.",
+      "name": "ArchiveData",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/ArchiveData",
+      "description": "Specialization of a pfhub:File containing a compressed data archive.",
+      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
+      "is_a": "File",
+      "slots": [
+        "File_name",
+        "ArchiveData_format"
+      ],
+      "slot_usage": {},
+      "class_uri": "https://w3id.org/usnistgov/pfhub-schema/ArchiveData",
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "FieldData",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/FieldData",
+      "description": "Specialization of a pfhub:File representing field variables in a simulation domain using a format appropriate for the application.",
+      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
+      "is_a": "File",
+      "slots": [
+        "File_name",
+        "format"
+      ],
+      "slot_usage": {},
+      "class_uri": "https://w3id.org/usnistgov/pfhub-schema/FieldData",
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "TimeSeriesData",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/TimeSeriesData",
+      "description": "Specialization of a pfhub:File representing a time series in plain text using named columns of comma-separated values.",
       "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
       "mappings": [
         "https://en.wikipedia.org/wiki/Comma-separated_values"
@@ -1112,52 +1333,24 @@
       "slots": [
         "File_name",
         "columns",
-        "CsvFile_format"
+        "TimeSeriesData_format"
       ],
       "slot_usage": {},
       "class_uri": "https://en.wikipedia.org/wiki/Comma-separated_values",
       "@type": "ClassDefinition"
     },
     {
-      "name": "DataFile",
-      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/DataFile",
-      "description": "Data represented in an application-specific or binary format.",
+      "name": "ImageData",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/ImageData",
+      "description": "Specialization of a pfhub:File for images and visualization data.",
       "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
       "is_a": "File",
       "slots": [
         "File_name",
-        "format"
+        "ImageData_format"
       ],
       "slot_usage": {},
-      "class_uri": "https://w3id.org/usnistgov/pfhub-schema/DataFile",
-      "@type": "ClassDefinition"
-    },
-    {
-      "name": "Tarball",
-      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/Tarball",
-      "description": "Gzip-compressed Tar data archive.",
-      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
-      "is_a": "File",
-      "slots": [
-        "File_name",
-        "Tarball_format"
-      ],
-      "slot_usage": {},
-      "class_uri": "https://w3id.org/usnistgov/pfhub-schema/Tarball",
-      "@type": "ClassDefinition"
-    },
-    {
-      "name": "VisualizationFile",
-      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/VisualizationFile",
-      "description": "Visualization data.",
-      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
-      "is_a": "File",
-      "slots": [
-        "File_name",
-        "format"
-      ],
-      "slot_usage": {},
-      "class_uri": "https://w3id.org/usnistgov/pfhub-schema/VisualizationFile",
+      "class_uri": "https://w3id.org/usnistgov/pfhub-schema/ImageData",
       "@type": "ClassDefinition"
     },
     {
@@ -1169,9 +1362,10 @@
         "https://schema.org/Dataset"
       ],
       "slots": [
-        "csv_data",
-        "raw_data",
-        "viz_data",
+        "file_archive",
+        "file_spatial",
+        "file_timeseries",
+        "file_visual",
         "fictive_time",
         "hardware",
         "memory_in_kb",
@@ -1220,9 +1414,9 @@
   ],
   "metamodel_version": "1.7.0",
   "source_file": "pfhub_schema.yaml",
-  "source_file_date": "2023-03-23T13:22:54",
-  "source_file_size": 13232,
-  "generation_date": "2023-03-23T13:28:05",
+  "source_file_date": "2023-03-24T14:24:19",
+  "source_file_size": 18347,
+  "generation_date": "2023-03-24T14:24:38",
   "@type": "SchemaDefinition",
   "@context": [
     "project/jsonld/pfhub_schema.context.jsonld",

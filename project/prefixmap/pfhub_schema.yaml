@@ -7,9 +7,6 @@
    "Contributor": {
       "@id": "https://schema.org/Person"
    },
-   "CsvFile": {
-      "@id": "https://en.wikipedia.org/wiki/Comma-separated_values"
-   },
    "File": {
       "@id": "https://schema.org/DigitalDocument"
    },
@@ -21,5 +18,8 @@
    },
    "SourceCode": {
       "@id": "https://schema.org/SoftwareSourceCode"
+   },
+   "TimeSeriesData": {
+      "@id": "https://en.wikipedia.org/wiki/Comma-separated_values"
    }
 }
