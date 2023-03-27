@@ -75,13 +75,13 @@ cruft-check:
 cruft-diff:
 	cruft diff
 
-update: update-template update-linkml
+update: update-linkml
 update-template:
 	cruft update
 
 # todo: consider pinning to template
 update-linkml:
-	poetry add -D linkml@latest
+	poetry add --group dev linkml@latest
 
 # EXPERIMENTAL
 create-data-harmonizer:
