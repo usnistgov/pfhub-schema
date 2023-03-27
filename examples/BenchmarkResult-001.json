@@ -59,7 +59,7 @@
     "time_in_s": 157187
   },
   "schema": {
-    "url": "https://github.com/usnistgov/pfhub-schema/tree/2646573/project"
+    "url": "https://github.com/usnistgov/pfhub-schema/tree/39dc199/project"
   },
   "summary": "Serial Travis CI benchmark with FiPy, periodic domain",
   "@type": "BenchmarkResult"

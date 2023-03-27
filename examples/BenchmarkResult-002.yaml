@@ -29,5 +29,5 @@ results:
   memory_in_kb: 815104
   time_in_s: 3720
 schema:
-  url: https://github.com/usnistgov/pfhub-schema/tree/2646573/project
+  url: https://github.com/usnistgov/pfhub-schema/tree/39dc199/project
 summary: MOOSE, IA solver, periodic domain.
