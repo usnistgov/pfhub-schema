@@ -2,7 +2,6 @@
 
 CREATE TABLE "ArchiveData" (
 	name TEXT NOT NULL, 
-	format VARCHAR(6), 
 	PRIMARY KEY (name)
 );
 
@@ -15,17 +14,16 @@ CREATE TABLE "ComputeResource" (
 
 CREATE TABLE "FieldData" (
 	name TEXT NOT NULL, 
-	format TEXT, 
 	PRIMARY KEY (name)
 );
 
 CREATE TABLE "ImageData" (
 	name TEXT NOT NULL, 
-	format VARCHAR(4), 
 	PRIMARY KEY (name)
 );
 
 CREATE TABLE "Results" (
+	documentation TEXT, 
 	file_archive TEXT, 
 	file_spatial TEXT, 
 	file_timeseries TEXT, 
@@ -34,7 +32,7 @@ CREATE TABLE "Results" (
 	hardware TEXT, 
 	memory_in_kb INTEGER, 
 	time_in_s INTEGER, 
-	PRIMARY KEY (file_archive, file_spatial, file_timeseries, file_visual, fictive_time, hardware, memory_in_kb, time_in_s)
+	PRIMARY KEY (documentation, file_archive, file_spatial, file_timeseries, file_visual, fictive_time, hardware, memory_in_kb, time_in_s)
 );
 
 CREATE TABLE "SourceCode" (
@@ -44,16 +42,19 @@ CREATE TABLE "SourceCode" (
 	PRIMARY KEY (url)
 );
 
+CREATE TABLE "TextFile" (
+	name TEXT NOT NULL, 
+	PRIMARY KEY (name)
+);
+
 CREATE TABLE "TimeSeriesData" (
 	name TEXT NOT NULL, 
-	format VARCHAR(3), 
 	PRIMARY KEY (name)
 );
 
 CREATE TABLE "BenchmarkResult" (
 	id TEXT NOT NULL, 
-	benchmark_problem VARCHAR(2) NOT NULL, 
-	benchmark_version INTEGER NOT NULL, 
+	benchmark_problem VARCHAR(4) NOT NULL, 
 	date_created DATE, 
 	implementation TEXT, 
 	results TEXT, 

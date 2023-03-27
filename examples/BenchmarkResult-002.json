@@ -1,0 +1,53 @@
+{
+  "id": "moose_1a_amjokisaari_ia",
+  "benchmark_problem": "1a.0",
+  "contributors": [
+    {
+      "id": "https://orcid.org/0000-0002-4945-5714",
+      "name": "A.M. Jokisaari",
+      "affiliation": [
+        "INL"
+      ],
+      "email": "andrea.jokisaari@northwestern.edu"
+    }
+  ],
+  "date_created": "2016-06-28",
+  "framework": [
+    {
+      "url": "https://mooseframework.inl.gov/modules/phase_field/index.html",
+      "name": "MOOSE",
+      "download": "https://github.com/idaholab/moose",
+      "version": "1.0.0"
+    }
+  ],
+  "implementation": {
+    "url": "https://bitbucket.org/ajokisaari/coral",
+    "commit": "e8fc74f"
+  },
+  "results": {
+    "file_timeseries": [
+      {
+        "name": "free_energy_1a.csv",
+        "columns": [
+          "time",
+          "free_energy"
+        ]
+      }
+    ],
+    "fictive_time": 935803.78997793,
+    "hardware": [
+      {
+        "architecture": "cpu",
+        "cores": 6,
+        "nodes": 1
+      }
+    ],
+    "memory_in_kb": 815104,
+    "time_in_s": 3720
+  },
+  "schema": {
+    "url": "https://github.com/usnistgov/pfhub-schema/tree/2646573/project"
+  },
+  "summary": "MOOSE, IA solver, periodic domain.",
+  "@type": "BenchmarkResult"
+}

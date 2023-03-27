@@ -1,14 +1,12 @@
 type ArchiveData
   {
     name: String!
-    format: CompressedFiles
   }
 
 type BenchmarkResult
   {
     id: Uriorcurie!
-    benchmarkProblem: ValidBenchmarkProblem!
-    benchmarkVersion: Integer!
+    benchmarkProblem: ValidBenchmarkProblems!
     contributors: [Contributor]
     dateCreated: Date
     framework: [Software]
@@ -37,23 +35,21 @@ type Contributor
 type FieldData
   {
     name: String!
-    format: String
   }
 
 interface File
   {
     name: String!
-    format: String
   }
 
 type ImageData
   {
     name: String!
-    format: ImageFiles
   }
 
 type Results
   {
+    documentation: [TextFile]
     fileArchive: [ArchiveData]
     fileSpatial: [FieldData]
     fileTimeseries: [TimeSeriesData]
@@ -80,10 +76,14 @@ type SourceCode
     commit: String
   }
 
+type TextFile
+  {
+    name: String!
+  }
+
 type TimeSeriesData
   {
     name: String!
     columns: [String]
-    format: TabularFiles
   }
 

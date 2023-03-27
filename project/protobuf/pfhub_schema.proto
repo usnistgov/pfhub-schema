@@ -2,14 +2,12 @@
 message ArchiveData
  {
   string name = 0
-  compressedFiles format = 0
  }
 // Root and context for this Benchmark Problem solution.
 message BenchmarkResult
  {
   uriorcurie id = 0
-  validBenchmarkProblem benchmarkProblem = 0
-  integer benchmarkVersion = 0
+  validBenchmarkProblems benchmarkProblem = 0
  repeated  contributor contributors = 0
   date dateCreated = 0
  repeated  software framework = 0
@@ -38,17 +36,16 @@ message Contributor
 message FieldData
  {
   string name = 0
-  string format = 0
  }
 // Specialization of a pfhub:File for images and visualization data.
 message ImageData
  {
   string name = 0
-  imageFiles format = 0
  }
 // Runtime information and output from a simulation.
 message Results
  {
+ repeated  textFile documentation = 0
  repeated  archiveData fileArchive = 0
  repeated  fieldData fileSpatial = 0
  repeated  timeSeriesData fileTimeseries = 0
@@ -74,10 +71,14 @@ message SourceCode
   string name = 0
   string commit = 0
  }
+// Specialization of a pfhub:File containing plain text.
+message TextFile
+ {
+  string name = 0
+ }
 // Specialization of a pfhub:File representing a time series in plain text using named columns of comma-separated values.
 message TimeSeriesData
  {
   string name = 0
  repeated  string columns = 0
-  tabularFiles format = 0
  }

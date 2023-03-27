@@ -1,9 +1,8 @@
 # Example of a PFHub Benchmark result
 ---
 # id: pfhub:BenchmarkResult
-id: https://doi.org/10.5281/zenodo.7474506
-benchmark_problem: 1a
-benchmark_version: 0
+id: fipy_1a_tkphd_pysparse
+benchmark_problem: 1a.0
 date_created: 2017-01-10
 schema:
   url: >-
@@ -38,7 +37,6 @@ implementation:
 results:
   file_timeseries:
     - name: free_energy.csv
-      format: csv
       columns:
         - time
         - free_energy

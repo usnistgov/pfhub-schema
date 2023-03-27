@@ -4,10 +4,6 @@
             "additionalProperties": false,
             "description": "Specialization of a pfhub:File containing a compressed data archive.",
             "properties": {
-                "format": {
-                    "$ref": "#/$defs/CompressedFiles",
-                    "description": "Format of data contained in a file."
-                },
                 "name": {
                     "description": "Informal or human-memorable identifier that may collide with others.",
                     "type": "string"
@@ -24,13 +20,9 @@
             "description": "Root and context for this Benchmark Problem solution.",
             "properties": {
                 "benchmark_problem": {
-                    "$ref": "#/$defs/ValidBenchmarkProblem",
-                    "description": "Alphanumerical identifier for part of a Benchmark Problem.",
-                    "pattern": "^\\d\\a"
-                },
-                "benchmark_version": {
-                    "description": "Numerical identifier for a Benchmark Problem version.",
-                    "type": "integer"
+                    "$ref": "#/$defs/ValidBenchmarkProblems",
+                    "description": "Specification of the PFHub Benchmark Problem solved.",
+                    "pattern": "^\\S+"
                 },
                 "contributors": {
                     "description": "Collection of people who worked on this solution.",
@@ -45,7 +37,7 @@
                     "type": "string"
                 },
                 "framework": {
-                    "description": "A computer program or library",
+                    "description": "List of the primary phase-field software framework and extra dependencies required to run this simulation.",
                     "items": {
                         "$ref": "#/$defs/Software"
                     },
@@ -74,24 +66,10 @@
             },
             "required": [
                 "id",
-                "benchmark_problem",
-                "benchmark_version"
+                "benchmark_problem"
             ],
             "title": "BenchmarkResult",
             "type": "object"
-        },
-        "CompressedFiles": {
-            "description": "Valid compressed archive file extensions.",
-            "enum": [
-                "7z",
-                "bz2",
-                "gz",
-                "tgz",
-                "tar.gz",
-                "zip"
-            ],
-            "title": "CompressedFiles",
-            "type": "string"
         },
         "ComputeResource": {
             "additionalProperties": false,
@@ -151,33 +129,10 @@
             "title": "Contributor",
             "type": "object"
         },
-        "DataFiles": {
-            "description": "Valid raw or transformed spatial phase-field data file extensions.",
-            "enum": [
-                "csv",
-                "hdf5",
-                "pvti",
-                "pvtr",
-                "pvts",
-                "pvtu",
-                "tsv",
-                "vti",
-                "vtr",
-                "vts",
-                "vtu",
-                "xdmf"
-            ],
-            "title": "DataFiles",
-            "type": "string"
-        },
         "FieldData": {
             "additionalProperties": false,
             "description": "Specialization of a pfhub:File representing field variables in a simulation domain using a format appropriate for the application.",
             "properties": {
-                "format": {
-                    "description": "Format of data contained in a file.",
-                    "type": "string"
-                },
                 "name": {
                     "description": "Informal or human-memorable identifier that may collide with others.",
                     "type": "string"
@@ -193,10 +148,6 @@
             "additionalProperties": false,
             "description": "Specialization of a pfhub:File for images and visualization data.",
             "properties": {
-                "format": {
-                    "$ref": "#/$defs/ImageFiles",
-                    "description": "Format of data contained in a file."
-                },
                 "name": {
                     "description": "Informal or human-memorable identifier that may collide with others.",
                     "type": "string"
@@ -208,55 +159,44 @@
             "title": "ImageData",
             "type": "object"
         },
-        "ImageFiles": {
-            "description": "Valid image and visualization file extensions.",
-            "enum": [
-                "png",
-                "pvti",
-                "pvtr",
-                "pvts",
-                "pvtu",
-                "tif",
-                "tsv",
-                "vti",
-                "vtr",
-                "vts",
-                "vtu"
-            ],
-            "title": "ImageFiles",
-            "type": "string"
-        },
         "Results": {
             "additionalProperties": false,
             "description": "Runtime information and output from a simulation.",
             "properties": {
+                "documentation": {
+                    "description": "README, AUTHORS, and similar documentation.",
+                    "items": {
+                        "$ref": "#/$defs/TextFile"
+                    },
+                    "type": "array"
+                },
                 "fictive_time": {
                     "description": "Maximum simulated (or \"fictive\") time reached.",
                     "type": "number"
                 },
                 "file_archive": {
-                    "description": "Compressed data.",
+                    "description": "Compressed data files.",
                     "items": {
                         "$ref": "#/$defs/ArchiveData"
                     },
                     "type": "array"
                 },
                 "file_spatial": {
-                    "description": "Raw data output from a simulation.",
+                    "description": "Raw data files from a simulation.",
                     "items": {
                         "$ref": "#/$defs/FieldData"
                     },
                     "type": "array"
                 },
                 "file_timeseries": {
-                    "description": "Columnar timeseries data from a simulation.",
+                    "description": "Columnar timeseries files from a simulation.",
                     "items": {
                         "$ref": "#/$defs/TimeSeriesData"
                     },
                     "type": "array"
                 },
                 "file_visual": {
-                    "description": "Visualization output from a simulation.",
+                    "description": "Visualization output files from a simulation.",
                     "items": {
                         "$ref": "#/$defs/ImageData"
                     },
@@ -338,14 +278,20 @@
             "title": "SourceCode",
             "type": "object"
         },
-        "TabularFiles": {
-            "description": "Valid tabular file extensions.",
-            "enum": [
-                "csv",
-                "tsv"
+        "TextFile": {
+            "additionalProperties": false,
+            "description": "Specialization of a pfhub:File containing plain text.",
+            "properties": {
+                "name": {
+                    "description": "Informal or human-memorable identifier that may collide with others.",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name"
             ],
-            "title": "TabularFiles",
-            "type": "string"
+            "title": "TextFile",
+            "type": "object"
         },
         "TimeSeriesData": {
             "additionalProperties": false,
@@ -359,10 +305,6 @@
                     },
                     "type": "array"
                 },
-                "format": {
-                    "$ref": "#/$defs/TabularFiles",
-                    "description": "Format of data contained in a file."
-                },
                 "name": {
                     "description": "Informal or human-memorable identifier that may collide with others.",
                     "type": "string"
@@ -374,47 +316,49 @@
             "title": "TimeSeriesData",
             "type": "object"
         },
-        "ValidBenchmarkProblem": {
+        "ValidBenchmarkProblems": {
             "description": "Known parts of the accepted PFHub Benchmark Problems.",
             "enum": [
-                "1a",
-                "1b",
-                "1c",
-                "1d",
-                "2a",
-                "2b",
-                "2c",
-                "2d",
-                "3a",
-                "4a",
-                "4b",
-                "4c",
-                "4d",
-                "4e",
-                "4f",
-                "4g",
-                "4h",
-                "5a",
-                "5b",
-                "6a",
-                "6b",
-                "7a",
-                "7b",
-                "7c",
-                "8a",
-                "8b",
-                "8c"
+                "1a.1",
+                "1a.0",
+                "1b.1",
+                "1b.0",
+                "1c.1",
+                "1c.0",
+                "1d.1",
+                "1d.0",
+                "2a.1",
+                "2a.0",
+                "2b.1",
+                "2b.0",
+                "2c.1",
+                "2c.0",
+                "2d.1",
+                "2d.0",
+                "3a.1",
+                "3a.0",
+                "3b.0",
+                "3c.0",
+                "4a.1",
+                "4b.1",
+                "4c.1",
+                "4d.1",
+                "4e.1",
+                "4f.1",
+                "4g.1",
+                "4h.1",
+                "5a.0",
+                "5b.0",
+                "6a.0",
+                "6b.0",
+                "7a.0",
+                "7b.0",
+                "7c.0",
+                "8a.0",
+                "8b.0",
+                "8c.0"
             ],
-            "title": "ValidBenchmarkProblem",
-            "type": "string"
-        },
-        "ValidBenchmarkVersion": {
-            "description": "Known versions of the accepted PFHub Benchmark Problems.",
-            "enum": [
-                "0",
-                "1"
-            ],
-            "title": "ValidBenchmarkVersion",
+            "title": "ValidBenchmarkProblems",
             "type": "string"
         }
     },
@@ -424,13 +368,9 @@
     "metamodel_version": "1.7.0",
     "properties": {
         "benchmark_problem": {
-            "$ref": "#/$defs/ValidBenchmarkProblem",
-            "description": "Alphanumerical identifier for part of a Benchmark Problem.",
-            "pattern": "^\\d\\a"
-        },
-        "benchmark_version": {
-            "description": "Numerical identifier for a Benchmark Problem version.",
-            "type": "integer"
+            "$ref": "#/$defs/ValidBenchmarkProblems",
+            "description": "Specification of the PFHub Benchmark Problem solved.",
+            "pattern": "^\\S+"
         },
         "contributors": {
             "description": "Collection of people who worked on this solution.",
@@ -445,7 +385,7 @@
             "type": "string"
         },
         "framework": {
-            "description": "A computer program or library",
+            "description": "List of the primary phase-field software framework and extra dependencies required to run this simulation.",
             "items": {
                 "$ref": "#/$defs/Software"
             },
@@ -474,8 +414,7 @@
     },
     "required": [
         "id",
-        "benchmark_problem",
-        "benchmark_version"
+        "benchmark_problem"
     ],
     "title": "pfhub_schema",
     "type": "object",

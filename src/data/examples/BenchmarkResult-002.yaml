@@ -1,8 +1,7 @@
 # Example of a PFHub Benchmark result
 ---
-id: https://bitbucket.org/ajokisaari/coral
-benchmark_problem: 1a
-benchmark_version: 0
+id: moose_1a_amjokisaari_ia
+benchmark_problem: 1a.0
 date_created: 2016-06-28
 schema:
   url: >-
@@ -31,7 +30,6 @@ results:
   file_timeseries:
     - name: >-
         free_energy_1a.csv
-      format: csv
       columns:
         - time
         - free_energy

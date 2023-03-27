@@ -38,16 +38,14 @@ linkml:Nodeidentifier NONLITERAL
 
 <ArchiveData> CLOSED {
     (  $<ArchiveData_tes> (  &<File_tes> ;
-          rdf:type [ <https://schema.org/DigitalDocument> ] ? ;
-          <https://schema.org/encodingFormat> @<CompressedFiles> ?
+          rdf:type [ <https://schema.org/DigitalDocument> ] ?
        ) ;
        rdf:type [ <ArchiveData> ]
     )
 }
 
 <BenchmarkResult> CLOSED {
-    (  $<BenchmarkResult_tes> (  <benchmark_problem> @<ValidBenchmarkProblem> ;
-          <benchmark_version> @linkml:Integer ;
+    (  $<BenchmarkResult_tes> (  <benchmark_problem> @<ValidBenchmarkProblems> ;
           <https://schema.org/contributor> @<Contributor> * ;
           <https://schema.org/dateCreated> @linkml:Date ? ;
           <https://schema.org/SoftwareApplication> @<Software> * ;
@@ -88,26 +86,26 @@ linkml:Nodeidentifier NONLITERAL
 }
 
 <File>  (
-    @<ArchiveData> OR @<FieldData> OR @<ImageData> OR @<TimeSeriesData>
+    @<ArchiveData> OR @<FieldData> OR @<ImageData> OR @<TextFile> OR @<TimeSeriesData>
 )
 
 <File_struct> {
-    (  $<File_tes> <https://schema.org/encodingFormat> @linkml:String ? ;
+    (  $<File_tes> rdf:type . * ;
        rdf:type [ <https://schema.org/DigitalDocument> ]
     )
 }
 
 <ImageData> CLOSED {
     (  $<ImageData_tes> (  &<File_tes> ;
-          rdf:type [ <https://schema.org/DigitalDocument> ] ? ;
-          <https://schema.org/encodingFormat> @<ImageFiles> ?
+          rdf:type [ <https://schema.org/DigitalDocument> ] ?
        ) ;
        rdf:type [ <ImageData> ]
     )
 }
 
 <Results> CLOSED {
-    (  $<Results_tes> (  <file_archive> @<ArchiveData> * ;
+    (  $<Results_tes> (  <documentation> @<TextFile> * ;
+          <file_archive> @<ArchiveData> * ;
           <file_spatial> @<FieldData> * ;
           <file_timeseries> @<TimeSeriesData> * ;
           <file_visual> @<ImageData> * ;
@@ -138,11 +136,18 @@ linkml:Nodeidentifier NONLITERAL
     )
 }
 
+<TextFile> CLOSED {
+    (  $<TextFile_tes> (  &<File_tes> ;
+          rdf:type [ <https://schema.org/DigitalDocument> ] ?
+       ) ;
+       rdf:type [ <TextFile> ]
+    )
+}
+
 <TimeSeriesData> CLOSED {
     (  $<TimeSeriesData_tes> (  &<File_tes> ;
           rdf:type [ <https://schema.org/DigitalDocument> ] ? ;
-          <columns> @linkml:String * ;
-          <https://schema.org/encodingFormat> @<TabularFiles> ?
+          <columns> @linkml:String *
        ) ;
        rdf:type [ <https://en.wikipedia.org/wiki/Comma-separated_values> ]
     )

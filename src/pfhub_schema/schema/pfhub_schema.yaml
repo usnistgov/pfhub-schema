@@ -19,11 +19,11 @@ see_also:
   - https://pages.nist.gov/pfhub
   - https://pages.nist.gov/pfhub-schema
 
-version: 0.1.0
+version: 0.1.0  # LinkML schema under development (alpha)
 
 prefixes:
   pfhub: https://w3id.org/usnistgov/pfhub-schema/
-  linkml: https://w3id.org/linkml/  # LinkML itself
+  linkml: https://w3id.org/linkml/
 
 default_curi_maps:
   - semweb_context
@@ -33,13 +33,13 @@ imports:
   - linkml:types
 
 classes:
+
   BenchmarkResult:
     description: >-
       Root and context for this Benchmark Problem solution.
     slots:
       - id
       - benchmark_problem
-      - benchmark_version
       - contributors
       - date_created
       - framework
@@ -76,50 +76,16 @@ classes:
       A generic electronic information container.
     slots:
       - name
-      - format
     slot_usage:
       name:
         identifier: true
-
-  ArchiveData:
-    description: >-
-      Specialization of a pfhub:File containing a compressed data archive.
-    is_a: File
-    slot_usage:
-      format:
-        range: CompressedFiles
-
-  FieldData:
-    description: >-
-      Specialization of a pfhub:File representing field variables in a
-      simulation domain using a format appropriate for the application.
-    is_a: File
-
-  TimeSeriesData:
-    class_uri: https://en.wikipedia.org/wiki/Comma-separated_values
-    description: >-
-      Specialization of a pfhub:File representing a time series in
-      plain text using named columns of comma-separated values.
-    is_a: File
-    slots:
-      - columns
-    slot_usage:
-      format:
-        range: TabularFiles
-
-  ImageData:
-    description: >-
-      Specialization of a pfhub:File for images and visualization data.
-    is_a: File
-    slot_usage:
-      format:
-        range: ImageFiles
 
   Results:
     class_uri: https://schema.org/Dataset
     description: >-
       Runtime information and output from a simulation.
     slots:
+      - documentation
       - file_archive
       - file_spatial
       - file_timeseries
@@ -156,7 +122,41 @@ classes:
         identifier: true
 
 
+  # ~~~ Derived Classes ~~~
+
+  ArchiveData:
+    description: >-
+      Specialization of a pfhub:File containing a compressed data archive.
+    is_a: File
+
+  FieldData:
+    description: >-
+      Specialization of a pfhub:File representing field variables in a
+      simulation domain using a format appropriate for the application.
+    is_a: File
+
+  TextFile:
+    description: >-
+      Specialization of a pfhub:File containing plain text.
+    is_a: File
+
+  TimeSeriesData:
+    class_uri: https://en.wikipedia.org/wiki/Comma-separated_values
+    description: >-
+      Specialization of a pfhub:File representing a time series in
+      plain text using named columns of comma-separated values.
+    is_a: File
+    slots:
+      - columns
+
+  ImageData:
+    description: >-
+      Specialization of a pfhub:File for images and visualization data.
+    is_a: File
+
+
 slots:
+
   id:
     description: >-
       Unique identifier that must not collide with any other.
@@ -181,17 +181,10 @@ slots:
 
   benchmark_problem:
     description: >-
-      Alphanumerical identifier for part of a Benchmark Problem.
+      Specification of the PFHub Benchmark Problem solved.
     multivalued: false
-    pattern: "^\\d\\a"
-    range: ValidBenchmarkProblem
-    required: true
-
-  benchmark_version:
-    description: >-
-      Numerical identifier for a Benchmark Problem version.
-    multivalued: false
-    range: integer
+    range: ValidBenchmarkProblems
+    pattern: "^\\S+"  # no whitespace allowed
     required: true
 
   columns:
@@ -317,37 +310,45 @@ slots:
     range: Contributor
     slot_uri: https://schema.org/contributor
 
+  documentation:
+    description: >-
+      README, AUTHORS, and similar documentation.
+    inlined_as_list: true
+    multivalued: true
+    range: TextFile
+
   file_archive:
     description: >-
-      Compressed data.
+      Compressed data files.
     inlined_as_list: true
     multivalued: true
     range: ArchiveData
 
   file_spatial:
     description: >-
-      Raw data output from a simulation.
+      Raw data files from a simulation.
     inlined_as_list: true
     multivalued: true
     range: FieldData
 
   file_timeseries:
     description: >-
-      Columnar timeseries data from a simulation.
+      Columnar timeseries files from a simulation.
     inlined_as_list: true
     multivalued: true
     range: TimeSeriesData
 
   file_visual:
     description: >-
-      Visualization output from a simulation.
+      Visualization output files from a simulation.
     inlined_as_list: true
     multivalued: true
     range: ImageData
 
   framework:
     description: >-
-      A computer program or library
+      List of the primary phase-field software framework and
+      extra dependencies required to run this simulation.
     inlined_as_list: true
     multivalued: true
     range: Software
@@ -383,261 +384,212 @@ slots:
 # === Enums ===
 
 enums:
-  ValidBenchmarkProblem:
+  ValidBenchmarkProblems:
     description: >-
       Known parts of the accepted PFHub Benchmark Problems.
     permissible_values:
-      1a:
+      1a.1:
         description: >-
           Spinodal decomposition in a square domain with periodic boundaries.
-      1b:
+        meaning: >-
+          https://pages.nist.gov/pfhub/benchmarks/benchmark1.ipynb/#(a)-Square-periodic
+      1a.0:
+        description: >-
+          Spinodal decomposition in a square domain with periodic boundaries.
+        meaning: >-
+          https://pages.nist.gov/pfhub/hackathons/hackathon1/problems.ipynb/#1.a-Square-Periodic
+      1b.1:
         description: >-
           Spinodal decomposition in a square domain with no-flux boundaries.
-      1c:
+        meaning: >-
+          https://pages.nist.gov/pfhub/benchmarks/benchmark1.ipynb/#(b)-Square-no-flux
+      1b.0:
+        description: >-
+          Spinodal decomposition in a square domain with no-flux boundaries.
+        meaning: >-
+          https://pages.nist.gov/pfhub/hackathons/hackathon1/problems.ipynb/#1.b-No-Flux
+      1c.1:
         description: >-
           Spinodal decomposition in a T-shaped domain with no-flux boundaries.
-      1d:
+        meaning: >-
+          https://pages.nist.gov/pfhub/benchmarks/benchmark1.ipynb/#(c)-T-shape
+      1c.0:
+        description: >-
+          Spinodal decomposition in a T-shaped domain with no-flux boundaries.
+        meaning: >-
+          https://pages.nist.gov/pfhub/hackathons/hackathon1/problems.ipynb/#1.c-T-Shape-No-Flux
+      1d.1:
         description: >-
           Spinodal decomposition on a closed spherical shell.
+        meaning: >-
+          https://pages.nist.gov/pfhub/benchmarks/benchmark1.ipynb/#(d)-Sphere
+      1d.0:
+        description: >-
+          Spinodal decomposition on a closed spherical shell.
+        meaning: >-
+          https://pages.nist.gov/pfhub/hackathons/hackathon1/problems.ipynb/#1.d-Sphere
 
-      2a:
+      2a.1:
         description: >-
           Ostwald ripening in a square domain with periodic boundaries.
-      2b:
+        meaning: >-
+          https://pages.nist.gov/pfhub/benchmarks/benchmark2.ipynb/#(a)-Square-periodic
+      2a.0:
+        description: >-
+          Ostwald ripening in a square domain with periodic boundaries.
+        meaning: >-
+          https://pages.nist.gov/pfhub/hackathons/hackathon1/problems.ipynb/#2.a-Square-Periodic
+      2b.1:
         description: >-
           Ostwald ripening in a square domain with no-flux boundaries.
-      2c:
+        meaning: >-
+          https://pages.nist.gov/pfhub/benchmarks/benchmark2.ipynb/#(b)-Square-no-flux
+      2b.0:
+        description: >-
+          Ostwald ripening in a square domain with no-flux boundaries.
+        meaning: >-
+          https://pages.nist.gov/pfhub/hackathons/hackathon1/problems.ipynb/#2.b-No-Flux
+      2c.1:
         description: >-
           Ostwald ripening in a T-shaped domain with no-flux boundaries.
-      2d:
+        meaning: >-
+          https://pages.nist.gov/pfhub/benchmarks/benchmark2.ipynb/#(c)-T-shape
+      2c.0:
+        description: >-
+          Ostwald ripening in a T-shaped domain with no-flux boundaries.
+        meaning: >-
+          https://pages.nist.gov/pfhub/hackathons/hackathon1/problems.ipynb/#2.c-T-Shape-No-Flux
+      2d.1:
         description: >-
           Ostwald ripening on a closed spherical shell.
+        meaning: >-
+          https://pages.nist.gov/pfhub/benchmarks/benchmark2.ipynb/#(d)-Sphere
+      2d.0:
+        description: >-
+          Ostwald ripening on a closed spherical shell.
+        meaning: >-
+          https://pages.nist.gov/pfhub/hackathons/hackathon1/problems.ipynb/#2.d-Sphere
 
-      3a:
+      3a.1:
         description: >-
           Dendritic growth in a square domain.
+        meaning: >-
+          https://pages.nist.gov/pfhub/benchmarks/benchmark3.ipynb/
+      3a.0:
+        description: >-
+          Dendritic growth in a square domain with m=4 and θ₀=0.
+        meaning: >-
+          https://pages.nist.gov/pfhub/hackathons/hackathon2/problem1.ipynb/
+      3b.0:
+        description: >-
+          Dendritic growth in a square domain with m=4 and θ₀=π/4.
+        meaning: >-
+          https://pages.nist.gov/pfhub/hackathons/hackathon2/problem1.ipynb/
+      3c.0:
+        description: >-
+          Dendritic growth in a square domain with m=6 and θ₀=0.
+        meaning: >-
+          https://pages.nist.gov/pfhub/hackathons/hackathon2/problem1.ipynb/
 
-      4a:
+      4a.1:
         description: >-
           Elastic precipitate with radii (20 nm, 20 nm),
           C₁₁₁₁=250 aJ/nm³, C₁₁₂₂=150 aJ/nm³, C₁₂₁₂=100 aJ/nm³.
-      4b:
+        meaning: >-
+          https://pages.nist.gov/pfhub/benchmarks/benchmark4.ipynb/
+      4b.1:
         description: >-
           Elastic precipitate with radii (75 nm, 75 nm),
           C₁₁₁₁=250 aJ/nm³, C₁₁₂₂=150 aJ/nm³, C₁₂₁₂=100 aJ/nm³.
-      4c:
+        meaning: >-
+          https://pages.nist.gov/pfhub/benchmarks/benchmark4.ipynb/
+      4c.1:
         description: >-
           Elastic precipitate with radii (20 nm, 20 nm),
           C₁₁₁₁=275 aJ/nm³, C₁₁₂₂=165 aJ/nm³, C₁₂₁₂=110 aJ/nm³.
-      4d:
+        meaning: >-
+          https://pages.nist.gov/pfhub/benchmarks/benchmark4.ipynb/
+      4d.1:
         description: >-
           Elastic precipitate with radii (75 nm, 75 nm),
           C₁₁₁₁=275 aJ/nm³, C₁₁₂₂=165 aJ/nm³, C₁₂₁₂=110 aJ/nm³.
-      4e:
+        meaning: >-
+          https://pages.nist.gov/pfhub/benchmarks/benchmark4.ipynb/
+      4e.1:
         description: >-
           Elastic precipitate with radii (20/0.9 nm, 0.9*20 nm),
           C₁₁₁₁=250 aJ/nm³, C₁₁₂₂=150 aJ/nm³, C₁₂₁₂=100 aJ/nm³.
-      4f:
+        meaning: >-
+          https://pages.nist.gov/pfhub/benchmarks/benchmark4.ipynb/
+      4f.1:
         description: >-
           Elastic precipitate with radii (75/0.9 nm, 0.9*75 nm),
           C₁₁₁₁=250 aJ/nm³, C₁₁₂₂=150 aJ/nm³, C₁₂₁₂=100 aJ/nm³.
-      4g:
+        meaning: >-
+          https://pages.nist.gov/pfhub/benchmarks/benchmark4.ipynb/
+      4g.1:
         description: >-
           Elastic precipitate with radii (20/0.9 nm, 0.9*20 nm),
           C₁₁₁₁=275 aJ/nm³, C₁₁₂₂=165 aJ/nm³, C₁₂₁₂=110 aJ/nm³.
-      4h:
+        meaning: >-
+          https://pages.nist.gov/pfhub/benchmarks/benchmark4.ipynb/
+      4h.1:
         description: >-
           Elastic precipitate with radii (75/0.9 nm, 0.9*75 nm),
           C₁₁₁₁=275 aJ/nm³, C₁₁₂₂=165 aJ/nm³, C₁₂₁₂=110 aJ/nm³.
+        meaning: >-
+          https://pages.nist.gov/pfhub/benchmarks/benchmark4.ipynb/
 
-      5a:
+      5a.0:
         description: >-
           Stokes flow in an un-obstructed channel.
-      5b:
+        meaning: >-
+          https://pages.nist.gov/pfhub/benchmarks/benchmark5-hackathon.ipynb/
+      5b.0:
         description: >-
           Stokes flow in a channel with elliptical obstruction.
+        meaning: >-
+          https://pages.nist.gov/pfhub/benchmarks/benchmark5-hackathon.ipynb/
 
-      6a:
+      6a.0:
         description: >-
           Electrostatics in a square domain.
-      6b:
+        meaning: >-
+          https://pages.nist.gov/pfhub/benchmarks/benchmark6-hackathon.ipynb/
+      6b.0:
         description: >-
           Electrostatics in a domain comprised of a rectangle and half-circle.
+        meaning: >-
+          https://pages.nist.gov/pfhub/benchmarks/benchmark6-hackathon.ipynb/
 
-      7a:
+      7a.0:
         description: >-
           Method of Manufactured Solutions: order of accuracy test.
-      7b:
+        meaning: >-
+          https://pages.nist.gov/pfhub/benchmarks/benchmark7.ipynb/#Part-(a)
+      7b.0:
         description: >-
           Method of Manufactured Solutions: performance with fixed error.
-      7c:
+        meaning: >-
+          https://pages.nist.gov/pfhub/benchmarks/benchmark7.ipynb/#Part-(b)
+      7c.0:
         description: >-
           Method of Manufactured Solutions: increased rate of change.
+        meaning: >-
+          https://pages.nist.gov/pfhub/benchmarks/benchmark7.ipynb/#Part-(c)
 
-      8a:
+      8a.0:
         description: >-
           Homogeneous nucleation with a single initial seed.
-      8b:
+        meaning: >-
+          https://pages.nist.gov/pfhub/benchmarks/benchmark8.ipynb/#Part-(a):-single-seed
+      8b.0:
         description: >-
           Homogeneous nucleation with multiple initial seeds.
-      8c:
+        meaning: >-
+          https://pages.nist.gov/pfhub/benchmarks/benchmark8.ipynb/#Part-(b):-multiple-initial-seeds
+      8c.0:
         description: >-
           Homogeneous nucleation with seeds at random times.
-
-
-  ValidBenchmarkVersion:
-    description: >-
-      Known versions of the accepted PFHub Benchmark Problems.
-    permissible_values:
-      0:
-        description: >-
-          Initial or Hackathon version.
-      1:
-        description: >-
-          Published version.
-
-
-  CompressedFiles:
-    description: >-
-      Valid compressed archive file extensions.
-    permissible_values:
-      7z:
-        description: >-
-          7zip file extension.
-        meaning: https://www.iana.org/assignments/media-types/application/x-7z-compressed
-      bz2:
-        description: >-
-          Bzip-2 file extension.
-        meaning: https://www.iana.org/assignments/media-types/application/x-bzip2
-      gz:
-        description: >-
-          GZip file extension.
-        meaning: https://www.iana.org/assignments/media-types/application/gzip
-      tgz:
-        description: >-
-          Shorthand tarball extension.
-        meaning: https://www.iana.org/assignments/media-types/application/x-gtar
-      tar.gz:
-        description: >-
-          Gzipped Tar extension.
-        meaning: https://www.iana.org/assignments/media-types/application/x-gtar
-      zip:
-        description: >-
-          Zip file extension.
-        meaning: https://www.iana.org/assignments/media-types/application/zip
-
-
-  DataFiles:
-    description: >-
-      Valid raw or transformed spatial phase-field data file extensions.
-    permissible_values:
-      csv:
-        description: >-
-          Comma-separated values.
-        meaning: https://www.iana.org/assignments/media-types/text/csv
-      hdf5:
-        description: >-
-          Hierarchical HDF5 data.
-        meaning: https://docs.hdfgroup.org/hdf5/develop/_intro_h_d_f5.html
-      pvti:
-        description: >-
-          Parallel VTK ImageData file.
-        meaning: https://www.vtk.org/doc/nightly/html/classvtkImageData.html#details
-      pvtr:
-        description: >-
-          Parallel VTK RectilinearGrid file.
-        meaning: https://www.vtk.org/doc/nightly/html/classvtkRectilinearGrid.html#details
-      pvts:
-        description: >-
-          Parallel VTK StructuredGrid file.
-        meaning: https://www.vtk.org/doc/nightly/html/classvtkStructuredGrid.html#details
-      pvtu:
-        description: >-
-          Parallel VTK UnstructuredGrid file.
-        meaning: https://www.vtk.org/doc/nightly/html/classvtkUnstructuredGrid.html#details
-      tsv:
-        description: >-
-          Tab-delimited values.
-        meaning: https://www.iana.org/assignments/media-types/text/tsv
-      vti:
-        description: >-
-          VTK ImageData file.
-        meaning: https://www.vtk.org/doc/nightly/html/classvtkImageData.html#details
-      vtr:
-        description: >-
-          VTK RectilinearGrid file.
-        meaning: https://www.vtk.org/doc/nightly/html/classvtkRectilinearGrid.html#details
-      vts:
-        description: >-
-          VTK StructuredGrid file.
-        meaning: https://www.vtk.org/doc/nightly/html/classvtkStructuredGrid.htmOAl#details
-      vtu:
-        description: >-
-          VTK UnstructuredGrid file.
-        meaning: https://www.vtk.org/doc/nightly/html/classvtkUnstructuredGrid.html#details
-      xdmf:
-        description: >-
-          XML summary with HDF5 data.
-        meaning: https://www.xdmf.org/index.php/XDMF_Model_and_Format
-
-  ImageFiles:
-    description: >-
-      Valid image and visualization file extensions.
-    permissible_values:
-      png:
-        description: >-
-          Portable Network Graphics image file format.
-        meaning: https://www.iana.org/assignments/media-types/image/png
-      pvti:
-        description: >-
-          Parallel VTK ImageData file.
-        meaning: https://www.vtk.org/doc/nightly/html/classvtkImageData.html#details
-      pvtr:
-        description: >-
-          Parallel VTK RectilinearGrid file.
-        meaning: https://www.vtk.org/doc/nightly/html/classvtkRectilinearGrid.html#details
-      pvts:
-        description: >-
-          Parallel VTK StructuredGrid file.
-        meaning: https://www.vtk.org/doc/nightly/html/classvtkStructuredGrid.html#details
-      pvtu:
-        description: >-
-          Parallel VTK UnstructuredGrid file.
-        meaning: https://www.vtk.org/doc/nightly/html/classvtkUnstructuredGrid.html#details
-      tif:
-        description: >-
-          Tagged Image File Format file.
-        meaning: https://www.iana.org/assignments/media-types/image/tif
-      tsv:
-        description: >-
-          Tab-delimited values.
-        meaning: https://www.iana.org/assignments/media-types/text/tsv
-      vti:
-        description: >-
-          VTK ImageData file.
-        meaning: https://www.vtk.org/doc/nightly/html/classvtkImageData.html#details
-      vtr:
-        description: >-
-          VTK RectilinearGrid file.
-        meaning: https://www.vtk.org/doc/nightly/html/classvtkRectilinearGrid.html#details
-      vts:
-        description: >-
-          VTK StructuredGrid file.
-        meaning: https://www.vtk.org/doc/nightly/html/classvtkStructuredGrid.htmOAl#details
-      vtu:
-        description: >-
-          VTK UnstructuredGrid file.
-        meaning: https://www.vtk.org/doc/nightly/html/classvtkUnstructuredGrid.html#details
-
-  TabularFiles:
-    description: >-
-      Valid tabular file extensions.
-    permissible_values:
-      csv:
-        description: >-
-          Comma-separated values.
-        meaning: https://www.iana.org/assignments/media-types/text/csv
-      tsv:
-        description: >-
-          Tab-delimited values.
-        meaning: https://www.iana.org/assignments/media-types/text/tsv
+        meaning: >-
+          https://pages.nist.gov/pfhub/benchmarks/benchmark8.ipynb/#Part-(c):-multiple-seeds-at-random-times

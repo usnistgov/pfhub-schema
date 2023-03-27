@@ -56,7 +56,7 @@ status: check-config
 	@echo "Source: $(SOURCE_SCHEMA_PATH)"
 
 # generate products and add everything to github
-setup: install gen-project gen-examples gendoc git-init-add
+setup: install gen-project gendoc git-init-add
 
 # install any dependencies required for building
 install:
@@ -87,17 +87,13 @@ update-linkml:
 create-data-harmonizer:
 	npm init data-harmonizer $(SOURCE_SCHEMA_PATH)
 
-all: site
-site: gen-examples gen-project gendoc
+all: site validate
+site: gen-project gendoc
 %.yaml: gen-project
 deploy: all mkd-gh-deploy
 
 compile-sheets:
 	$(RUN) sheets2linkml --gsheet-id $(SHEET_ID) $(SHEET_TABS) > $(SHEET_MODULE_PATH).tmp && mv $(SHEET_MODULE_PATH).tmp $(SHEET_MODULE_PATH)
-
-# In future this will be done by conversion
-gen-examples:
-	cp src/data/examples/* $(EXAMPLEDIR)
 
 # generates all project files
 
@@ -119,14 +115,14 @@ check-config:
 	@(grep my-datamodel about.yaml > /dev/null && printf "\n**Project not configured**:\n\n  - Remember to edit 'about.yaml'\n\n" || exit 0)
 
 convert-examples-to-%:
-	$(patsubst %, $(RUN) linkml-convert  % -s $(SOURCE_SCHEMA_PATH) -C Person, $(shell ${SHELL} find src/data/examples -name "*.yaml"))
+	$(patsubst %, $(RUN) linkml-convert  % -s $(SOURCE_SCHEMA_PATH) -C BenchmarkResult, $(shell ${SHELL} find src/data/examples -name "*.yaml"))
 
 examples/%.yaml: src/data/examples/%.yaml
-	$(RUN) linkml-convert -s $(SOURCE_SCHEMA_PATH) -C Person $< -o $@
+	$(RUN) linkml-convert -s $(SOURCE_SCHEMA_PATH) -C BenchmarkResult $< -o $@
 examples/%.json: src/data/examples/%.yaml
-	$(RUN) linkml-convert -s $(SOURCE_SCHEMA_PATH) -C Person $< -o $@
+	$(RUN) linkml-convert -s $(SOURCE_SCHEMA_PATH) -C BenchmarkResult $< -o $@
 examples/%.ttl: src/data/examples/%.yaml
-	$(RUN) linkml-convert -P EXAMPLE=http://example.org/ -s $(SOURCE_SCHEMA_PATH) -C Person $< -o $@
+	$(RUN) linkml-convert -P EXAMPLE=http://example.org/ -s $(SOURCE_SCHEMA_PATH) -C BenchmarkResult $< -o $@
 
 examples/output: src/pfhub_schema/schema/pfhub_schema.yaml
 	mkdir -p $@

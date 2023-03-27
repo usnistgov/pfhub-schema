@@ -10,142 +10,130 @@
     sh:property [ sh:description "Informal or human-memorable identifier that may collide with others." ;
             sh:maxCount 1 ;
             sh:order 0 ;
-            sh:path <https://schema.org/name> ],
-        [ sh:description "Format of data contained in a file." ;
-            sh:maxCount 1 ;
-            sh:order 1 ;
-            sh:path <https://schema.org/encodingFormat> ] ;
+            sh:path <https://schema.org/name> ] ;
     sh:targetClass <https://schema.org/DigitalDocument> .
 
 pfhub:BenchmarkResult a sh:NodeShape ;
     sh:closed true ;
     sh:description "Root and context for this Benchmark Problem solution." ;
     sh:ignoredProperties ( rdf:type ) ;
-    sh:property [ sh:description "Text description, abstract, or narrative." ;
+    sh:property [ sh:class <https://schema.org/SoftwareApplication> ;
+            sh:description "List of the primary phase-field software framework and extra dependencies required to run this simulation." ;
+            sh:nodeKind sh:IRI ;
+            sh:order 4 ;
+            sh:path <https://schema.org/SoftwareApplication> ],
+        [ sh:class <https://schema.org/SoftwareSourceCode> ;
+            sh:description "Version of the PFHub Schema this record conforms to." ;
             sh:maxCount 1 ;
-            sh:order 9 ;
+            sh:nodeKind sh:IRI ;
+            sh:order 7 ;
+            sh:path pfhub:schema ],
+        [ sh:description "Text description, abstract, or narrative." ;
+            sh:maxCount 1 ;
+            sh:order 8 ;
             sh:path <https://schema.org/abstract> ],
+        [ sh:class <https://schema.org/SoftwareSourceCode> ;
+            sh:description "Source code implementing the solution." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:IRI ;
+            sh:order 5 ;
+            sh:path pfhub:implementation ],
         [ sh:class <https://schema.org/Person> ;
             sh:description "Collection of people who worked on this solution." ;
             sh:nodeKind sh:IRI ;
-            sh:order 3 ;
+            sh:order 2 ;
             sh:path <https://schema.org/contributor> ],
+        [ sh:description "Specification of the PFHub Benchmark Problem solved." ;
+            sh:in ( <https://pages.nist.gov/pfhub/benchmarks/benchmark1.ipynb/#(a)-Square-periodic> <https://pages.nist.gov/pfhub/hackathons/hackathon1/problems.ipynb/#1.a-Square-Periodic> <https://pages.nist.gov/pfhub/benchmarks/benchmark1.ipynb/#(b)-Square-no-flux> <https://pages.nist.gov/pfhub/hackathons/hackathon1/problems.ipynb/#1.b-No-Flux> <https://pages.nist.gov/pfhub/benchmarks/benchmark1.ipynb/#(c)-T-shape> <https://pages.nist.gov/pfhub/hackathons/hackathon1/problems.ipynb/#1.c-T-Shape-No-Flux> <https://pages.nist.gov/pfhub/benchmarks/benchmark1.ipynb/#(d)-Sphere> <https://pages.nist.gov/pfhub/hackathons/hackathon1/problems.ipynb/#1.d-Sphere> <https://pages.nist.gov/pfhub/benchmarks/benchmark2.ipynb/#(a)-Square-periodic> <https://pages.nist.gov/pfhub/hackathons/hackathon1/problems.ipynb/#2.a-Square-Periodic> <https://pages.nist.gov/pfhub/benchmarks/benchmark2.ipynb/#(b)-Square-no-flux> <https://pages.nist.gov/pfhub/hackathons/hackathon1/problems.ipynb/#2.b-No-Flux> <https://pages.nist.gov/pfhub/benchmarks/benchmark2.ipynb/#(c)-T-shape> <https://pages.nist.gov/pfhub/hackathons/hackathon1/problems.ipynb/#2.c-T-Shape-No-Flux> <https://pages.nist.gov/pfhub/benchmarks/benchmark2.ipynb/#(d)-Sphere> <https://pages.nist.gov/pfhub/hackathons/hackathon1/problems.ipynb/#2.d-Sphere> <https://pages.nist.gov/pfhub/benchmarks/benchmark3.ipynb/> <https://pages.nist.gov/pfhub/hackathons/hackathon2/problem1.ipynb/> <https://pages.nist.gov/pfhub/hackathons/hackathon2/problem1.ipynb/> <https://pages.nist.gov/pfhub/hackathons/hackathon2/problem1.ipynb/> <https://pages.nist.gov/pfhub/benchmarks/benchmark4.ipynb/> <https://pages.nist.gov/pfhub/benchmarks/benchmark4.ipynb/> <https://pages.nist.gov/pfhub/benchmarks/benchmark4.ipynb/> <https://pages.nist.gov/pfhub/benchmarks/benchmark4.ipynb/> <https://pages.nist.gov/pfhub/benchmarks/benchmark4.ipynb/> <https://pages.nist.gov/pfhub/benchmarks/benchmark4.ipynb/> <https://pages.nist.gov/pfhub/benchmarks/benchmark4.ipynb/> <https://pages.nist.gov/pfhub/benchmarks/benchmark4.ipynb/> <https://pages.nist.gov/pfhub/benchmarks/benchmark5-hackathon.ipynb/> <https://pages.nist.gov/pfhub/benchmarks/benchmark5-hackathon.ipynb/> <https://pages.nist.gov/pfhub/benchmarks/benchmark6-hackathon.ipynb/> <https://pages.nist.gov/pfhub/benchmarks/benchmark6-hackathon.ipynb/> <https://pages.nist.gov/pfhub/benchmarks/benchmark7.ipynb/#Part-(a)> <https://pages.nist.gov/pfhub/benchmarks/benchmark7.ipynb/#Part-(b)> <https://pages.nist.gov/pfhub/benchmarks/benchmark7.ipynb/#Part-(c)> <https://pages.nist.gov/pfhub/benchmarks/benchmark8.ipynb/#Part-(a):-single-seed> <https://pages.nist.gov/pfhub/benchmarks/benchmark8.ipynb/#Part-(b):-multiple-initial-seeds> <https://pages.nist.gov/pfhub/benchmarks/benchmark8.ipynb/#Part-(c):-multiple-seeds-at-random-times> ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:order 1 ;
+            sh:path pfhub:benchmark_problem ;
+            sh:pattern "^\\S+" ],
+        [ sh:class <https://schema.org/Dataset> ;
+            sh:description "Collection of outputs and summary data from a simulation." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNode ;
+            sh:order 6 ;
+            sh:path pfhub:results ],
         [ sh:description "Unique identifier that must not collide with any other." ;
             sh:maxCount 1 ;
             sh:minCount 1 ;
             sh:order 0 ;
             sh:path <https://schema.org/identifier> ],
-        [ sh:description "Numerical identifier for a Benchmark Problem version." ;
-            sh:maxCount 1 ;
-            sh:minCount 1 ;
-            sh:order 2 ;
-            sh:path pfhub:benchmark_version ],
-        [ sh:class <https://schema.org/SoftwareSourceCode> ;
-            sh:description "Version of the PFHub Schema this record conforms to." ;
-            sh:maxCount 1 ;
-            sh:nodeKind sh:IRI ;
-            sh:order 8 ;
-            sh:path pfhub:schema ],
-        [ sh:class <https://schema.org/Dataset> ;
-            sh:description "Collection of outputs and summary data from a simulation." ;
-            sh:maxCount 1 ;
-            sh:nodeKind sh:BlankNode ;
-            sh:order 7 ;
-            sh:path pfhub:results ],
-        [ sh:class <https://schema.org/SoftwareSourceCode> ;
-            sh:description "Source code implementing the solution." ;
-            sh:maxCount 1 ;
-            sh:nodeKind sh:IRI ;
-            sh:order 6 ;
-            sh:path pfhub:implementation ],
         [ sh:description "Day when an item was uploaded, released, or published." ;
             sh:maxCount 1 ;
-            sh:order 4 ;
-            sh:path <https://schema.org/dateCreated> ],
-        [ sh:description "Alphanumerical identifier for part of a Benchmark Problem." ;
-            sh:in ( "1a" "1b" "1c" "1d" "2a" "2b" "2c" "2d" "3a" "4a" "4b" "4c" "4d" "4e" "4f" "4g" "4h" "5a" "5b" "6a" "6b" "7a" "7b" "7c" "8a" "8b" "8c" ) ;
-            sh:maxCount 1 ;
-            sh:minCount 1 ;
-            sh:order 1 ;
-            sh:path pfhub:benchmark_problem ;
-            sh:pattern "^\\d\\a" ],
-        [ sh:class <https://schema.org/SoftwareApplication> ;
-            sh:description "A computer program or library" ;
-            sh:nodeKind sh:IRI ;
-            sh:order 5 ;
-            sh:path <https://schema.org/SoftwareApplication> ] ;
+            sh:order 3 ;
+            sh:path <https://schema.org/dateCreated> ] ;
     sh:targetClass pfhub:BenchmarkResult .
 
 <https://en.wikipedia.org/wiki/Comma-separated_values> a sh:NodeShape ;
     sh:closed true ;
     sh:description "Specialization of a pfhub:File representing a time series in plain text using named columns of comma-separated values." ;
     sh:ignoredProperties ( rdf:type ) ;
-    sh:property [ sh:description "Column names applied to tabular data." ;
-            sh:order 0 ;
-            sh:path pfhub:columns ;
-            sh:pattern "^\\S+" ],
-        [ sh:description "Informal or human-memorable identifier that may collide with others." ;
+    sh:property [ sh:description "Informal or human-memorable identifier that may collide with others." ;
             sh:maxCount 1 ;
             sh:order 1 ;
             sh:path <https://schema.org/name> ],
-        [ sh:description "Format of data contained in a file." ;
-            sh:in ( <https://www.iana.org/assignments/media-types/text/csv> <https://www.iana.org/assignments/media-types/text/tsv> ) ;
-            sh:maxCount 1 ;
-            sh:order 2 ;
-            sh:path <https://schema.org/encodingFormat> ] ;
+        [ sh:description "Column names applied to tabular data." ;
+            sh:order 0 ;
+            sh:path pfhub:columns ;
+            sh:pattern "^\\S+" ] ;
     sh:targetClass <https://en.wikipedia.org/wiki/Comma-separated_values> .
 
 <https://schema.org/Dataset> a sh:NodeShape ;
     sh:closed true ;
     sh:description "Runtime information and output from a simulation." ;
     sh:ignoredProperties ( rdf:type ) ;
-    sh:property [ sh:class <https://schema.org/softwareRequirements> ;
-            sh:description "Computer hardware used to run the simulation." ;
-            sh:nodeKind sh:BlankNode ;
-            sh:order 5 ;
-            sh:path pfhub:hardware ],
-        [ sh:class pfhub:ArchiveData ;
-            sh:description "Compressed data." ;
-            sh:nodeKind sh:IRI ;
-            sh:order 0 ;
-            sh:path pfhub:file_archive ],
-        [ sh:description "Memory capacity required for this simulation." ;
+    sh:property [ sh:description "Amount of time required to execute the simulation." ;
             sh:maxCount 1 ;
-            sh:order 6 ;
-            sh:path pfhub:memory_in_kb ],
-        [ sh:class <https://en.wikipedia.org/wiki/Comma-separated_values> ;
-            sh:description "Columnar timeseries data from a simulation." ;
-            sh:nodeKind sh:IRI ;
-            sh:order 2 ;
-            sh:path pfhub:file_timeseries ],
-        [ sh:description "Amount of time required to execute the simulation." ;
-            sh:maxCount 1 ;
-            sh:order 7 ;
+            sh:order 8 ;
             sh:path <https://schema.org/Number> ],
-        [ sh:class pfhub:FieldData ;
-            sh:description "Raw data output from a simulation." ;
+        [ sh:class pfhub:ArchiveData ;
+            sh:description "Compressed data files." ;
             sh:nodeKind sh:IRI ;
             sh:order 1 ;
+            sh:path pfhub:file_archive ],
+        [ sh:class <https://en.wikipedia.org/wiki/Comma-separated_values> ;
+            sh:description "Columnar timeseries files from a simulation." ;
+            sh:nodeKind sh:IRI ;
+            sh:order 3 ;
+            sh:path pfhub:file_timeseries ],
+        [ sh:description "Memory capacity required for this simulation." ;
+            sh:maxCount 1 ;
+            sh:order 7 ;
+            sh:path pfhub:memory_in_kb ],
+        [ sh:class pfhub:ImageData ;
+            sh:description "Visualization output files from a simulation." ;
+            sh:nodeKind sh:IRI ;
+            sh:order 4 ;
+            sh:path pfhub:file_visual ],
+        [ sh:class <https://schema.org/softwareRequirements> ;
+            sh:description "Computer hardware used to run the simulation." ;
+            sh:nodeKind sh:BlankNode ;
+            sh:order 6 ;
+            sh:path pfhub:hardware ],
+        [ sh:class pfhub:TextFile ;
+            sh:description "README, AUTHORS, and similar documentation." ;
+            sh:nodeKind sh:IRI ;
+            sh:order 0 ;
+            sh:path pfhub:documentation ],
+        [ sh:class pfhub:FieldData ;
+            sh:description "Raw data files from a simulation." ;
+            sh:nodeKind sh:IRI ;
+            sh:order 2 ;
             sh:path pfhub:file_spatial ],
         [ sh:description "Maximum simulated (or \"fictive\") time reached." ;
             sh:maxCount 1 ;
-            sh:order 4 ;
-            sh:path <https://schema.org/Number> ],
-        [ sh:class pfhub:ImageData ;
-            sh:description "Visualization output from a simulation." ;
-            sh:nodeKind sh:IRI ;
-            sh:order 3 ;
-            sh:path pfhub:file_visual ] ;
+            sh:order 5 ;
+            sh:path <https://schema.org/Number> ] ;
     sh:targetClass <https://schema.org/Dataset> .
 
 <https://schema.org/Person> a sh:NodeShape ;
     sh:closed true ;
     sh:description "Someone who contributed to this solution." ;
     sh:ignoredProperties ( rdf:type ) ;
-    sh:property [ sh:description "A person's identifier on a website, without the \"at\" symbol." ;
-            sh:order 2 ;
-            sh:path <https://schema.org/member> ],
-        [ sh:description "Informal or human-memorable identifier that may collide with others." ;
+    sh:property [ sh:description "Informal or human-memorable identifier that may collide with others." ;
             sh:maxCount 1 ;
             sh:order 1 ;
             sh:path <https://schema.org/name> ],
@@ -161,25 +149,28 @@ pfhub:BenchmarkResult a sh:NodeShape ;
             sh:path <https://schema.org/identifier> ],
         [ sh:description "Institution, company, or agency a person works with." ;
             sh:order 3 ;
-            sh:path pfhub:affiliation ] ;
+            sh:path pfhub:affiliation ],
+        [ sh:description "A person's identifier on a website, without the \"at\" symbol." ;
+            sh:order 2 ;
+            sh:path <https://schema.org/member> ] ;
     sh:targetClass <https://schema.org/Person> .
 
 <https://schema.org/softwareRequirements> a sh:NodeShape ;
     sh:closed true ;
     sh:description "Summary of the hardware used to execute the simulation." ;
     sh:ignoredProperties ( rdf:type ) ;
-    sh:property [ sh:description "Computer processor architecture required for this simulation." ;
+    sh:property [ sh:description "Number of machines allocated for the simulation in a computer cluster environment." ;
             sh:maxCount 1 ;
-            sh:order 0 ;
-            sh:path <http://www.fairsharing.org/ontology/subject/SRAO_0000258> ],
+            sh:order 2 ;
+            sh:path <http://purl.obolibrary.org/obo/NCIT_C18132> ],
         [ sh:description "Number of parallel cores or threads of execution used by the simulation on a CPU, GPU, or accelerator device." ;
             sh:maxCount 1 ;
             sh:order 1 ;
             sh:path <http://purl.obolibrary.org/obo/NCIT_C64194> ],
-        [ sh:description "Number of machines allocated for the simulation in a computer cluster environment." ;
+        [ sh:description "Computer processor architecture required for this simulation." ;
             sh:maxCount 1 ;
-            sh:order 2 ;
-            sh:path <http://purl.obolibrary.org/obo/NCIT_C18132> ] ;
+            sh:order 0 ;
+            sh:path <http://www.fairsharing.org/ontology/subject/SRAO_0000258> ] ;
     sh:targetClass <https://schema.org/softwareRequirements> .
 
 pfhub:ArchiveData a sh:NodeShape ;
@@ -189,12 +180,7 @@ pfhub:ArchiveData a sh:NodeShape ;
     sh:property [ sh:description "Informal or human-memorable identifier that may collide with others." ;
             sh:maxCount 1 ;
             sh:order 0 ;
-            sh:path <https://schema.org/name> ],
-        [ sh:description "Format of data contained in a file." ;
-            sh:in ( <https://www.iana.org/assignments/media-types/application/x-7z-compressed> <https://www.iana.org/assignments/media-types/application/x-bzip2> <https://www.iana.org/assignments/media-types/application/gzip> <https://www.iana.org/assignments/media-types/application/x-gtar> <https://www.iana.org/assignments/media-types/application/x-gtar> <https://www.iana.org/assignments/media-types/application/zip> ) ;
-            sh:maxCount 1 ;
-            sh:order 1 ;
-            sh:path <https://schema.org/encodingFormat> ] ;
+            sh:path <https://schema.org/name> ] ;
     sh:targetClass pfhub:ArchiveData .
 
 pfhub:FieldData a sh:NodeShape ;
@@ -204,11 +190,7 @@ pfhub:FieldData a sh:NodeShape ;
     sh:property [ sh:description "Informal or human-memorable identifier that may collide with others." ;
             sh:maxCount 1 ;
             sh:order 0 ;
-            sh:path <https://schema.org/name> ],
-        [ sh:description "Format of data contained in a file." ;
-            sh:maxCount 1 ;
-            sh:order 1 ;
-            sh:path <https://schema.org/encodingFormat> ] ;
+            sh:path <https://schema.org/name> ] ;
     sh:targetClass pfhub:FieldData .
 
 pfhub:ImageData a sh:NodeShape ;
@@ -218,13 +200,18 @@ pfhub:ImageData a sh:NodeShape ;
     sh:property [ sh:description "Informal or human-memorable identifier that may collide with others." ;
             sh:maxCount 1 ;
             sh:order 0 ;
-            sh:path <https://schema.org/name> ],
-        [ sh:description "Format of data contained in a file." ;
-            sh:in ( <https://www.iana.org/assignments/media-types/image/png> <https://www.vtk.org/doc/nightly/html/classvtkImageData.html#details> <https://www.vtk.org/doc/nightly/html/classvtkRectilinearGrid.html#details> <https://www.vtk.org/doc/nightly/html/classvtkStructuredGrid.html#details> <https://www.vtk.org/doc/nightly/html/classvtkUnstructuredGrid.html#details> <https://www.iana.org/assignments/media-types/image/tif> <https://www.iana.org/assignments/media-types/text/tsv> <https://www.vtk.org/doc/nightly/html/classvtkImageData.html#details> <https://www.vtk.org/doc/nightly/html/classvtkRectilinearGrid.html#details> <https://www.vtk.org/doc/nightly/html/classvtkStructuredGrid.htmOAl#details> <https://www.vtk.org/doc/nightly/html/classvtkUnstructuredGrid.html#details> ) ;
-            sh:maxCount 1 ;
-            sh:order 1 ;
-            sh:path <https://schema.org/encodingFormat> ] ;
+            sh:path <https://schema.org/name> ] ;
     sh:targetClass pfhub:ImageData .
+
+pfhub:TextFile a sh:NodeShape ;
+    sh:closed true ;
+    sh:description "Specialization of a pfhub:File containing plain text." ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:description "Informal or human-memorable identifier that may collide with others." ;
+            sh:maxCount 1 ;
+            sh:order 0 ;
+            sh:path <https://schema.org/name> ] ;
+    sh:targetClass pfhub:TextFile .
 
 <https://schema.org/SoftwareApplication> a sh:NodeShape ;
     sh:closed true ;
@@ -234,15 +221,6 @@ pfhub:ImageData a sh:NodeShape ;
             sh:maxCount 1 ;
             sh:order 3 ;
             sh:path <https://schema.org/downloadUrl> ],
-        [ sh:description "URL of an online resource or website." ;
-            sh:maxCount 1 ;
-            sh:order 0 ;
-            sh:path <https://schema.org/url> ],
-        [ sh:description "Semantic version of a software project." ;
-            sh:maxCount 1 ;
-            sh:order 4 ;
-            sh:path <https://schema.org/softwareVersion> ;
-            sh:pattern "^[\\d+\\.]+" ],
         [ sh:description "Informal or human-memorable identifier that may collide with others." ;
             sh:maxCount 1 ;
             sh:order 1 ;
@@ -251,21 +229,30 @@ pfhub:ImageData a sh:NodeShape ;
             sh:maxCount 1 ;
             sh:order 2 ;
             sh:path <https://en.wikipedia.org/wiki/Commit_(version_control)> ;
-            sh:pattern "^\\S+" ] ;
+            sh:pattern "^\\S+" ],
+        [ sh:description "Semantic version of a software project." ;
+            sh:maxCount 1 ;
+            sh:order 4 ;
+            sh:path <https://schema.org/softwareVersion> ;
+            sh:pattern "^[\\d+\\.]+" ],
+        [ sh:description "URL of an online resource or website." ;
+            sh:maxCount 1 ;
+            sh:order 0 ;
+            sh:path <https://schema.org/url> ] ;
     sh:targetClass <https://schema.org/SoftwareApplication> .
 
 <https://schema.org/SoftwareSourceCode> a sh:NodeShape ;
     sh:closed true ;
     sh:description "Link to the authors' implementation of the benchmark problem." ;
     sh:ignoredProperties ( rdf:type ) ;
-    sh:property [ sh:description "URL of an online resource or website." ;
-            sh:maxCount 1 ;
-            sh:order 0 ;
-            sh:path <https://schema.org/url> ],
-        [ sh:description "Informal or human-memorable identifier that may collide with others." ;
+    sh:property [ sh:description "Informal or human-memorable identifier that may collide with others." ;
             sh:maxCount 1 ;
             sh:order 1 ;
             sh:path <https://schema.org/name> ],
+        [ sh:description "URL of an online resource or website." ;
+            sh:maxCount 1 ;
+            sh:order 0 ;
+            sh:path <https://schema.org/url> ],
         [ sh:description "Commit hash in a repository of source code." ;
             sh:maxCount 1 ;
             sh:order 2 ;

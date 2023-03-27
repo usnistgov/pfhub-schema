@@ -1,5 +1,5 @@
 # Auto generated from pfhub_schema.yaml by pythongen.py version: 0.9.0
-# Generation date: 2023-03-24T14:26:12
+# Generation date: 2023-03-27T15:39:38
 # Schema: pfhub_schema
 #
 # id: https://w3id.org/usnistgov/pfhub-schema
@@ -52,6 +52,14 @@ class FileName(extended_str):
     pass
 
 
+class SoftwareUrl(URIorCURIE):
+    pass
+
+
+class SourceCodeUrl(URIorCURIE):
+    pass
+
+
 class ArchiveDataName(FileName):
     pass
 
@@ -60,19 +68,15 @@ class FieldDataName(FileName):
     pass
 
 
+class TextFileName(FileName):
+    pass
+
+
 class TimeSeriesDataName(FileName):
     pass
 
 
 class ImageDataName(FileName):
-    pass
-
-
-class SoftwareUrl(URIorCURIE):
-    pass
-
-
-class SourceCodeUrl(URIorCURIE):
     pass
 
 
@@ -89,8 +93,7 @@ class BenchmarkResult(YAMLRoot):
     class_model_uri: ClassVar[URIRef] = PFHUB.BenchmarkResult
 
     id: Union[str, BenchmarkResultId] = None
-    benchmark_problem: Union[str, "ValidBenchmarkProblem"] = None
-    benchmark_version: int = None
+    benchmark_problem: Union[str, "ValidBenchmarkProblems"] = None
     contributors: Optional[Union[Dict[Union[str, ContributorId], Union[dict, "Contributor"]], List[Union[dict, "Contributor"]]]] = empty_dict()
     date_created: Optional[Union[str, XSDDate]] = None
     framework: Optional[Union[Dict[Union[str, SoftwareUrl], Union[dict, "Software"]], List[Union[dict, "Software"]]]] = empty_dict()
@@ -107,13 +110,8 @@ class BenchmarkResult(YAMLRoot):
 
         if self._is_empty(self.benchmark_problem):
             self.MissingRequiredField("benchmark_problem")
-        if not isinstance(self.benchmark_problem, ValidBenchmarkProblem):
-            self.benchmark_problem = ValidBenchmarkProblem(self.benchmark_problem)
-
-        if self._is_empty(self.benchmark_version):
-            self.MissingRequiredField("benchmark_version")
-        if not isinstance(self.benchmark_version, int):
-            self.benchmark_version = int(self.benchmark_version)
+        if not isinstance(self.benchmark_problem, ValidBenchmarkProblems):
+            self.benchmark_problem = ValidBenchmarkProblems(self.benchmark_problem)
 
         self._normalize_inlined_as_list(slot_name="contributors", slot_type=Contributor, key_name="id", keyed=True)
 
@@ -220,127 +218,12 @@ class File(YAMLRoot):
     class_model_uri: ClassVar[URIRef] = PFHUB.File
 
     name: Union[str, FileName] = None
-    format: Optional[str] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.name):
             self.MissingRequiredField("name")
         if not isinstance(self.name, FileName):
             self.name = FileName(self.name)
-
-        if self.format is not None and not isinstance(self.format, str):
-            self.format = str(self.format)
-
-        super().__post_init__(**kwargs)
-
-
-@dataclass
-class ArchiveData(File):
-    """
-    Specialization of a pfhub:File containing a compressed data archive.
-    """
-    _inherited_slots: ClassVar[List[str]] = []
-
-    class_class_uri: ClassVar[URIRef] = PFHUB.ArchiveData
-    class_class_curie: ClassVar[str] = "pfhub:ArchiveData"
-    class_name: ClassVar[str] = "ArchiveData"
-    class_model_uri: ClassVar[URIRef] = PFHUB.ArchiveData
-
-    name: Union[str, ArchiveDataName] = None
-    format: Optional[Union[str, "CompressedFiles"]] = None
-
-    def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
-        if self._is_empty(self.name):
-            self.MissingRequiredField("name")
-        if not isinstance(self.name, ArchiveDataName):
-            self.name = ArchiveDataName(self.name)
-
-        if self.format is not None and not isinstance(self.format, CompressedFiles):
-            self.format = CompressedFiles(self.format)
-
-        super().__post_init__(**kwargs)
-
-
-@dataclass
-class FieldData(File):
-    """
-    Specialization of a pfhub:File representing field variables in a simulation domain using a format appropriate for
-    the application.
-    """
-    _inherited_slots: ClassVar[List[str]] = []
-
-    class_class_uri: ClassVar[URIRef] = PFHUB.FieldData
-    class_class_curie: ClassVar[str] = "pfhub:FieldData"
-    class_name: ClassVar[str] = "FieldData"
-    class_model_uri: ClassVar[URIRef] = PFHUB.FieldData
-
-    name: Union[str, FieldDataName] = None
-
-    def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
-        if self._is_empty(self.name):
-            self.MissingRequiredField("name")
-        if not isinstance(self.name, FieldDataName):
-            self.name = FieldDataName(self.name)
-
-        super().__post_init__(**kwargs)
-
-
-@dataclass
-class TimeSeriesData(File):
-    """
-    Specialization of a pfhub:File representing a time series in plain text using named columns of comma-separated
-    values.
-    """
-    _inherited_slots: ClassVar[List[str]] = []
-
-    class_class_uri: ClassVar[URIRef] = URIRef("https://en.wikipedia.org/wiki/Comma-separated_values")
-    class_class_curie: ClassVar[str] = None
-    class_name: ClassVar[str] = "TimeSeriesData"
-    class_model_uri: ClassVar[URIRef] = PFHUB.TimeSeriesData
-
-    name: Union[str, TimeSeriesDataName] = None
-    columns: Optional[Union[str, List[str]]] = empty_list()
-    format: Optional[Union[str, "TabularFiles"]] = None
-
-    def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
-        if self._is_empty(self.name):
-            self.MissingRequiredField("name")
-        if not isinstance(self.name, TimeSeriesDataName):
-            self.name = TimeSeriesDataName(self.name)
-
-        if not isinstance(self.columns, list):
-            self.columns = [self.columns] if self.columns is not None else []
-        self.columns = [v if isinstance(v, str) else str(v) for v in self.columns]
-
-        if self.format is not None and not isinstance(self.format, TabularFiles):
-            self.format = TabularFiles(self.format)
-
-        super().__post_init__(**kwargs)
-
-
-@dataclass
-class ImageData(File):
-    """
-    Specialization of a pfhub:File for images and visualization data.
-    """
-    _inherited_slots: ClassVar[List[str]] = []
-
-    class_class_uri: ClassVar[URIRef] = PFHUB.ImageData
-    class_class_curie: ClassVar[str] = "pfhub:ImageData"
-    class_name: ClassVar[str] = "ImageData"
-    class_model_uri: ClassVar[URIRef] = PFHUB.ImageData
-
-    name: Union[str, ImageDataName] = None
-    format: Optional[Union[str, "ImageFiles"]] = None
-
-    def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
-        if self._is_empty(self.name):
-            self.MissingRequiredField("name")
-        if not isinstance(self.name, ImageDataName):
-            self.name = ImageDataName(self.name)
-
-        if self.format is not None and not isinstance(self.format, ImageFiles):
-            self.format = ImageFiles(self.format)
 
         super().__post_init__(**kwargs)
 
@@ -357,16 +240,19 @@ class Results(YAMLRoot):
     class_name: ClassVar[str] = "Results"
     class_model_uri: ClassVar[URIRef] = PFHUB.Results
 
-    file_archive: Optional[Union[Dict[Union[str, ArchiveDataName], Union[dict, ArchiveData]], List[Union[dict, ArchiveData]]]] = empty_dict()
-    file_spatial: Optional[Union[Dict[Union[str, FieldDataName], Union[dict, FieldData]], List[Union[dict, FieldData]]]] = empty_dict()
-    file_timeseries: Optional[Union[Dict[Union[str, TimeSeriesDataName], Union[dict, TimeSeriesData]], List[Union[dict, TimeSeriesData]]]] = empty_dict()
-    file_visual: Optional[Union[Dict[Union[str, ImageDataName], Union[dict, ImageData]], List[Union[dict, ImageData]]]] = empty_dict()
+    documentation: Optional[Union[List[Union[str, TextFileName]], Dict[Union[str, TextFileName], Union[dict, "TextFile"]]]] = empty_dict()
+    file_archive: Optional[Union[List[Union[str, ArchiveDataName]], Dict[Union[str, ArchiveDataName], Union[dict, "ArchiveData"]]]] = empty_dict()
+    file_spatial: Optional[Union[List[Union[str, FieldDataName]], Dict[Union[str, FieldDataName], Union[dict, "FieldData"]]]] = empty_dict()
+    file_timeseries: Optional[Union[Dict[Union[str, TimeSeriesDataName], Union[dict, "TimeSeriesData"]], List[Union[dict, "TimeSeriesData"]]]] = empty_dict()
+    file_visual: Optional[Union[List[Union[str, ImageDataName]], Dict[Union[str, ImageDataName], Union[dict, "ImageData"]]]] = empty_dict()
     fictive_time: Optional[float] = None
     hardware: Optional[Union[Union[dict, ComputeResource], List[Union[dict, ComputeResource]]]] = empty_list()
     memory_in_kb: Optional[int] = None
     time_in_s: Optional[int] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
+        self._normalize_inlined_as_list(slot_name="documentation", slot_type=TextFile, key_name="name", keyed=True)
+
         self._normalize_inlined_as_list(slot_name="file_archive", slot_type=ArchiveData, key_name="name", keyed=True)
 
         self._normalize_inlined_as_list(slot_name="file_spatial", slot_type=FieldData, key_name="name", keyed=True)
@@ -461,255 +347,292 @@ class SourceCode(YAMLRoot):
         super().__post_init__(**kwargs)
 
 
+@dataclass
+class ArchiveData(File):
+    """
+    Specialization of a pfhub:File containing a compressed data archive.
+    """
+    _inherited_slots: ClassVar[List[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = PFHUB.ArchiveData
+    class_class_curie: ClassVar[str] = "pfhub:ArchiveData"
+    class_name: ClassVar[str] = "ArchiveData"
+    class_model_uri: ClassVar[URIRef] = PFHUB.ArchiveData
+
+    name: Union[str, ArchiveDataName] = None
+
+    def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
+        if self._is_empty(self.name):
+            self.MissingRequiredField("name")
+        if not isinstance(self.name, ArchiveDataName):
+            self.name = ArchiveDataName(self.name)
+
+        super().__post_init__(**kwargs)
+
+
+@dataclass
+class FieldData(File):
+    """
+    Specialization of a pfhub:File representing field variables in a simulation domain using a format appropriate for
+    the application.
+    """
+    _inherited_slots: ClassVar[List[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = PFHUB.FieldData
+    class_class_curie: ClassVar[str] = "pfhub:FieldData"
+    class_name: ClassVar[str] = "FieldData"
+    class_model_uri: ClassVar[URIRef] = PFHUB.FieldData
+
+    name: Union[str, FieldDataName] = None
+
+    def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
+        if self._is_empty(self.name):
+            self.MissingRequiredField("name")
+        if not isinstance(self.name, FieldDataName):
+            self.name = FieldDataName(self.name)
+
+        super().__post_init__(**kwargs)
+
+
+@dataclass
+class TextFile(File):
+    """
+    Specialization of a pfhub:File containing plain text.
+    """
+    _inherited_slots: ClassVar[List[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = PFHUB.TextFile
+    class_class_curie: ClassVar[str] = "pfhub:TextFile"
+    class_name: ClassVar[str] = "TextFile"
+    class_model_uri: ClassVar[URIRef] = PFHUB.TextFile
+
+    name: Union[str, TextFileName] = None
+
+    def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
+        if self._is_empty(self.name):
+            self.MissingRequiredField("name")
+        if not isinstance(self.name, TextFileName):
+            self.name = TextFileName(self.name)
+
+        super().__post_init__(**kwargs)
+
+
+@dataclass
+class TimeSeriesData(File):
+    """
+    Specialization of a pfhub:File representing a time series in plain text using named columns of comma-separated
+    values.
+    """
+    _inherited_slots: ClassVar[List[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = URIRef("https://en.wikipedia.org/wiki/Comma-separated_values")
+    class_class_curie: ClassVar[str] = None
+    class_name: ClassVar[str] = "TimeSeriesData"
+    class_model_uri: ClassVar[URIRef] = PFHUB.TimeSeriesData
+
+    name: Union[str, TimeSeriesDataName] = None
+    columns: Optional[Union[str, List[str]]] = empty_list()
+
+    def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
+        if self._is_empty(self.name):
+            self.MissingRequiredField("name")
+        if not isinstance(self.name, TimeSeriesDataName):
+            self.name = TimeSeriesDataName(self.name)
+
+        if not isinstance(self.columns, list):
+            self.columns = [self.columns] if self.columns is not None else []
+        self.columns = [v if isinstance(v, str) else str(v) for v in self.columns]
+
+        super().__post_init__(**kwargs)
+
+
+@dataclass
+class ImageData(File):
+    """
+    Specialization of a pfhub:File for images and visualization data.
+    """
+    _inherited_slots: ClassVar[List[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = PFHUB.ImageData
+    class_class_curie: ClassVar[str] = "pfhub:ImageData"
+    class_name: ClassVar[str] = "ImageData"
+    class_model_uri: ClassVar[URIRef] = PFHUB.ImageData
+
+    name: Union[str, ImageDataName] = None
+
+    def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
+        if self._is_empty(self.name):
+            self.MissingRequiredField("name")
+        if not isinstance(self.name, ImageDataName):
+            self.name = ImageDataName(self.name)
+
+        super().__post_init__(**kwargs)
+
+
 # Enumerations
-class ValidBenchmarkProblem(EnumDefinitionImpl):
+class ValidBenchmarkProblems(EnumDefinitionImpl):
     """
     Known parts of the accepted PFHub Benchmark Problems.
     """
     _defn = EnumDefinition(
-        name="ValidBenchmarkProblem",
+        name="ValidBenchmarkProblems",
         description="Known parts of the accepted PFHub Benchmark Problems.",
     )
 
     @classmethod
     def _addvals(cls):
-        setattr(cls, "1a",
-                PermissibleValue(text="1a",
-                                 description="Spinodal decomposition in a square domain with periodic boundaries.") )
-        setattr(cls, "1b",
-                PermissibleValue(text="1b",
-                                 description="Spinodal decomposition in a square domain with no-flux boundaries.") )
-        setattr(cls, "1c",
-                PermissibleValue(text="1c",
-                                 description="Spinodal decomposition in a T-shaped domain with no-flux boundaries.") )
-        setattr(cls, "1d",
-                PermissibleValue(text="1d",
-                                 description="Spinodal decomposition on a closed spherical shell.") )
-        setattr(cls, "2a",
-                PermissibleValue(text="2a",
-                                 description="Ostwald ripening in a square domain with periodic boundaries.") )
-        setattr(cls, "2b",
-                PermissibleValue(text="2b",
-                                 description="Ostwald ripening in a square domain with no-flux boundaries.") )
-        setattr(cls, "2c",
-                PermissibleValue(text="2c",
-                                 description="Ostwald ripening in a T-shaped domain with no-flux boundaries.") )
-        setattr(cls, "2d",
-                PermissibleValue(text="2d",
-                                 description="Ostwald ripening on a closed spherical shell.") )
-        setattr(cls, "3a",
-                PermissibleValue(text="3a",
-                                 description="Dendritic growth in a square domain.") )
-        setattr(cls, "4a",
-                PermissibleValue(text="4a",
-                                 description="Elastic precipitate with radii (20 nm, 20 nm), C₁₁₁₁=250 aJ/nm³, C₁₁₂₂=150 aJ/nm³, C₁₂₁₂=100 aJ/nm³.") )
-        setattr(cls, "4b",
-                PermissibleValue(text="4b",
-                                 description="Elastic precipitate with radii (75 nm, 75 nm), C₁₁₁₁=250 aJ/nm³, C₁₁₂₂=150 aJ/nm³, C₁₂₁₂=100 aJ/nm³.") )
-        setattr(cls, "4c",
-                PermissibleValue(text="4c",
-                                 description="Elastic precipitate with radii (20 nm, 20 nm), C₁₁₁₁=275 aJ/nm³, C₁₁₂₂=165 aJ/nm³, C₁₂₁₂=110 aJ/nm³.") )
-        setattr(cls, "4d",
-                PermissibleValue(text="4d",
-                                 description="Elastic precipitate with radii (75 nm, 75 nm), C₁₁₁₁=275 aJ/nm³, C₁₁₂₂=165 aJ/nm³, C₁₂₁₂=110 aJ/nm³.") )
-        setattr(cls, "4e",
-                PermissibleValue(text="4e",
-                                 description="Elastic precipitate with radii (20/0.9 nm, 0.9*20 nm), C₁₁₁₁=250 aJ/nm³, C₁₁₂₂=150 aJ/nm³, C₁₂₁₂=100 aJ/nm³.") )
-        setattr(cls, "4f",
-                PermissibleValue(text="4f",
-                                 description="Elastic precipitate with radii (75/0.9 nm, 0.9*75 nm), C₁₁₁₁=250 aJ/nm³, C₁₁₂₂=150 aJ/nm³, C₁₂₁₂=100 aJ/nm³.") )
-        setattr(cls, "4g",
-                PermissibleValue(text="4g",
-                                 description="Elastic precipitate with radii (20/0.9 nm, 0.9*20 nm), C₁₁₁₁=275 aJ/nm³, C₁₁₂₂=165 aJ/nm³, C₁₂₁₂=110 aJ/nm³.") )
-        setattr(cls, "4h",
-                PermissibleValue(text="4h",
-                                 description="Elastic precipitate with radii (75/0.9 nm, 0.9*75 nm), C₁₁₁₁=275 aJ/nm³, C₁₁₂₂=165 aJ/nm³, C₁₂₁₂=110 aJ/nm³.") )
-        setattr(cls, "5a",
-                PermissibleValue(text="5a",
-                                 description="Stokes flow in an un-obstructed channel.") )
-        setattr(cls, "5b",
-                PermissibleValue(text="5b",
-                                 description="Stokes flow in a channel with elliptical obstruction.") )
-        setattr(cls, "6a",
-                PermissibleValue(text="6a",
-                                 description="Electrostatics in a square domain.") )
-        setattr(cls, "6b",
-                PermissibleValue(text="6b",
-                                 description="Electrostatics in a domain comprised of a rectangle and half-circle.") )
-        setattr(cls, "7a",
-                PermissibleValue(text="7a",
-                                 description="Method of Manufactured Solutions: order of accuracy test.") )
-        setattr(cls, "7b",
-                PermissibleValue(text="7b",
-                                 description="Method of Manufactured Solutions: performance with fixed error.") )
-        setattr(cls, "7c",
-                PermissibleValue(text="7c",
-                                 description="Method of Manufactured Solutions: increased rate of change.") )
-        setattr(cls, "8a",
-                PermissibleValue(text="8a",
-                                 description="Homogeneous nucleation with a single initial seed.") )
-        setattr(cls, "8b",
-                PermissibleValue(text="8b",
-                                 description="Homogeneous nucleation with multiple initial seeds.") )
-        setattr(cls, "8c",
-                PermissibleValue(text="8c",
-                                 description="Homogeneous nucleation with seeds at random times.") )
-
-class ValidBenchmarkVersion(EnumDefinitionImpl):
-    """
-    Known versions of the accepted PFHub Benchmark Problems.
-    """
-    _defn = EnumDefinition(
-        name="ValidBenchmarkVersion",
-        description="Known versions of the accepted PFHub Benchmark Problems.",
-    )
-
-    @classmethod
-    def _addvals(cls):
-        setattr(cls, "0",
-                PermissibleValue(text="0",
-                                 description="Initial or Hackathon version.") )
-        setattr(cls, "1",
-                PermissibleValue(text="1",
-                                 description="Published version.") )
-
-class CompressedFiles(EnumDefinitionImpl):
-    """
-    Valid compressed archive file extensions.
-    """
-    bz2 = PermissibleValue(text="bz2",
-                             description="Bzip-2 file extension.",
-                             meaning=None)
-    gz = PermissibleValue(text="gz",
-                           description="GZip file extension.",
-                           meaning=None)
-    tgz = PermissibleValue(text="tgz",
-                             description="Shorthand tarball extension.",
-                             meaning=None)
-    zip = PermissibleValue(text="zip",
-                             description="Zip file extension.",
-                             meaning=None)
-
-    _defn = EnumDefinition(
-        name="CompressedFiles",
-        description="Valid compressed archive file extensions.",
-    )
-
-    @classmethod
-    def _addvals(cls):
-        setattr(cls, "7z",
-                PermissibleValue(text="7z",
-                                 description="7zip file extension.",
+        setattr(cls, "1a.1",
+                PermissibleValue(text="1a.1",
+                                 description="Spinodal decomposition in a square domain with periodic boundaries.",
                                  meaning=None) )
-        setattr(cls, "tar.gz",
-                PermissibleValue(text="tar.gz",
-                                 description="Gzipped Tar extension.",
+        setattr(cls, "1a.0",
+                PermissibleValue(text="1a.0",
+                                 description="Spinodal decomposition in a square domain with periodic boundaries.",
                                  meaning=None) )
-
-class DataFiles(EnumDefinitionImpl):
-    """
-    Valid raw or transformed spatial phase-field data file extensions.
-    """
-    csv = PermissibleValue(text="csv",
-                             description="Comma-separated values.",
-                             meaning=None)
-    hdf5 = PermissibleValue(text="hdf5",
-                               description="Hierarchical HDF5 data.",
-                               meaning=None)
-    pvti = PermissibleValue(text="pvti",
-                               description="Parallel VTK ImageData file.",
-                               meaning=None)
-    pvtr = PermissibleValue(text="pvtr",
-                               description="Parallel VTK RectilinearGrid file.",
-                               meaning=None)
-    pvts = PermissibleValue(text="pvts",
-                               description="Parallel VTK StructuredGrid file.",
-                               meaning=None)
-    pvtu = PermissibleValue(text="pvtu",
-                               description="Parallel VTK UnstructuredGrid file.",
-                               meaning=None)
-    tsv = PermissibleValue(text="tsv",
-                             description="Tab-delimited values.",
-                             meaning=None)
-    vti = PermissibleValue(text="vti",
-                             description="VTK ImageData file.",
-                             meaning=None)
-    vtr = PermissibleValue(text="vtr",
-                             description="VTK RectilinearGrid file.",
-                             meaning=None)
-    vts = PermissibleValue(text="vts",
-                             description="VTK StructuredGrid file.",
-                             meaning=None)
-    vtu = PermissibleValue(text="vtu",
-                             description="VTK UnstructuredGrid file.",
-                             meaning=None)
-    xdmf = PermissibleValue(text="xdmf",
-                               description="XML summary with HDF5 data.",
-                               meaning=None)
-
-    _defn = EnumDefinition(
-        name="DataFiles",
-        description="Valid raw or transformed spatial phase-field data file extensions.",
-    )
-
-class ImageFiles(EnumDefinitionImpl):
-    """
-    Valid image and visualization file extensions.
-    """
-    png = PermissibleValue(text="png",
-                             description="Portable Network Graphics image file format.",
-                             meaning=None)
-    pvti = PermissibleValue(text="pvti",
-                               description="Parallel VTK ImageData file.",
-                               meaning=None)
-    pvtr = PermissibleValue(text="pvtr",
-                               description="Parallel VTK RectilinearGrid file.",
-                               meaning=None)
-    pvts = PermissibleValue(text="pvts",
-                               description="Parallel VTK StructuredGrid file.",
-                               meaning=None)
-    pvtu = PermissibleValue(text="pvtu",
-                               description="Parallel VTK UnstructuredGrid file.",
-                               meaning=None)
-    tif = PermissibleValue(text="tif",
-                             description="Tagged Image File Format file.",
-                             meaning=None)
-    tsv = PermissibleValue(text="tsv",
-                             description="Tab-delimited values.",
-                             meaning=None)
-    vti = PermissibleValue(text="vti",
-                             description="VTK ImageData file.",
-                             meaning=None)
-    vtr = PermissibleValue(text="vtr",
-                             description="VTK RectilinearGrid file.",
-                             meaning=None)
-    vts = PermissibleValue(text="vts",
-                             description="VTK StructuredGrid file.",
-                             meaning=None)
-    vtu = PermissibleValue(text="vtu",
-                             description="VTK UnstructuredGrid file.",
-                             meaning=None)
-
-    _defn = EnumDefinition(
-        name="ImageFiles",
-        description="Valid image and visualization file extensions.",
-    )
-
-class TabularFiles(EnumDefinitionImpl):
-    """
-    Valid tabular file extensions.
-    """
-    csv = PermissibleValue(text="csv",
-                             description="Comma-separated values.",
-                             meaning=None)
-    tsv = PermissibleValue(text="tsv",
-                             description="Tab-delimited values.",
-                             meaning=None)
-
-    _defn = EnumDefinition(
-        name="TabularFiles",
-        description="Valid tabular file extensions.",
-    )
+        setattr(cls, "1b.1",
+                PermissibleValue(text="1b.1",
+                                 description="Spinodal decomposition in a square domain with no-flux boundaries.",
+                                 meaning=None) )
+        setattr(cls, "1b.0",
+                PermissibleValue(text="1b.0",
+                                 description="Spinodal decomposition in a square domain with no-flux boundaries.",
+                                 meaning=None) )
+        setattr(cls, "1c.1",
+                PermissibleValue(text="1c.1",
+                                 description="Spinodal decomposition in a T-shaped domain with no-flux boundaries.",
+                                 meaning=None) )
+        setattr(cls, "1c.0",
+                PermissibleValue(text="1c.0",
+                                 description="Spinodal decomposition in a T-shaped domain with no-flux boundaries.",
+                                 meaning=None) )
+        setattr(cls, "1d.1",
+                PermissibleValue(text="1d.1",
+                                 description="Spinodal decomposition on a closed spherical shell.",
+                                 meaning=None) )
+        setattr(cls, "1d.0",
+                PermissibleValue(text="1d.0",
+                                 description="Spinodal decomposition on a closed spherical shell.",
+                                 meaning=None) )
+        setattr(cls, "2a.1",
+                PermissibleValue(text="2a.1",
+                                 description="Ostwald ripening in a square domain with periodic boundaries.",
+                                 meaning=None) )
+        setattr(cls, "2a.0",
+                PermissibleValue(text="2a.0",
+                                 description="Ostwald ripening in a square domain with periodic boundaries.",
+                                 meaning=None) )
+        setattr(cls, "2b.1",
+                PermissibleValue(text="2b.1",
+                                 description="Ostwald ripening in a square domain with no-flux boundaries.",
+                                 meaning=None) )
+        setattr(cls, "2b.0",
+                PermissibleValue(text="2b.0",
+                                 description="Ostwald ripening in a square domain with no-flux boundaries.",
+                                 meaning=None) )
+        setattr(cls, "2c.1",
+                PermissibleValue(text="2c.1",
+                                 description="Ostwald ripening in a T-shaped domain with no-flux boundaries.",
+                                 meaning=None) )
+        setattr(cls, "2c.0",
+                PermissibleValue(text="2c.0",
+                                 description="Ostwald ripening in a T-shaped domain with no-flux boundaries.",
+                                 meaning=None) )
+        setattr(cls, "2d.1",
+                PermissibleValue(text="2d.1",
+                                 description="Ostwald ripening on a closed spherical shell.",
+                                 meaning=None) )
+        setattr(cls, "2d.0",
+                PermissibleValue(text="2d.0",
+                                 description="Ostwald ripening on a closed spherical shell.",
+                                 meaning=None) )
+        setattr(cls, "3a.1",
+                PermissibleValue(text="3a.1",
+                                 description="Dendritic growth in a square domain.",
+                                 meaning=None) )
+        setattr(cls, "3a.0",
+                PermissibleValue(text="3a.0",
+                                 description="Dendritic growth in a square domain with m=4 and θ₀=0.",
+                                 meaning=None) )
+        setattr(cls, "3b.0",
+                PermissibleValue(text="3b.0",
+                                 description="Dendritic growth in a square domain with m=4 and θ₀=π/4.",
+                                 meaning=None) )
+        setattr(cls, "3c.0",
+                PermissibleValue(text="3c.0",
+                                 description="Dendritic growth in a square domain with m=6 and θ₀=0.",
+                                 meaning=None) )
+        setattr(cls, "4a.1",
+                PermissibleValue(text="4a.1",
+                                 description="Elastic precipitate with radii (20 nm, 20 nm), C₁₁₁₁=250 aJ/nm³, C₁₁₂₂=150 aJ/nm³, C₁₂₁₂=100 aJ/nm³.",
+                                 meaning=None) )
+        setattr(cls, "4b.1",
+                PermissibleValue(text="4b.1",
+                                 description="Elastic precipitate with radii (75 nm, 75 nm), C₁₁₁₁=250 aJ/nm³, C₁₁₂₂=150 aJ/nm³, C₁₂₁₂=100 aJ/nm³.",
+                                 meaning=None) )
+        setattr(cls, "4c.1",
+                PermissibleValue(text="4c.1",
+                                 description="Elastic precipitate with radii (20 nm, 20 nm), C₁₁₁₁=275 aJ/nm³, C₁₁₂₂=165 aJ/nm³, C₁₂₁₂=110 aJ/nm³.",
+                                 meaning=None) )
+        setattr(cls, "4d.1",
+                PermissibleValue(text="4d.1",
+                                 description="Elastic precipitate with radii (75 nm, 75 nm), C₁₁₁₁=275 aJ/nm³, C₁₁₂₂=165 aJ/nm³, C₁₂₁₂=110 aJ/nm³.",
+                                 meaning=None) )
+        setattr(cls, "4e.1",
+                PermissibleValue(text="4e.1",
+                                 description="Elastic precipitate with radii (20/0.9 nm, 0.9*20 nm), C₁₁₁₁=250 aJ/nm³, C₁₁₂₂=150 aJ/nm³, C₁₂₁₂=100 aJ/nm³.",
+                                 meaning=None) )
+        setattr(cls, "4f.1",
+                PermissibleValue(text="4f.1",
+                                 description="Elastic precipitate with radii (75/0.9 nm, 0.9*75 nm), C₁₁₁₁=250 aJ/nm³, C₁₁₂₂=150 aJ/nm³, C₁₂₁₂=100 aJ/nm³.",
+                                 meaning=None) )
+        setattr(cls, "4g.1",
+                PermissibleValue(text="4g.1",
+                                 description="Elastic precipitate with radii (20/0.9 nm, 0.9*20 nm), C₁₁₁₁=275 aJ/nm³, C₁₁₂₂=165 aJ/nm³, C₁₂₁₂=110 aJ/nm³.",
+                                 meaning=None) )
+        setattr(cls, "4h.1",
+                PermissibleValue(text="4h.1",
+                                 description="Elastic precipitate with radii (75/0.9 nm, 0.9*75 nm), C₁₁₁₁=275 aJ/nm³, C₁₁₂₂=165 aJ/nm³, C₁₂₁₂=110 aJ/nm³.",
+                                 meaning=None) )
+        setattr(cls, "5a.0",
+                PermissibleValue(text="5a.0",
+                                 description="Stokes flow in an un-obstructed channel.",
+                                 meaning=None) )
+        setattr(cls, "5b.0",
+                PermissibleValue(text="5b.0",
+                                 description="Stokes flow in a channel with elliptical obstruction.",
+                                 meaning=None) )
+        setattr(cls, "6a.0",
+                PermissibleValue(text="6a.0",
+                                 description="Electrostatics in a square domain.",
+                                 meaning=None) )
+        setattr(cls, "6b.0",
+                PermissibleValue(text="6b.0",
+                                 description="Electrostatics in a domain comprised of a rectangle and half-circle.",
+                                 meaning=None) )
+        setattr(cls, "7a.0",
+                PermissibleValue(text="7a.0",
+                                 description="Method of Manufactured Solutions: order of accuracy test.",
+                                 meaning=None) )
+        setattr(cls, "7b.0",
+                PermissibleValue(text="7b.0",
+                                 description="Method of Manufactured Solutions: performance with fixed error.",
+                                 meaning=None) )
+        setattr(cls, "7c.0",
+                PermissibleValue(text="7c.0",
+                                 description="Method of Manufactured Solutions: increased rate of change.",
+                                 meaning=None) )
+        setattr(cls, "8a.0",
+                PermissibleValue(text="8a.0",
+                                 description="Homogeneous nucleation with a single initial seed.",
+                                 meaning=None) )
+        setattr(cls, "8b.0",
+                PermissibleValue(text="8b.0",
+                                 description="Homogeneous nucleation with multiple initial seeds.",
+                                 meaning=None) )
+        setattr(cls, "8c.0",
+                PermissibleValue(text="8c.0",
+                                 description="Homogeneous nucleation with seeds at random times.",
+                                 meaning=None) )
 
 # Slots
 class slots:
@@ -725,11 +648,8 @@ slots.architecture = Slot(uri="str(uriorcurie)", name="architecture", curie=None
                    model_uri=PFHUB.architecture, domain=None, range=Optional[str])
 
 slots.benchmark_problem = Slot(uri=PFHUB.benchmark_problem, name="benchmark_problem", curie=PFHUB.curie('benchmark_problem'),
-                   model_uri=PFHUB.benchmark_problem, domain=None, range=Union[str, "ValidBenchmarkProblem"],
-                   pattern=re.compile(r'^\d\a'))
-
-slots.benchmark_version = Slot(uri=PFHUB.benchmark_version, name="benchmark_version", curie=PFHUB.curie('benchmark_version'),
-                   model_uri=PFHUB.benchmark_version, domain=None, range=int)
+                   model_uri=PFHUB.benchmark_problem, domain=None, range=Union[str, "ValidBenchmarkProblems"],
+                   pattern=re.compile(r'^\S+'))
 
 slots.columns = Slot(uri=PFHUB.columns, name="columns", curie=PFHUB.curie('columns'),
                    model_uri=PFHUB.columns, domain=None, range=Optional[Union[str, List[str]]],
@@ -786,17 +706,20 @@ slots.version = Slot(uri="str(uriorcurie)", name="version", curie=None,
 slots.contributors = Slot(uri="str(uriorcurie)", name="contributors", curie=None,
                    model_uri=PFHUB.contributors, domain=None, range=Optional[Union[Dict[Union[str, ContributorId], Union[dict, Contributor]], List[Union[dict, Contributor]]]])
 
+slots.documentation = Slot(uri=PFHUB.documentation, name="documentation", curie=PFHUB.curie('documentation'),
+                   model_uri=PFHUB.documentation, domain=None, range=Optional[Union[List[Union[str, TextFileName]], Dict[Union[str, TextFileName], Union[dict, TextFile]]]])
+
 slots.file_archive = Slot(uri=PFHUB.file_archive, name="file_archive", curie=PFHUB.curie('file_archive'),
-                   model_uri=PFHUB.file_archive, domain=None, range=Optional[Union[Dict[Union[str, ArchiveDataName], Union[dict, ArchiveData]], List[Union[dict, ArchiveData]]]])
+                   model_uri=PFHUB.file_archive, domain=None, range=Optional[Union[List[Union[str, ArchiveDataName]], Dict[Union[str, ArchiveDataName], Union[dict, ArchiveData]]]])
 
 slots.file_spatial = Slot(uri=PFHUB.file_spatial, name="file_spatial", curie=PFHUB.curie('file_spatial'),
-                   model_uri=PFHUB.file_spatial, domain=None, range=Optional[Union[Dict[Union[str, FieldDataName], Union[dict, FieldData]], List[Union[dict, FieldData]]]])
+                   model_uri=PFHUB.file_spatial, domain=None, range=Optional[Union[List[Union[str, FieldDataName]], Dict[Union[str, FieldDataName], Union[dict, FieldData]]]])
 
 slots.file_timeseries = Slot(uri=PFHUB.file_timeseries, name="file_timeseries", curie=PFHUB.curie('file_timeseries'),
                    model_uri=PFHUB.file_timeseries, domain=None, range=Optional[Union[Dict[Union[str, TimeSeriesDataName], Union[dict, TimeSeriesData]], List[Union[dict, TimeSeriesData]]]])
 
 slots.file_visual = Slot(uri=PFHUB.file_visual, name="file_visual", curie=PFHUB.curie('file_visual'),
-                   model_uri=PFHUB.file_visual, domain=None, range=Optional[Union[Dict[Union[str, ImageDataName], Union[dict, ImageData]], List[Union[dict, ImageData]]]])
+                   model_uri=PFHUB.file_visual, domain=None, range=Optional[Union[List[Union[str, ImageDataName]], Dict[Union[str, ImageDataName], Union[dict, ImageData]]]])
 
 slots.framework = Slot(uri="str(uriorcurie)", name="framework", curie=None,
                    model_uri=PFHUB.framework, domain=None, range=Optional[Union[Dict[Union[str, SoftwareUrl], Union[dict, Software]], List[Union[dict, Software]]]])
@@ -815,15 +738,6 @@ slots.schema = Slot(uri=PFHUB.schema, name="schema", curie=PFHUB.curie('schema')
 
 slots.File_name = Slot(uri="str(uriorcurie)", name="File_name", curie=None,
                    model_uri=PFHUB.File_name, domain=File, range=Union[str, FileName])
-
-slots.ArchiveData_format = Slot(uri="str(uriorcurie)", name="ArchiveData_format", curie=None,
-                   model_uri=PFHUB.ArchiveData_format, domain=ArchiveData, range=Optional[Union[str, "CompressedFiles"]])
-
-slots.TimeSeriesData_format = Slot(uri="str(uriorcurie)", name="TimeSeriesData_format", curie=None,
-                   model_uri=PFHUB.TimeSeriesData_format, domain=TimeSeriesData, range=Optional[Union[str, "TabularFiles"]])
-
-slots.ImageData_format = Slot(uri="str(uriorcurie)", name="ImageData_format", curie=None,
-                   model_uri=PFHUB.ImageData_format, domain=ImageData, range=Optional[Union[str, "ImageFiles"]])
 
 slots.Software_url = Slot(uri="str(uriorcurie)", name="Software_url", curie=None,
                    model_uri=PFHUB.Software_url, domain=Software, range=Union[str, SoftwareUrl])

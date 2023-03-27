@@ -250,321 +250,200 @@
   ],
   "enums": [
     {
-      "name": "ValidBenchmarkProblem",
-      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem",
+      "name": "ValidBenchmarkProblems",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblems",
       "description": "Known parts of the accepted PFHub Benchmark Problems.",
       "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
       "permissible_values": [
         {
-          "text": "1a",
-          "description": "Spinodal decomposition in a square domain with periodic boundaries."
+          "text": "1a.1",
+          "description": "Spinodal decomposition in a square domain with periodic boundaries.",
+          "meaning": "https://pages.nist.gov/pfhub/benchmarks/benchmark1.ipynb/#(a)-Square-periodic"
         },
         {
-          "text": "1b",
-          "description": "Spinodal decomposition in a square domain with no-flux boundaries."
+          "text": "1a.0",
+          "description": "Spinodal decomposition in a square domain with periodic boundaries.",
+          "meaning": "https://pages.nist.gov/pfhub/hackathons/hackathon1/problems.ipynb/#1.a-Square-Periodic"
         },
         {
-          "text": "1c",
-          "description": "Spinodal decomposition in a T-shaped domain with no-flux boundaries."
+          "text": "1b.1",
+          "description": "Spinodal decomposition in a square domain with no-flux boundaries.",
+          "meaning": "https://pages.nist.gov/pfhub/benchmarks/benchmark1.ipynb/#(b)-Square-no-flux"
         },
         {
-          "text": "1d",
-          "description": "Spinodal decomposition on a closed spherical shell."
+          "text": "1b.0",
+          "description": "Spinodal decomposition in a square domain with no-flux boundaries.",
+          "meaning": "https://pages.nist.gov/pfhub/hackathons/hackathon1/problems.ipynb/#1.b-No-Flux"
         },
         {
-          "text": "2a",
-          "description": "Ostwald ripening in a square domain with periodic boundaries."
+          "text": "1c.1",
+          "description": "Spinodal decomposition in a T-shaped domain with no-flux boundaries.",
+          "meaning": "https://pages.nist.gov/pfhub/benchmarks/benchmark1.ipynb/#(c)-T-shape"
         },
         {
-          "text": "2b",
-          "description": "Ostwald ripening in a square domain with no-flux boundaries."
+          "text": "1c.0",
+          "description": "Spinodal decomposition in a T-shaped domain with no-flux boundaries.",
+          "meaning": "https://pages.nist.gov/pfhub/hackathons/hackathon1/problems.ipynb/#1.c-T-Shape-No-Flux"
         },
         {
-          "text": "2c",
-          "description": "Ostwald ripening in a T-shaped domain with no-flux boundaries."
+          "text": "1d.1",
+          "description": "Spinodal decomposition on a closed spherical shell.",
+          "meaning": "https://pages.nist.gov/pfhub/benchmarks/benchmark1.ipynb/#(d)-Sphere"
         },
         {
-          "text": "2d",
-          "description": "Ostwald ripening on a closed spherical shell."
+          "text": "1d.0",
+          "description": "Spinodal decomposition on a closed spherical shell.",
+          "meaning": "https://pages.nist.gov/pfhub/hackathons/hackathon1/problems.ipynb/#1.d-Sphere"
         },
         {
-          "text": "3a",
-          "description": "Dendritic growth in a square domain."
+          "text": "2a.1",
+          "description": "Ostwald ripening in a square domain with periodic boundaries.",
+          "meaning": "https://pages.nist.gov/pfhub/benchmarks/benchmark2.ipynb/#(a)-Square-periodic"
         },
         {
-          "text": "4a",
-          "description": "Elastic precipitate with radii (20 nm, 20 nm), C\u2081\u2081\u2081\u2081=250 aJ/nm\u00b3, C\u2081\u2081\u2082\u2082=150 aJ/nm\u00b3, C\u2081\u2082\u2081\u2082=100 aJ/nm\u00b3."
+          "text": "2a.0",
+          "description": "Ostwald ripening in a square domain with periodic boundaries.",
+          "meaning": "https://pages.nist.gov/pfhub/hackathons/hackathon1/problems.ipynb/#2.a-Square-Periodic"
         },
         {
-          "text": "4b",
-          "description": "Elastic precipitate with radii (75 nm, 75 nm), C\u2081\u2081\u2081\u2081=250 aJ/nm\u00b3, C\u2081\u2081\u2082\u2082=150 aJ/nm\u00b3, C\u2081\u2082\u2081\u2082=100 aJ/nm\u00b3."
+          "text": "2b.1",
+          "description": "Ostwald ripening in a square domain with no-flux boundaries.",
+          "meaning": "https://pages.nist.gov/pfhub/benchmarks/benchmark2.ipynb/#(b)-Square-no-flux"
         },
         {
-          "text": "4c",
-          "description": "Elastic precipitate with radii (20 nm, 20 nm), C\u2081\u2081\u2081\u2081=275 aJ/nm\u00b3, C\u2081\u2081\u2082\u2082=165 aJ/nm\u00b3, C\u2081\u2082\u2081\u2082=110 aJ/nm\u00b3."
+          "text": "2b.0",
+          "description": "Ostwald ripening in a square domain with no-flux boundaries.",
+          "meaning": "https://pages.nist.gov/pfhub/hackathons/hackathon1/problems.ipynb/#2.b-No-Flux"
         },
         {
-          "text": "4d",
-          "description": "Elastic precipitate with radii (75 nm, 75 nm), C\u2081\u2081\u2081\u2081=275 aJ/nm\u00b3, C\u2081\u2081\u2082\u2082=165 aJ/nm\u00b3, C\u2081\u2082\u2081\u2082=110 aJ/nm\u00b3."
+          "text": "2c.1",
+          "description": "Ostwald ripening in a T-shaped domain with no-flux boundaries.",
+          "meaning": "https://pages.nist.gov/pfhub/benchmarks/benchmark2.ipynb/#(c)-T-shape"
         },
         {
-          "text": "4e",
-          "description": "Elastic precipitate with radii (20/0.9 nm, 0.9*20 nm), C\u2081\u2081\u2081\u2081=250 aJ/nm\u00b3, C\u2081\u2081\u2082\u2082=150 aJ/nm\u00b3, C\u2081\u2082\u2081\u2082=100 aJ/nm\u00b3."
+          "text": "2c.0",
+          "description": "Ostwald ripening in a T-shaped domain with no-flux boundaries.",
+          "meaning": "https://pages.nist.gov/pfhub/hackathons/hackathon1/problems.ipynb/#2.c-T-Shape-No-Flux"
         },
         {
-          "text": "4f",
-          "description": "Elastic precipitate with radii (75/0.9 nm, 0.9*75 nm), C\u2081\u2081\u2081\u2081=250 aJ/nm\u00b3, C\u2081\u2081\u2082\u2082=150 aJ/nm\u00b3, C\u2081\u2082\u2081\u2082=100 aJ/nm\u00b3."
+          "text": "2d.1",
+          "description": "Ostwald ripening on a closed spherical shell.",
+          "meaning": "https://pages.nist.gov/pfhub/benchmarks/benchmark2.ipynb/#(d)-Sphere"
         },
         {
-          "text": "4g",
-          "description": "Elastic precipitate with radii (20/0.9 nm, 0.9*20 nm), C\u2081\u2081\u2081\u2081=275 aJ/nm\u00b3, C\u2081\u2081\u2082\u2082=165 aJ/nm\u00b3, C\u2081\u2082\u2081\u2082=110 aJ/nm\u00b3."
+          "text": "2d.0",
+          "description": "Ostwald ripening on a closed spherical shell.",
+          "meaning": "https://pages.nist.gov/pfhub/hackathons/hackathon1/problems.ipynb/#2.d-Sphere"
         },
         {
-          "text": "4h",
-          "description": "Elastic precipitate with radii (75/0.9 nm, 0.9*75 nm), C\u2081\u2081\u2081\u2081=275 aJ/nm\u00b3, C\u2081\u2081\u2082\u2082=165 aJ/nm\u00b3, C\u2081\u2082\u2081\u2082=110 aJ/nm\u00b3."
+          "text": "3a.1",
+          "description": "Dendritic growth in a square domain.",
+          "meaning": "https://pages.nist.gov/pfhub/benchmarks/benchmark3.ipynb/"
         },
         {
-          "text": "5a",
-          "description": "Stokes flow in an un-obstructed channel."
+          "text": "3a.0",
+          "description": "Dendritic growth in a square domain with m=4 and \u03b8\u2080=0.",
+          "meaning": "https://pages.nist.gov/pfhub/hackathons/hackathon2/problem1.ipynb/"
         },
         {
-          "text": "5b",
-          "description": "Stokes flow in a channel with elliptical obstruction."
+          "text": "3b.0",
+          "description": "Dendritic growth in a square domain with m=4 and \u03b8\u2080=\u03c0/4.",
+          "meaning": "https://pages.nist.gov/pfhub/hackathons/hackathon2/problem1.ipynb/"
         },
         {
-          "text": "6a",
-          "description": "Electrostatics in a square domain."
+          "text": "3c.0",
+          "description": "Dendritic growth in a square domain with m=6 and \u03b8\u2080=0.",
+          "meaning": "https://pages.nist.gov/pfhub/hackathons/hackathon2/problem1.ipynb/"
         },
         {
-          "text": "6b",
-          "description": "Electrostatics in a domain comprised of a rectangle and half-circle."
+          "text": "4a.1",
+          "description": "Elastic precipitate with radii (20 nm, 20 nm), C\u2081\u2081\u2081\u2081=250 aJ/nm\u00b3, C\u2081\u2081\u2082\u2082=150 aJ/nm\u00b3, C\u2081\u2082\u2081\u2082=100 aJ/nm\u00b3.",
+          "meaning": "https://pages.nist.gov/pfhub/benchmarks/benchmark4.ipynb/"
         },
         {
-          "text": "7a",
-          "description": "Method of Manufactured Solutions: order of accuracy test."
+          "text": "4b.1",
+          "description": "Elastic precipitate with radii (75 nm, 75 nm), C\u2081\u2081\u2081\u2081=250 aJ/nm\u00b3, C\u2081\u2081\u2082\u2082=150 aJ/nm\u00b3, C\u2081\u2082\u2081\u2082=100 aJ/nm\u00b3.",
+          "meaning": "https://pages.nist.gov/pfhub/benchmarks/benchmark4.ipynb/"
         },
         {
-          "text": "7b",
-          "description": "Method of Manufactured Solutions: performance with fixed error."
+          "text": "4c.1",
+          "description": "Elastic precipitate with radii (20 nm, 20 nm), C\u2081\u2081\u2081\u2081=275 aJ/nm\u00b3, C\u2081\u2081\u2082\u2082=165 aJ/nm\u00b3, C\u2081\u2082\u2081\u2082=110 aJ/nm\u00b3.",
+          "meaning": "https://pages.nist.gov/pfhub/benchmarks/benchmark4.ipynb/"
         },
         {
-          "text": "7c",
-          "description": "Method of Manufactured Solutions: increased rate of change."
+          "text": "4d.1",
+          "description": "Elastic precipitate with radii (75 nm, 75 nm), C\u2081\u2081\u2081\u2081=275 aJ/nm\u00b3, C\u2081\u2081\u2082\u2082=165 aJ/nm\u00b3, C\u2081\u2082\u2081\u2082=110 aJ/nm\u00b3.",
+          "meaning": "https://pages.nist.gov/pfhub/benchmarks/benchmark4.ipynb/"
         },
         {
-          "text": "8a",
-          "description": "Homogeneous nucleation with a single initial seed."
+          "text": "4e.1",
+          "description": "Elastic precipitate with radii (20/0.9 nm, 0.9*20 nm), C\u2081\u2081\u2081\u2081=250 aJ/nm\u00b3, C\u2081\u2081\u2082\u2082=150 aJ/nm\u00b3, C\u2081\u2082\u2081\u2082=100 aJ/nm\u00b3.",
+          "meaning": "https://pages.nist.gov/pfhub/benchmarks/benchmark4.ipynb/"
         },
         {
-          "text": "8b",
-          "description": "Homogeneous nucleation with multiple initial seeds."
+          "text": "4f.1",
+          "description": "Elastic precipitate with radii (75/0.9 nm, 0.9*75 nm), C\u2081\u2081\u2081\u2081=250 aJ/nm\u00b3, C\u2081\u2081\u2082\u2082=150 aJ/nm\u00b3, C\u2081\u2082\u2081\u2082=100 aJ/nm\u00b3.",
+          "meaning": "https://pages.nist.gov/pfhub/benchmarks/benchmark4.ipynb/"
         },
         {
-          "text": "8c",
-          "description": "Homogeneous nucleation with seeds at random times."
-        }
-      ]
-    },
-    {
-      "name": "ValidBenchmarkVersion",
-      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkVersion",
-      "description": "Known versions of the accepted PFHub Benchmark Problems.",
-      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
-      "permissible_values": [
-        {
-          "text": "0",
-          "description": "Initial or Hackathon version."
+          "text": "4g.1",
+          "description": "Elastic precipitate with radii (20/0.9 nm, 0.9*20 nm), C\u2081\u2081\u2081\u2081=275 aJ/nm\u00b3, C\u2081\u2081\u2082\u2082=165 aJ/nm\u00b3, C\u2081\u2082\u2081\u2082=110 aJ/nm\u00b3.",
+          "meaning": "https://pages.nist.gov/pfhub/benchmarks/benchmark4.ipynb/"
         },
         {
-          "text": "1",
-          "description": "Published version."
-        }
-      ]
-    },
-    {
-      "name": "CompressedFiles",
-      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/CompressedFiles",
-      "description": "Valid compressed archive file extensions.",
-      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
-      "permissible_values": [
-        {
-          "text": "7z",
-          "description": "7zip file extension.",
-          "meaning": "https://www.iana.org/assignments/media-types/application/x-7z-compressed"
+          "text": "4h.1",
+          "description": "Elastic precipitate with radii (75/0.9 nm, 0.9*75 nm), C\u2081\u2081\u2081\u2081=275 aJ/nm\u00b3, C\u2081\u2081\u2082\u2082=165 aJ/nm\u00b3, C\u2081\u2082\u2081\u2082=110 aJ/nm\u00b3.",
+          "meaning": "https://pages.nist.gov/pfhub/benchmarks/benchmark4.ipynb/"
         },
         {
-          "text": "bz2",
-          "description": "Bzip-2 file extension.",
-          "meaning": "https://www.iana.org/assignments/media-types/application/x-bzip2"
+          "text": "5a.0",
+          "description": "Stokes flow in an un-obstructed channel.",
+          "meaning": "https://pages.nist.gov/pfhub/benchmarks/benchmark5-hackathon.ipynb/"
         },
         {
-          "text": "gz",
-          "description": "GZip file extension.",
-          "meaning": "https://www.iana.org/assignments/media-types/application/gzip"
+          "text": "5b.0",
+          "description": "Stokes flow in a channel with elliptical obstruction.",
+          "meaning": "https://pages.nist.gov/pfhub/benchmarks/benchmark5-hackathon.ipynb/"
         },
         {
-          "text": "tgz",
-          "description": "Shorthand tarball extension.",
-          "meaning": "https://www.iana.org/assignments/media-types/application/x-gtar"
+          "text": "6a.0",
+          "description": "Electrostatics in a square domain.",
+          "meaning": "https://pages.nist.gov/pfhub/benchmarks/benchmark6-hackathon.ipynb/"
         },
         {
-          "text": "tar.gz",
-          "description": "Gzipped Tar extension.",
-          "meaning": "https://www.iana.org/assignments/media-types/application/x-gtar"
+          "text": "6b.0",
+          "description": "Electrostatics in a domain comprised of a rectangle and half-circle.",
+          "meaning": "https://pages.nist.gov/pfhub/benchmarks/benchmark6-hackathon.ipynb/"
         },
         {
-          "text": "zip",
-          "description": "Zip file extension.",
-          "meaning": "https://www.iana.org/assignments/media-types/application/zip"
-        }
-      ]
-    },
-    {
-      "name": "DataFiles",
-      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/DataFiles",
-      "description": "Valid raw or transformed spatial phase-field data file extensions.",
-      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
-      "permissible_values": [
-        {
-          "text": "csv",
-          "description": "Comma-separated values.",
-          "meaning": "https://www.iana.org/assignments/media-types/text/csv"
+          "text": "7a.0",
+          "description": "Method of Manufactured Solutions: order of accuracy test.",
+          "meaning": "https://pages.nist.gov/pfhub/benchmarks/benchmark7.ipynb/#Part-(a)"
         },
         {
-          "text": "hdf5",
-          "description": "Hierarchical HDF5 data.",
-          "meaning": "https://docs.hdfgroup.org/hdf5/develop/_intro_h_d_f5.html"
+          "text": "7b.0",
+          "description": "Method of Manufactured Solutions: performance with fixed error.",
+          "meaning": "https://pages.nist.gov/pfhub/benchmarks/benchmark7.ipynb/#Part-(b)"
         },
         {
-          "text": "pvti",
-          "description": "Parallel VTK ImageData file.",
-          "meaning": "https://www.vtk.org/doc/nightly/html/classvtkImageData.html#details"
+          "text": "7c.0",
+          "description": "Method of Manufactured Solutions: increased rate of change.",
+          "meaning": "https://pages.nist.gov/pfhub/benchmarks/benchmark7.ipynb/#Part-(c)"
         },
         {
-          "text": "pvtr",
-          "description": "Parallel VTK RectilinearGrid file.",
-          "meaning": "https://www.vtk.org/doc/nightly/html/classvtkRectilinearGrid.html#details"
+          "text": "8a.0",
+          "description": "Homogeneous nucleation with a single initial seed.",
+          "meaning": "https://pages.nist.gov/pfhub/benchmarks/benchmark8.ipynb/#Part-(a):-single-seed"
         },
         {
-          "text": "pvts",
-          "description": "Parallel VTK StructuredGrid file.",
-          "meaning": "https://www.vtk.org/doc/nightly/html/classvtkStructuredGrid.html#details"
+          "text": "8b.0",
+          "description": "Homogeneous nucleation with multiple initial seeds.",
+          "meaning": "https://pages.nist.gov/pfhub/benchmarks/benchmark8.ipynb/#Part-(b):-multiple-initial-seeds"
         },
         {
-          "text": "pvtu",
-          "description": "Parallel VTK UnstructuredGrid file.",
-          "meaning": "https://www.vtk.org/doc/nightly/html/classvtkUnstructuredGrid.html#details"
-        },
-        {
-          "text": "tsv",
-          "description": "Tab-delimited values.",
-          "meaning": "https://www.iana.org/assignments/media-types/text/tsv"
-        },
-        {
-          "text": "vti",
-          "description": "VTK ImageData file.",
-          "meaning": "https://www.vtk.org/doc/nightly/html/classvtkImageData.html#details"
-        },
-        {
-          "text": "vtr",
-          "description": "VTK RectilinearGrid file.",
-          "meaning": "https://www.vtk.org/doc/nightly/html/classvtkRectilinearGrid.html#details"
-        },
-        {
-          "text": "vts",
-          "description": "VTK StructuredGrid file.",
-          "meaning": "https://www.vtk.org/doc/nightly/html/classvtkStructuredGrid.htmOAl#details"
-        },
-        {
-          "text": "vtu",
-          "description": "VTK UnstructuredGrid file.",
-          "meaning": "https://www.vtk.org/doc/nightly/html/classvtkUnstructuredGrid.html#details"
-        },
-        {
-          "text": "xdmf",
-          "description": "XML summary with HDF5 data.",
-          "meaning": "https://www.xdmf.org/index.php/XDMF_Model_and_Format"
-        }
-      ]
-    },
-    {
-      "name": "ImageFiles",
-      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/ImageFiles",
-      "description": "Valid image and visualization file extensions.",
-      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
-      "permissible_values": [
-        {
-          "text": "png",
-          "description": "Portable Network Graphics image file format.",
-          "meaning": "https://www.iana.org/assignments/media-types/image/png"
-        },
-        {
-          "text": "pvti",
-          "description": "Parallel VTK ImageData file.",
-          "meaning": "https://www.vtk.org/doc/nightly/html/classvtkImageData.html#details"
-        },
-        {
-          "text": "pvtr",
-          "description": "Parallel VTK RectilinearGrid file.",
-          "meaning": "https://www.vtk.org/doc/nightly/html/classvtkRectilinearGrid.html#details"
-        },
-        {
-          "text": "pvts",
-          "description": "Parallel VTK StructuredGrid file.",
-          "meaning": "https://www.vtk.org/doc/nightly/html/classvtkStructuredGrid.html#details"
-        },
-        {
-          "text": "pvtu",
-          "description": "Parallel VTK UnstructuredGrid file.",
-          "meaning": "https://www.vtk.org/doc/nightly/html/classvtkUnstructuredGrid.html#details"
-        },
-        {
-          "text": "tif",
-          "description": "Tagged Image File Format file.",
-          "meaning": "https://www.iana.org/assignments/media-types/image/tif"
-        },
-        {
-          "text": "tsv",
-          "description": "Tab-delimited values.",
-          "meaning": "https://www.iana.org/assignments/media-types/text/tsv"
-        },
-        {
-          "text": "vti",
-          "description": "VTK ImageData file.",
-          "meaning": "https://www.vtk.org/doc/nightly/html/classvtkImageData.html#details"
-        },
-        {
-          "text": "vtr",
-          "description": "VTK RectilinearGrid file.",
-          "meaning": "https://www.vtk.org/doc/nightly/html/classvtkRectilinearGrid.html#details"
-        },
-        {
-          "text": "vts",
-          "description": "VTK StructuredGrid file.",
-          "meaning": "https://www.vtk.org/doc/nightly/html/classvtkStructuredGrid.htmOAl#details"
-        },
-        {
-          "text": "vtu",
-          "description": "VTK UnstructuredGrid file.",
-          "meaning": "https://www.vtk.org/doc/nightly/html/classvtkUnstructuredGrid.html#details"
-        }
-      ]
-    },
-    {
-      "name": "TabularFiles",
-      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/TabularFiles",
-      "description": "Valid tabular file extensions.",
-      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
-      "permissible_values": [
-        {
-          "text": "csv",
-          "description": "Comma-separated values.",
-          "meaning": "https://www.iana.org/assignments/media-types/text/csv"
-        },
-        {
-          "text": "tsv",
-          "description": "Tab-delimited values.",
-          "meaning": "https://www.iana.org/assignments/media-types/text/tsv"
+          "text": "8c.0",
+          "description": "Homogeneous nucleation with seeds at random times.",
+          "meaning": "https://pages.nist.gov/pfhub/benchmarks/benchmark8.ipynb/#Part-(c):-multiple-seeds-at-random-times"
         }
       ]
     }
@@ -623,30 +502,16 @@
     {
       "name": "benchmark_problem",
       "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/benchmark_problem",
-      "description": "Alphanumerical identifier for part of a Benchmark Problem.",
+      "description": "Specification of the PFHub Benchmark Problem solved.",
       "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
       "slot_uri": "https://w3id.org/usnistgov/pfhub-schema/benchmark_problem",
       "owner": "BenchmarkResult",
       "domain_of": [
         "BenchmarkResult"
       ],
-      "range": "ValidBenchmarkProblem",
+      "range": "ValidBenchmarkProblems",
       "required": true,
-      "pattern": "^\\d\\a",
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "benchmark_version",
-      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/benchmark_version",
-      "description": "Numerical identifier for a Benchmark Problem version.",
-      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
-      "slot_uri": "https://w3id.org/usnistgov/pfhub-schema/benchmark_version",
-      "owner": "BenchmarkResult",
-      "domain_of": [
-        "BenchmarkResult"
-      ],
-      "range": "integer",
-      "required": true,
+      "pattern": "^\\S+",
       "@type": "SlotDefinition"
     },
     {
@@ -773,10 +638,6 @@
         "https://schema.org/encodingFormat"
       ],
       "slot_uri": "https://schema.org/encodingFormat",
-      "owner": "File",
-      "domain_of": [
-        "File"
-      ],
       "range": "string",
       "@type": "SlotDefinition"
     },
@@ -943,9 +804,25 @@
       "@type": "SlotDefinition"
     },
     {
+      "name": "documentation",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/documentation",
+      "description": "README, AUTHORS, and similar documentation.",
+      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
+      "slot_uri": "https://w3id.org/usnistgov/pfhub-schema/documentation",
+      "multivalued": true,
+      "owner": "Results",
+      "domain_of": [
+        "Results"
+      ],
+      "range": "TextFile",
+      "inlined": true,
+      "inlined_as_list": true,
+      "@type": "SlotDefinition"
+    },
+    {
       "name": "file_archive",
       "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/file_archive",
-      "description": "Compressed data.",
+      "description": "Compressed data files.",
       "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
       "slot_uri": "https://w3id.org/usnistgov/pfhub-schema/file_archive",
       "multivalued": true,
@@ -961,7 +838,7 @@
     {
       "name": "file_spatial",
       "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/file_spatial",
-      "description": "Raw data output from a simulation.",
+      "description": "Raw data files from a simulation.",
       "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
       "slot_uri": "https://w3id.org/usnistgov/pfhub-schema/file_spatial",
       "multivalued": true,
@@ -977,7 +854,7 @@
     {
       "name": "file_timeseries",
       "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/file_timeseries",
-      "description": "Columnar timeseries data from a simulation.",
+      "description": "Columnar timeseries files from a simulation.",
       "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
       "slot_uri": "https://w3id.org/usnistgov/pfhub-schema/file_timeseries",
       "multivalued": true,
@@ -993,7 +870,7 @@
     {
       "name": "file_visual",
       "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/file_visual",
-      "description": "Visualization output from a simulation.",
+      "description": "Visualization output files from a simulation.",
       "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
       "slot_uri": "https://w3id.org/usnistgov/pfhub-schema/file_visual",
       "multivalued": true,
@@ -1009,7 +886,7 @@
     {
       "name": "framework",
       "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/framework",
-      "description": "A computer program or library",
+      "description": "List of the primary phase-field software framework and extra dependencies required to run this simulation.",
       "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
       "mappings": [
         "https://schema.org/SoftwareApplication"
@@ -1108,69 +985,6 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "ArchiveData_format",
-      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/format",
-      "description": "Format of data contained in a file.",
-      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
-      "mappings": [
-        "https://schema.org/encodingFormat"
-      ],
-      "is_a": "format",
-      "domain": "ArchiveData",
-      "slot_uri": "https://schema.org/encodingFormat",
-      "alias": "format",
-      "owner": "ArchiveData",
-      "domain_of": [
-        "ArchiveData"
-      ],
-      "is_usage_slot": true,
-      "usage_slot_name": "format",
-      "range": "CompressedFiles",
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "TimeSeriesData_format",
-      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/format",
-      "description": "Format of data contained in a file.",
-      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
-      "mappings": [
-        "https://schema.org/encodingFormat"
-      ],
-      "is_a": "format",
-      "domain": "TimeSeriesData",
-      "slot_uri": "https://schema.org/encodingFormat",
-      "alias": "format",
-      "owner": "TimeSeriesData",
-      "domain_of": [
-        "TimeSeriesData"
-      ],
-      "is_usage_slot": true,
-      "usage_slot_name": "format",
-      "range": "TabularFiles",
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "ImageData_format",
-      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/format",
-      "description": "Format of data contained in a file.",
-      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
-      "mappings": [
-        "https://schema.org/encodingFormat"
-      ],
-      "is_a": "format",
-      "domain": "ImageData",
-      "slot_uri": "https://schema.org/encodingFormat",
-      "alias": "format",
-      "owner": "ImageData",
-      "domain_of": [
-        "ImageData"
-      ],
-      "is_usage_slot": true,
-      "usage_slot_name": "format",
-      "range": "ImageFiles",
-      "@type": "SlotDefinition"
-    },
-    {
       "name": "Software_url",
       "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/url",
       "description": "URL of an online resource or website.",
@@ -1226,7 +1040,6 @@
       "slots": [
         "id",
         "benchmark_problem",
-        "benchmark_version",
         "contributors",
         "date_created",
         "framework",
@@ -1286,71 +1099,10 @@
       ],
       "abstract": true,
       "slots": [
-        "File_name",
-        "format"
+        "File_name"
       ],
       "slot_usage": {},
       "class_uri": "https://schema.org/DigitalDocument",
-      "@type": "ClassDefinition"
-    },
-    {
-      "name": "ArchiveData",
-      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/ArchiveData",
-      "description": "Specialization of a pfhub:File containing a compressed data archive.",
-      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
-      "is_a": "File",
-      "slots": [
-        "File_name",
-        "ArchiveData_format"
-      ],
-      "slot_usage": {},
-      "class_uri": "https://w3id.org/usnistgov/pfhub-schema/ArchiveData",
-      "@type": "ClassDefinition"
-    },
-    {
-      "name": "FieldData",
-      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/FieldData",
-      "description": "Specialization of a pfhub:File representing field variables in a simulation domain using a format appropriate for the application.",
-      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
-      "is_a": "File",
-      "slots": [
-        "File_name",
-        "format"
-      ],
-      "slot_usage": {},
-      "class_uri": "https://w3id.org/usnistgov/pfhub-schema/FieldData",
-      "@type": "ClassDefinition"
-    },
-    {
-      "name": "TimeSeriesData",
-      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/TimeSeriesData",
-      "description": "Specialization of a pfhub:File representing a time series in plain text using named columns of comma-separated values.",
-      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
-      "mappings": [
-        "https://en.wikipedia.org/wiki/Comma-separated_values"
-      ],
-      "is_a": "File",
-      "slots": [
-        "File_name",
-        "columns",
-        "TimeSeriesData_format"
-      ],
-      "slot_usage": {},
-      "class_uri": "https://en.wikipedia.org/wiki/Comma-separated_values",
-      "@type": "ClassDefinition"
-    },
-    {
-      "name": "ImageData",
-      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/ImageData",
-      "description": "Specialization of a pfhub:File for images and visualization data.",
-      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
-      "is_a": "File",
-      "slots": [
-        "File_name",
-        "ImageData_format"
-      ],
-      "slot_usage": {},
-      "class_uri": "https://w3id.org/usnistgov/pfhub-schema/ImageData",
       "@type": "ClassDefinition"
     },
     {
@@ -1362,6 +1114,7 @@
         "https://schema.org/Dataset"
       ],
       "slots": [
+        "documentation",
         "file_archive",
         "file_spatial",
         "file_timeseries",
@@ -1410,13 +1163,82 @@
       "slot_usage": {},
       "class_uri": "https://schema.org/SoftwareSourceCode",
       "@type": "ClassDefinition"
+    },
+    {
+      "name": "ArchiveData",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/ArchiveData",
+      "description": "Specialization of a pfhub:File containing a compressed data archive.",
+      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
+      "is_a": "File",
+      "slots": [
+        "File_name"
+      ],
+      "slot_usage": {},
+      "class_uri": "https://w3id.org/usnistgov/pfhub-schema/ArchiveData",
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "FieldData",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/FieldData",
+      "description": "Specialization of a pfhub:File representing field variables in a simulation domain using a format appropriate for the application.",
+      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
+      "is_a": "File",
+      "slots": [
+        "File_name"
+      ],
+      "slot_usage": {},
+      "class_uri": "https://w3id.org/usnistgov/pfhub-schema/FieldData",
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "TextFile",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/TextFile",
+      "description": "Specialization of a pfhub:File containing plain text.",
+      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
+      "is_a": "File",
+      "slots": [
+        "File_name"
+      ],
+      "slot_usage": {},
+      "class_uri": "https://w3id.org/usnistgov/pfhub-schema/TextFile",
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "TimeSeriesData",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/TimeSeriesData",
+      "description": "Specialization of a pfhub:File representing a time series in plain text using named columns of comma-separated values.",
+      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
+      "mappings": [
+        "https://en.wikipedia.org/wiki/Comma-separated_values"
+      ],
+      "is_a": "File",
+      "slots": [
+        "File_name",
+        "columns"
+      ],
+      "slot_usage": {},
+      "class_uri": "https://en.wikipedia.org/wiki/Comma-separated_values",
+      "@type": "ClassDefinition"
+    },
+    {
+      "name": "ImageData",
+      "definition_uri": "https://w3id.org/usnistgov/pfhub-schema/ImageData",
+      "description": "Specialization of a pfhub:File for images and visualization data.",
+      "from_schema": "https://w3id.org/usnistgov/pfhub-schema",
+      "is_a": "File",
+      "slots": [
+        "File_name"
+      ],
+      "slot_usage": {},
+      "class_uri": "https://w3id.org/usnistgov/pfhub-schema/ImageData",
+      "@type": "ClassDefinition"
     }
   ],
   "metamodel_version": "1.7.0",
   "source_file": "pfhub_schema.yaml",
-  "source_file_date": "2023-03-24T14:24:19",
-  "source_file_size": 18347,
-  "generation_date": "2023-03-24T14:26:02",
+  "source_file_date": "2023-03-27T15:19:25",
+  "source_file_size": 17963,
+  "generation_date": "2023-03-27T15:39:28",
   "@type": "SchemaDefinition",
   "@context": [
     "project/jsonld/pfhub_schema.context.jsonld",

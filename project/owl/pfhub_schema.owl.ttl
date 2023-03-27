@@ -32,11 +32,18 @@ linkml:topValue a owl:DatatypeProperty ;
     pav:version "0.1.0" ;
     rdfs:seeAlso "https://pages.nist.gov/pfhub",
         "https://pages.nist.gov/pfhub-schema" ;
-    linkml:generation_date "2023-03-24T14:26:10" ;
+    linkml:generation_date "2023-03-27T15:39:36" ;
     linkml:metamodel_version "1.7.0" ;
     linkml:source_file "pfhub_schema.yaml" ;
-    linkml:source_file_date "2023-03-24T14:24:19" ;
-    linkml:source_file_size 18347 .
+    linkml:source_file_date "2023-03-27T15:19:25" ;
+    linkml:source_file_size 17963 .
+
+<https://schema.org/encodingFormat> a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "format" ;
+    rdfs:range linkml:String ;
+    skos:definition "Format of data contained in a file." ;
+    skos:exactMatch <https://schema.org/encodingFormat> .
 
 pfhub:BenchmarkResult a owl:Class,
         linkml:ClassDefinition ;
@@ -45,15 +52,7 @@ pfhub:BenchmarkResult a owl:Class,
             owl:allValuesFrom pfhub:Contributor ;
             owl:onProperty <https://schema.org/contributor> ],
         [ a owl:Restriction ;
-            owl:onClass linkml:Uriorcurie ;
-            owl:onProperty <https://schema.org/identifier> ;
-            owl:qualifiedCardinality 1 ],
-        [ a owl:Restriction ;
-            owl:onClass linkml:Integer ;
-            owl:onProperty pfhub:benchmark_version ;
-            owl:qualifiedCardinality 1 ],
-        [ a owl:Restriction ;
-            owl:onClass pfhub:ValidBenchmarkProblem ;
+            owl:onClass pfhub:ValidBenchmarkProblems ;
             owl:onProperty pfhub:benchmark_problem ;
             owl:qualifiedCardinality 1 ],
         [ a owl:Restriction ;
@@ -61,24 +60,28 @@ pfhub:BenchmarkResult a owl:Class,
             owl:onClass pfhub:Results ;
             owl:onProperty pfhub:results ],
         [ a owl:Restriction ;
-            owl:maxQualifiedCardinality 1 ;
-            owl:onClass pfhub:SourceCode ;
-            owl:onProperty pfhub:schema ],
-        [ a owl:Restriction ;
-            owl:maxQualifiedCardinality 1 ;
-            owl:onClass pfhub:SourceCode ;
-            owl:onProperty pfhub:implementation ],
-        [ a owl:Restriction ;
-            owl:maxQualifiedCardinality 1 ;
-            owl:onClass linkml:String ;
-            owl:onProperty <https://schema.org/abstract> ],
-        [ a owl:Restriction ;
             owl:allValuesFrom pfhub:Software ;
             owl:onProperty <https://schema.org/SoftwareApplication> ],
         [ a owl:Restriction ;
             owl:maxQualifiedCardinality 1 ;
             owl:onClass linkml:Date ;
-            owl:onProperty <https://schema.org/dateCreated> ] ;
+            owl:onProperty <https://schema.org/dateCreated> ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
+            owl:onClass pfhub:SourceCode ;
+            owl:onProperty pfhub:schema ],
+        [ a owl:Restriction ;
+            owl:onClass linkml:Uriorcurie ;
+            owl:onProperty <https://schema.org/identifier> ;
+            owl:qualifiedCardinality 1 ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
+            owl:onClass linkml:String ;
+            owl:onProperty <https://schema.org/abstract> ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
+            owl:onClass pfhub:SourceCode ;
+            owl:onProperty pfhub:implementation ] ;
     skos:definition "Root and context for this Benchmark Problem solution." .
 
 pfhub:affiliation a owl:ObjectProperty,
@@ -90,14 +93,8 @@ pfhub:affiliation a owl:ObjectProperty,
 pfhub:benchmark_problem a owl:ObjectProperty,
         linkml:SlotDefinition ;
     rdfs:label "benchmark_problem" ;
-    rdfs:range pfhub:ValidBenchmarkProblem ;
-    skos:definition "Alphanumerical identifier for part of a Benchmark Problem." .
-
-pfhub:benchmark_version a owl:ObjectProperty,
-        linkml:SlotDefinition ;
-    rdfs:label "benchmark_version" ;
-    rdfs:range linkml:Integer ;
-    skos:definition "Numerical identifier for a Benchmark Problem version." .
+    rdfs:range pfhub:ValidBenchmarkProblems ;
+    skos:definition "Specification of the PFHub Benchmark Problem solved." .
 
 pfhub:columns a owl:ObjectProperty,
         linkml:SlotDefinition ;
@@ -105,29 +102,35 @@ pfhub:columns a owl:ObjectProperty,
     rdfs:range linkml:String ;
     skos:definition "Column names applied to tabular data." .
 
+pfhub:documentation a owl:ObjectProperty,
+        linkml:SlotDefinition ;
+    rdfs:label "documentation" ;
+    rdfs:range pfhub:TextFile ;
+    skos:definition "README, AUTHORS, and similar documentation." .
+
 pfhub:file_archive a owl:ObjectProperty,
         linkml:SlotDefinition ;
     rdfs:label "file_archive" ;
     rdfs:range pfhub:ArchiveData ;
-    skos:definition "Compressed data." .
+    skos:definition "Compressed data files." .
 
 pfhub:file_spatial a owl:ObjectProperty,
         linkml:SlotDefinition ;
     rdfs:label "file_spatial" ;
     rdfs:range pfhub:FieldData ;
-    skos:definition "Raw data output from a simulation." .
+    skos:definition "Raw data files from a simulation." .
 
 pfhub:file_timeseries a owl:ObjectProperty,
         linkml:SlotDefinition ;
     rdfs:label "file_timeseries" ;
     rdfs:range pfhub:TimeSeriesData ;
-    skos:definition "Columnar timeseries data from a simulation." .
+    skos:definition "Columnar timeseries files from a simulation." .
 
 pfhub:file_visual a owl:ObjectProperty,
         linkml:SlotDefinition ;
     rdfs:label "file_visual" ;
     rdfs:range pfhub:ImageData ;
-    skos:definition "Visualization output from a simulation." .
+    skos:definition "Visualization output files from a simulation." .
 
 pfhub:hardware a owl:ObjectProperty,
         linkml:SlotDefinition ;
@@ -180,9 +183,97 @@ pfhub:schema a owl:ObjectProperty,
     skos:definition "Computer processor architecture required for this simulation." ;
     skos:exactMatch <http://www.fairsharing.org/ontology/subject/SRAO_0000258> .
 
-<https://docs.hdfgroup.org/hdf5/develop/_intro_h_d_f5.html> a owl:Class,
-        pfhub:DataFiles ;
-    rdfs:label "hdf5" .
+<https://pages.nist.gov/pfhub/benchmarks/benchmark1.ipynb/#(a)-Square-periodic> a owl:Class,
+        pfhub:ValidBenchmarkProblems ;
+    rdfs:label "1a.1" .
+
+<https://pages.nist.gov/pfhub/benchmarks/benchmark1.ipynb/#(b)-Square-no-flux> a owl:Class,
+        pfhub:ValidBenchmarkProblems ;
+    rdfs:label "1b.1" .
+
+<https://pages.nist.gov/pfhub/benchmarks/benchmark1.ipynb/#(c)-T-shape> a owl:Class,
+        pfhub:ValidBenchmarkProblems ;
+    rdfs:label "1c.1" .
+
+<https://pages.nist.gov/pfhub/benchmarks/benchmark1.ipynb/#(d)-Sphere> a owl:Class,
+        pfhub:ValidBenchmarkProblems ;
+    rdfs:label "1d.1" .
+
+<https://pages.nist.gov/pfhub/benchmarks/benchmark2.ipynb/#(a)-Square-periodic> a owl:Class,
+        pfhub:ValidBenchmarkProblems ;
+    rdfs:label "2a.1" .
+
+<https://pages.nist.gov/pfhub/benchmarks/benchmark2.ipynb/#(b)-Square-no-flux> a owl:Class,
+        pfhub:ValidBenchmarkProblems ;
+    rdfs:label "2b.1" .
+
+<https://pages.nist.gov/pfhub/benchmarks/benchmark2.ipynb/#(c)-T-shape> a owl:Class,
+        pfhub:ValidBenchmarkProblems ;
+    rdfs:label "2c.1" .
+
+<https://pages.nist.gov/pfhub/benchmarks/benchmark2.ipynb/#(d)-Sphere> a owl:Class,
+        pfhub:ValidBenchmarkProblems ;
+    rdfs:label "2d.1" .
+
+<https://pages.nist.gov/pfhub/benchmarks/benchmark3.ipynb/> a owl:Class,
+        pfhub:ValidBenchmarkProblems ;
+    rdfs:label "3a.1" .
+
+<https://pages.nist.gov/pfhub/benchmarks/benchmark7.ipynb/#Part-(a)> a owl:Class,
+        pfhub:ValidBenchmarkProblems ;
+    rdfs:label "7a.0" .
+
+<https://pages.nist.gov/pfhub/benchmarks/benchmark7.ipynb/#Part-(b)> a owl:Class,
+        pfhub:ValidBenchmarkProblems ;
+    rdfs:label "7b.0" .
+
+<https://pages.nist.gov/pfhub/benchmarks/benchmark7.ipynb/#Part-(c)> a owl:Class,
+        pfhub:ValidBenchmarkProblems ;
+    rdfs:label "7c.0" .
+
+<https://pages.nist.gov/pfhub/benchmarks/benchmark8.ipynb/#Part-(a):-single-seed> a owl:Class,
+        pfhub:ValidBenchmarkProblems ;
+    rdfs:label "8a.0" .
+
+<https://pages.nist.gov/pfhub/benchmarks/benchmark8.ipynb/#Part-(b):-multiple-initial-seeds> a owl:Class,
+        pfhub:ValidBenchmarkProblems ;
+    rdfs:label "8b.0" .
+
+<https://pages.nist.gov/pfhub/benchmarks/benchmark8.ipynb/#Part-(c):-multiple-seeds-at-random-times> a owl:Class,
+        pfhub:ValidBenchmarkProblems ;
+    rdfs:label "8c.0" .
+
+<https://pages.nist.gov/pfhub/hackathons/hackathon1/problems.ipynb/#1.a-Square-Periodic> a owl:Class,
+        pfhub:ValidBenchmarkProblems ;
+    rdfs:label "1a.0" .
+
+<https://pages.nist.gov/pfhub/hackathons/hackathon1/problems.ipynb/#1.b-No-Flux> a owl:Class,
+        pfhub:ValidBenchmarkProblems ;
+    rdfs:label "1b.0" .
+
+<https://pages.nist.gov/pfhub/hackathons/hackathon1/problems.ipynb/#1.c-T-Shape-No-Flux> a owl:Class,
+        pfhub:ValidBenchmarkProblems ;
+    rdfs:label "1c.0" .
+
+<https://pages.nist.gov/pfhub/hackathons/hackathon1/problems.ipynb/#1.d-Sphere> a owl:Class,
+        pfhub:ValidBenchmarkProblems ;
+    rdfs:label "1d.0" .
+
+<https://pages.nist.gov/pfhub/hackathons/hackathon1/problems.ipynb/#2.a-Square-Periodic> a owl:Class,
+        pfhub:ValidBenchmarkProblems ;
+    rdfs:label "2a.0" .
+
+<https://pages.nist.gov/pfhub/hackathons/hackathon1/problems.ipynb/#2.b-No-Flux> a owl:Class,
+        pfhub:ValidBenchmarkProblems ;
+    rdfs:label "2b.0" .
+
+<https://pages.nist.gov/pfhub/hackathons/hackathon1/problems.ipynb/#2.c-T-Shape-No-Flux> a owl:Class,
+        pfhub:ValidBenchmarkProblems ;
+    rdfs:label "2c.0" .
+
+<https://pages.nist.gov/pfhub/hackathons/hackathon1/problems.ipynb/#2.d-Sphere> a owl:Class,
+        pfhub:ValidBenchmarkProblems ;
+    rdfs:label "2d.0" .
 
 <https://schema.org/Number> a owl:ObjectProperty,
         linkml:SlotDefinition .
@@ -239,11 +330,7 @@ pfhub:schema a owl:ObjectProperty,
 pfhub:ArchiveData a owl:Class,
         linkml:ClassDefinition ;
     rdfs:label "ArchiveData" ;
-    rdfs:subClassOf [ a owl:Restriction ;
-            owl:maxQualifiedCardinality 1 ;
-            owl:onClass pfhub:CompressedFiles ;
-            owl:onProperty <https://schema.org/encodingFormat> ],
-        pfhub:File ;
+    rdfs:subClassOf pfhub:File ;
     skos:definition "Specialization of a pfhub:File containing a compressed data archive." .
 
 pfhub:FieldData a owl:Class,
@@ -255,177 +342,24 @@ pfhub:FieldData a owl:Class,
 pfhub:ImageData a owl:Class,
         linkml:ClassDefinition ;
     rdfs:label "ImageData" ;
-    rdfs:subClassOf [ a owl:Restriction ;
-            owl:maxQualifiedCardinality 1 ;
-            owl:onClass pfhub:ImageFiles ;
-            owl:onProperty <https://schema.org/encodingFormat> ],
-        pfhub:File ;
+    rdfs:subClassOf pfhub:File ;
     skos:definition "Specialization of a pfhub:File for images and visualization data." .
+
+pfhub:TextFile a owl:Class,
+        linkml:ClassDefinition ;
+    rdfs:label "TextFile" ;
+    rdfs:subClassOf pfhub:File ;
+    skos:definition "Specialization of a pfhub:File containing plain text." .
 
 pfhub:TimeSeriesData a owl:Class,
         linkml:ClassDefinition ;
     rdfs:label "TimeSeriesData" ;
     rdfs:subClassOf [ a owl:Restriction ;
-            owl:maxQualifiedCardinality 1 ;
-            owl:onClass pfhub:TabularFiles ;
-            owl:onProperty <https://schema.org/encodingFormat> ],
-        [ a owl:Restriction ;
             owl:allValuesFrom linkml:String ;
             owl:onProperty pfhub:columns ],
         pfhub:File ;
     skos:definition "Specialization of a pfhub:File representing a time series in plain text using named columns of comma-separated values." ;
     skos:exactMatch <https://en.wikipedia.org/wiki/Comma-separated_values> .
-
-<https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#1a> a owl:Class,
-        pfhub:ValidBenchmarkProblem ;
-    rdfs:label "1a" .
-
-<https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#1b> a owl:Class,
-        pfhub:ValidBenchmarkProblem ;
-    rdfs:label "1b" .
-
-<https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#1c> a owl:Class,
-        pfhub:ValidBenchmarkProblem ;
-    rdfs:label "1c" .
-
-<https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#1d> a owl:Class,
-        pfhub:ValidBenchmarkProblem ;
-    rdfs:label "1d" .
-
-<https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#2a> a owl:Class,
-        pfhub:ValidBenchmarkProblem ;
-    rdfs:label "2a" .
-
-<https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#2b> a owl:Class,
-        pfhub:ValidBenchmarkProblem ;
-    rdfs:label "2b" .
-
-<https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#2c> a owl:Class,
-        pfhub:ValidBenchmarkProblem ;
-    rdfs:label "2c" .
-
-<https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#2d> a owl:Class,
-        pfhub:ValidBenchmarkProblem ;
-    rdfs:label "2d" .
-
-<https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#3a> a owl:Class,
-        pfhub:ValidBenchmarkProblem ;
-    rdfs:label "3a" .
-
-<https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#4a> a owl:Class,
-        pfhub:ValidBenchmarkProblem ;
-    rdfs:label "4a" .
-
-<https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#4b> a owl:Class,
-        pfhub:ValidBenchmarkProblem ;
-    rdfs:label "4b" .
-
-<https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#4c> a owl:Class,
-        pfhub:ValidBenchmarkProblem ;
-    rdfs:label "4c" .
-
-<https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#4d> a owl:Class,
-        pfhub:ValidBenchmarkProblem ;
-    rdfs:label "4d" .
-
-<https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#4e> a owl:Class,
-        pfhub:ValidBenchmarkProblem ;
-    rdfs:label "4e" .
-
-<https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#4f> a owl:Class,
-        pfhub:ValidBenchmarkProblem ;
-    rdfs:label "4f" .
-
-<https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#4g> a owl:Class,
-        pfhub:ValidBenchmarkProblem ;
-    rdfs:label "4g" .
-
-<https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#4h> a owl:Class,
-        pfhub:ValidBenchmarkProblem ;
-    rdfs:label "4h" .
-
-<https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#5a> a owl:Class,
-        pfhub:ValidBenchmarkProblem ;
-    rdfs:label "5a" .
-
-<https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#5b> a owl:Class,
-        pfhub:ValidBenchmarkProblem ;
-    rdfs:label "5b" .
-
-<https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#6a> a owl:Class,
-        pfhub:ValidBenchmarkProblem ;
-    rdfs:label "6a" .
-
-<https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#6b> a owl:Class,
-        pfhub:ValidBenchmarkProblem ;
-    rdfs:label "6b" .
-
-<https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#7a> a owl:Class,
-        pfhub:ValidBenchmarkProblem ;
-    rdfs:label "7a" .
-
-<https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#7b> a owl:Class,
-        pfhub:ValidBenchmarkProblem ;
-    rdfs:label "7b" .
-
-<https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#7c> a owl:Class,
-        pfhub:ValidBenchmarkProblem ;
-    rdfs:label "7c" .
-
-<https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#8a> a owl:Class,
-        pfhub:ValidBenchmarkProblem ;
-    rdfs:label "8a" .
-
-<https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#8b> a owl:Class,
-        pfhub:ValidBenchmarkProblem ;
-    rdfs:label "8b" .
-
-<https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#8c> a owl:Class,
-        pfhub:ValidBenchmarkProblem ;
-    rdfs:label "8c" .
-
-pfhub:ValidBenchmarkVersion a owl:Class,
-        linkml:EnumDefinition ;
-    rdfs:label "ValidBenchmarkVersion" ;
-    owl:unionOf ( <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkVersion#0> <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkVersion#1> ) ;
-    linkml:permissible_values <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkVersion#0>,
-        <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkVersion#1> .
-
-<https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkVersion#0> a owl:Class,
-        pfhub:ValidBenchmarkVersion ;
-    rdfs:label "0" .
-
-<https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkVersion#1> a owl:Class,
-        pfhub:ValidBenchmarkVersion ;
-    rdfs:label "1" .
-
-<https://www.iana.org/assignments/media-types/application/gzip> a owl:Class,
-        pfhub:CompressedFiles ;
-    rdfs:label "gz" .
-
-<https://www.iana.org/assignments/media-types/application/x-7z-compressed> a owl:Class,
-        pfhub:CompressedFiles ;
-    rdfs:label "7z" .
-
-<https://www.iana.org/assignments/media-types/application/x-bzip2> a owl:Class,
-        pfhub:CompressedFiles ;
-    rdfs:label "bz2" .
-
-<https://www.iana.org/assignments/media-types/application/zip> a owl:Class,
-        pfhub:CompressedFiles ;
-    rdfs:label "zip" .
-
-<https://www.iana.org/assignments/media-types/image/png> a owl:Class,
-        pfhub:ImageFiles ;
-    rdfs:label "png" .
-
-<https://www.iana.org/assignments/media-types/image/tif> a owl:Class,
-        pfhub:ImageFiles ;
-    rdfs:label "tif" .
-
-<https://www.xdmf.org/index.php/XDMF_Model_and_Format> a owl:Class,
-        pfhub:DataFiles ;
-    rdfs:label "xdmf" .
 
 <https://en.wikipedia.org/wiki/Commit_(version_control)> a owl:ObjectProperty,
         linkml:SlotDefinition ;
@@ -434,11 +368,21 @@ pfhub:ValidBenchmarkVersion a owl:Class,
     skos:definition "Commit hash in a repository of source code." ;
     skos:exactMatch <https://en.wikipedia.org/wiki/Commit_(version_control)> .
 
+<https://pages.nist.gov/pfhub/benchmarks/benchmark5-hackathon.ipynb/> a owl:Class,
+        pfhub:ValidBenchmarkProblems ;
+    rdfs:label "5a.0",
+        "5b.0" .
+
+<https://pages.nist.gov/pfhub/benchmarks/benchmark6-hackathon.ipynb/> a owl:Class,
+        pfhub:ValidBenchmarkProblems ;
+    rdfs:label "6a.0",
+        "6b.0" .
+
 <https://schema.org/SoftwareApplication> a owl:ObjectProperty,
         linkml:SlotDefinition ;
     rdfs:label "framework" ;
     rdfs:range pfhub:Software ;
-    skos:definition "A computer program or library" ;
+    skos:definition "List of the primary phase-field software framework and extra dependencies required to run this simulation." ;
     skos:exactMatch <https://schema.org/SoftwareApplication> .
 
 <https://schema.org/identifier> a owl:ObjectProperty,
@@ -477,9 +421,15 @@ pfhub:Contributor a owl:Class,
         linkml:ClassDefinition ;
     rdfs:label "Contributor" ;
     rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom linkml:String ;
+            owl:onProperty pfhub:affiliation ],
+        [ a owl:Restriction ;
             owl:maxQualifiedCardinality 1 ;
             owl:onClass linkml:String ;
             owl:onProperty <https://schema.org/email> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom linkml:Uriorcurie ;
+            owl:onProperty <https://schema.org/member> ],
         [ a owl:Restriction ;
             owl:onClass linkml:Uriorcurie ;
             owl:onProperty <https://schema.org/identifier> ;
@@ -487,13 +437,7 @@ pfhub:Contributor a owl:Class,
         [ a owl:Restriction ;
             owl:maxQualifiedCardinality 1 ;
             owl:onClass linkml:String ;
-            owl:onProperty <https://schema.org/name> ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom linkml:Uriorcurie ;
-            owl:onProperty <https://schema.org/member> ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom linkml:String ;
-            owl:onProperty pfhub:affiliation ] ;
+            owl:onProperty <https://schema.org/name> ] ;
     skos:definition "Someone who contributed to this solution." ;
     skos:exactMatch <https://schema.org/Person> .
 
@@ -501,32 +445,35 @@ pfhub:Results a owl:Class,
         linkml:ClassDefinition ;
     rdfs:label "Results" ;
     rdfs:subClassOf [ a owl:Restriction ;
-            owl:allValuesFrom pfhub:ComputeResource ;
-            owl:onProperty pfhub:hardware ],
+            owl:allValuesFrom pfhub:FieldData ;
+            owl:onProperty pfhub:file_spatial ],
         [ a owl:Restriction ;
-            owl:allValuesFrom pfhub:ImageData ;
-            owl:onProperty pfhub:file_visual ],
+            owl:maxQualifiedCardinality 1 ;
+            owl:onClass linkml:Integer ;
+            owl:onProperty <https://schema.org/Number> ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom pfhub:TextFile ;
+            owl:onProperty pfhub:documentation ],
         [ a owl:Restriction ;
             owl:maxQualifiedCardinality 1 ;
             owl:onClass linkml:Integer ;
             owl:onProperty pfhub:memory_in_kb ],
         [ a owl:Restriction ;
-            owl:allValuesFrom pfhub:FieldData ;
-            owl:onProperty pfhub:file_spatial ],
-        [ a owl:Restriction ;
-            owl:allValuesFrom pfhub:TimeSeriesData ;
-            owl:onProperty pfhub:file_timeseries ],
+            owl:allValuesFrom pfhub:ArchiveData ;
+            owl:onProperty pfhub:file_archive ],
         [ a owl:Restriction ;
             owl:maxQualifiedCardinality 1 ;
             owl:onClass linkml:Float ;
             owl:onProperty <https://schema.org/Number> ],
         [ a owl:Restriction ;
-            owl:allValuesFrom pfhub:ArchiveData ;
-            owl:onProperty pfhub:file_archive ],
+            owl:allValuesFrom pfhub:ImageData ;
+            owl:onProperty pfhub:file_visual ],
         [ a owl:Restriction ;
-            owl:maxQualifiedCardinality 1 ;
-            owl:onClass linkml:Integer ;
-            owl:onProperty <https://schema.org/Number> ] ;
+            owl:allValuesFrom pfhub:TimeSeriesData ;
+            owl:onProperty pfhub:file_timeseries ],
+        [ a owl:Restriction ;
+            owl:allValuesFrom pfhub:ComputeResource ;
+            owl:onProperty pfhub:hardware ] ;
     skos:definition "Runtime information and output from a simulation." ;
     skos:exactMatch <https://schema.org/Dataset> .
 
@@ -534,17 +481,13 @@ pfhub:Software a owl:Class,
         linkml:ClassDefinition ;
     rdfs:label "Software" ;
     rdfs:subClassOf [ a owl:Restriction ;
-            owl:onClass linkml:Uriorcurie ;
-            owl:onProperty <https://schema.org/url> ;
-            owl:qualifiedCardinality 1 ],
-        [ a owl:Restriction ;
             owl:maxQualifiedCardinality 1 ;
             owl:onClass linkml:Uriorcurie ;
             owl:onProperty <https://schema.org/downloadUrl> ],
         [ a owl:Restriction ;
-            owl:maxQualifiedCardinality 1 ;
-            owl:onClass linkml:String ;
-            owl:onProperty <https://schema.org/softwareVersion> ],
+            owl:onClass linkml:Uriorcurie ;
+            owl:onProperty <https://schema.org/url> ;
+            owl:qualifiedCardinality 1 ],
         [ a owl:Restriction ;
             owl:maxQualifiedCardinality 1 ;
             owl:onClass linkml:String ;
@@ -552,43 +495,19 @@ pfhub:Software a owl:Class,
         [ a owl:Restriction ;
             owl:maxQualifiedCardinality 1 ;
             owl:onClass linkml:String ;
-            owl:onProperty <https://schema.org/name> ] ;
+            owl:onProperty <https://schema.org/name> ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality 1 ;
+            owl:onClass linkml:String ;
+            owl:onProperty <https://schema.org/softwareVersion> ] ;
     skos:definition "A software product, download, or repository." ;
     skos:exactMatch <https://schema.org/SoftwareApplication> .
 
-pfhub:TabularFiles a owl:Class,
-        linkml:EnumDefinition ;
-    rdfs:label "TabularFiles" ;
-    owl:unionOf ( <https://www.iana.org/assignments/media-types/text/csv> <https://www.iana.org/assignments/media-types/text/tsv> ) ;
-    linkml:permissible_values <https://www.iana.org/assignments/media-types/text/csv>,
-        <https://www.iana.org/assignments/media-types/text/tsv> .
-
-<https://www.iana.org/assignments/media-types/application/x-gtar> a owl:Class,
-        pfhub:CompressedFiles ;
-    rdfs:label "tar.gz",
-        "tgz" .
-
-<https://www.iana.org/assignments/media-types/text/csv> a owl:Class,
-        pfhub:DataFiles,
-        pfhub:TabularFiles ;
-    rdfs:label "csv" .
-
-<https://www.vtk.org/doc/nightly/html/classvtkStructuredGrid.htmOAl#details> a owl:Class,
-        pfhub:DataFiles,
-        pfhub:ImageFiles ;
-    rdfs:label "vts" .
-
-<https://www.vtk.org/doc/nightly/html/classvtkStructuredGrid.html#details> a owl:Class,
-        pfhub:DataFiles,
-        pfhub:ImageFiles ;
-    rdfs:label "pvts" .
-
-<https://schema.org/encodingFormat> a owl:ObjectProperty,
-        linkml:SlotDefinition ;
-    rdfs:label "format" ;
-    rdfs:range linkml:String ;
-    skos:definition "Format of data contained in a file." ;
-    skos:exactMatch <https://schema.org/encodingFormat> .
+<https://pages.nist.gov/pfhub/hackathons/hackathon2/problem1.ipynb/> a owl:Class,
+        pfhub:ValidBenchmarkProblems ;
+    rdfs:label "3a.0",
+        "3b.0",
+        "3c.0" .
 
 <https://schema.org/name> a owl:ObjectProperty,
         linkml:SlotDefinition ;
@@ -596,20 +515,6 @@ pfhub:TabularFiles a owl:Class,
     rdfs:range linkml:String ;
     skos:definition "Informal or human-memorable identifier that may collide with others." ;
     skos:exactMatch <https://schema.org/name> .
-
-pfhub:File a owl:Class,
-        linkml:ClassDefinition ;
-    rdfs:label "File" ;
-    rdfs:subClassOf [ a owl:Restriction ;
-            owl:maxQualifiedCardinality 1 ;
-            owl:onClass linkml:String ;
-            owl:onProperty <https://schema.org/encodingFormat> ],
-        [ a owl:Restriction ;
-            owl:onClass linkml:String ;
-            owl:onProperty <https://schema.org/name> ;
-            owl:qualifiedCardinality 1 ] ;
-    skos:definition "A generic electronic information container." ;
-    skos:exactMatch <https://schema.org/DigitalDocument> .
 
 pfhub:SourceCode a owl:Class,
         linkml:ClassDefinition ;
@@ -629,101 +534,61 @@ pfhub:SourceCode a owl:Class,
     skos:definition "Link to the authors' implementation of the benchmark problem." ;
     skos:exactMatch <https://schema.org/SoftwareSourceCode> .
 
-pfhub:CompressedFiles a owl:Class,
-        linkml:EnumDefinition ;
-    rdfs:label "CompressedFiles" ;
-    owl:unionOf ( <https://www.iana.org/assignments/media-types/application/x-7z-compressed> <https://www.iana.org/assignments/media-types/application/x-bzip2> <https://www.iana.org/assignments/media-types/application/gzip> <https://www.iana.org/assignments/media-types/application/x-gtar> <https://www.iana.org/assignments/media-types/application/x-gtar> <https://www.iana.org/assignments/media-types/application/zip> ) ;
-    linkml:permissible_values <https://www.iana.org/assignments/media-types/application/gzip>,
-        <https://www.iana.org/assignments/media-types/application/x-7z-compressed>,
-        <https://www.iana.org/assignments/media-types/application/x-bzip2>,
-        <https://www.iana.org/assignments/media-types/application/x-gtar>,
-        <https://www.iana.org/assignments/media-types/application/zip> .
+pfhub:File a owl:Class,
+        linkml:ClassDefinition ;
+    rdfs:label "File" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onClass linkml:String ;
+            owl:onProperty <https://schema.org/name> ;
+            owl:qualifiedCardinality 1 ] ;
+    skos:definition "A generic electronic information container." ;
+    skos:exactMatch <https://schema.org/DigitalDocument> .
 
-<https://www.iana.org/assignments/media-types/text/tsv> a owl:Class,
-        pfhub:DataFiles,
-        pfhub:ImageFiles,
-        pfhub:TabularFiles ;
-    rdfs:label "tsv" .
-
-<https://www.vtk.org/doc/nightly/html/classvtkImageData.html#details> a owl:Class,
-        pfhub:DataFiles,
-        pfhub:ImageFiles ;
-    rdfs:label "pvti",
-        "vti" .
-
-<https://www.vtk.org/doc/nightly/html/classvtkRectilinearGrid.html#details> a owl:Class,
-        pfhub:DataFiles,
-        pfhub:ImageFiles ;
-    rdfs:label "pvtr",
-        "vtr" .
-
-<https://www.vtk.org/doc/nightly/html/classvtkUnstructuredGrid.html#details> a owl:Class,
-        pfhub:DataFiles,
-        pfhub:ImageFiles ;
-    rdfs:label "pvtu",
-        "vtu" .
-
-pfhub:DataFiles a owl:Class,
-        linkml:EnumDefinition ;
-    rdfs:label "DataFiles" ;
-    owl:unionOf ( <https://www.iana.org/assignments/media-types/text/csv> <https://docs.hdfgroup.org/hdf5/develop/_intro_h_d_f5.html> <https://www.vtk.org/doc/nightly/html/classvtkImageData.html#details> <https://www.vtk.org/doc/nightly/html/classvtkRectilinearGrid.html#details> <https://www.vtk.org/doc/nightly/html/classvtkStructuredGrid.html#details> <https://www.vtk.org/doc/nightly/html/classvtkUnstructuredGrid.html#details> <https://www.iana.org/assignments/media-types/text/tsv> <https://www.vtk.org/doc/nightly/html/classvtkImageData.html#details> <https://www.vtk.org/doc/nightly/html/classvtkRectilinearGrid.html#details> <https://www.vtk.org/doc/nightly/html/classvtkStructuredGrid.htmOAl#details> <https://www.vtk.org/doc/nightly/html/classvtkUnstructuredGrid.html#details> <https://www.xdmf.org/index.php/XDMF_Model_and_Format> ) ;
-    linkml:permissible_values <https://docs.hdfgroup.org/hdf5/develop/_intro_h_d_f5.html>,
-        <https://www.iana.org/assignments/media-types/text/csv>,
-        <https://www.iana.org/assignments/media-types/text/tsv>,
-        <https://www.vtk.org/doc/nightly/html/classvtkImageData.html#details>,
-        <https://www.vtk.org/doc/nightly/html/classvtkRectilinearGrid.html#details>,
-        <https://www.vtk.org/doc/nightly/html/classvtkStructuredGrid.htmOAl#details>,
-        <https://www.vtk.org/doc/nightly/html/classvtkStructuredGrid.html#details>,
-        <https://www.vtk.org/doc/nightly/html/classvtkUnstructuredGrid.html#details>,
-        <https://www.xdmf.org/index.php/XDMF_Model_and_Format> .
-
-pfhub:ImageFiles a owl:Class,
-        linkml:EnumDefinition ;
-    rdfs:label "ImageFiles" ;
-    owl:unionOf ( <https://www.iana.org/assignments/media-types/image/png> <https://www.vtk.org/doc/nightly/html/classvtkImageData.html#details> <https://www.vtk.org/doc/nightly/html/classvtkRectilinearGrid.html#details> <https://www.vtk.org/doc/nightly/html/classvtkStructuredGrid.html#details> <https://www.vtk.org/doc/nightly/html/classvtkUnstructuredGrid.html#details> <https://www.iana.org/assignments/media-types/image/tif> <https://www.iana.org/assignments/media-types/text/tsv> <https://www.vtk.org/doc/nightly/html/classvtkImageData.html#details> <https://www.vtk.org/doc/nightly/html/classvtkRectilinearGrid.html#details> <https://www.vtk.org/doc/nightly/html/classvtkStructuredGrid.htmOAl#details> <https://www.vtk.org/doc/nightly/html/classvtkUnstructuredGrid.html#details> ) ;
-    linkml:permissible_values <https://www.iana.org/assignments/media-types/image/png>,
-        <https://www.iana.org/assignments/media-types/image/tif>,
-        <https://www.iana.org/assignments/media-types/text/tsv>,
-        <https://www.vtk.org/doc/nightly/html/classvtkImageData.html#details>,
-        <https://www.vtk.org/doc/nightly/html/classvtkRectilinearGrid.html#details>,
-        <https://www.vtk.org/doc/nightly/html/classvtkStructuredGrid.htmOAl#details>,
-        <https://www.vtk.org/doc/nightly/html/classvtkStructuredGrid.html#details>,
-        <https://www.vtk.org/doc/nightly/html/classvtkUnstructuredGrid.html#details> .
+<https://pages.nist.gov/pfhub/benchmarks/benchmark4.ipynb/> a owl:Class,
+        pfhub:ValidBenchmarkProblems ;
+    rdfs:label "4a.1",
+        "4b.1",
+        "4c.1",
+        "4d.1",
+        "4e.1",
+        "4f.1",
+        "4g.1",
+        "4h.1" .
 
 linkml:ClassDefinition a owl:Class ;
     rdfs:label "class_definition" .
 
-pfhub:ValidBenchmarkProblem a owl:Class,
+pfhub:ValidBenchmarkProblems a owl:Class,
         linkml:EnumDefinition ;
-    rdfs:label "ValidBenchmarkProblem" ;
-    owl:unionOf ( <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#1a> <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#1b> <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#1c> <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#1d> <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#2a> <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#2b> <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#2c> <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#2d> <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#3a> <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#4a> <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#4b> <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#4c> <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#4d> <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#4e> <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#4f> <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#4g> <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#4h> <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#5a> <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#5b> <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#6a> <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#6b> <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#7a> <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#7b> <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#7c> <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#8a> <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#8b> <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#8c> ) ;
-    linkml:permissible_values <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#1a>,
-        <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#1b>,
-        <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#1c>,
-        <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#1d>,
-        <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#2a>,
-        <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#2b>,
-        <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#2c>,
-        <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#2d>,
-        <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#3a>,
-        <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#4a>,
-        <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#4b>,
-        <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#4c>,
-        <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#4d>,
-        <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#4e>,
-        <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#4f>,
-        <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#4g>,
-        <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#4h>,
-        <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#5a>,
-        <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#5b>,
-        <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#6a>,
-        <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#6b>,
-        <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#7a>,
-        <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#7b>,
-        <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#7c>,
-        <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#8a>,
-        <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#8b>,
-        <https://w3id.org/usnistgov/pfhub-schema/ValidBenchmarkProblem#8c> .
+    rdfs:label "ValidBenchmarkProblems" ;
+    owl:unionOf ( <https://pages.nist.gov/pfhub/benchmarks/benchmark1.ipynb/#(a)-Square-periodic> <https://pages.nist.gov/pfhub/hackathons/hackathon1/problems.ipynb/#1.a-Square-Periodic> <https://pages.nist.gov/pfhub/benchmarks/benchmark1.ipynb/#(b)-Square-no-flux> <https://pages.nist.gov/pfhub/hackathons/hackathon1/problems.ipynb/#1.b-No-Flux> <https://pages.nist.gov/pfhub/benchmarks/benchmark1.ipynb/#(c)-T-shape> <https://pages.nist.gov/pfhub/hackathons/hackathon1/problems.ipynb/#1.c-T-Shape-No-Flux> <https://pages.nist.gov/pfhub/benchmarks/benchmark1.ipynb/#(d)-Sphere> <https://pages.nist.gov/pfhub/hackathons/hackathon1/problems.ipynb/#1.d-Sphere> <https://pages.nist.gov/pfhub/benchmarks/benchmark2.ipynb/#(a)-Square-periodic> <https://pages.nist.gov/pfhub/hackathons/hackathon1/problems.ipynb/#2.a-Square-Periodic> <https://pages.nist.gov/pfhub/benchmarks/benchmark2.ipynb/#(b)-Square-no-flux> <https://pages.nist.gov/pfhub/hackathons/hackathon1/problems.ipynb/#2.b-No-Flux> <https://pages.nist.gov/pfhub/benchmarks/benchmark2.ipynb/#(c)-T-shape> <https://pages.nist.gov/pfhub/hackathons/hackathon1/problems.ipynb/#2.c-T-Shape-No-Flux> <https://pages.nist.gov/pfhub/benchmarks/benchmark2.ipynb/#(d)-Sphere> <https://pages.nist.gov/pfhub/hackathons/hackathon1/problems.ipynb/#2.d-Sphere> <https://pages.nist.gov/pfhub/benchmarks/benchmark3.ipynb/> <https://pages.nist.gov/pfhub/hackathons/hackathon2/problem1.ipynb/> <https://pages.nist.gov/pfhub/hackathons/hackathon2/problem1.ipynb/> <https://pages.nist.gov/pfhub/hackathons/hackathon2/problem1.ipynb/> <https://pages.nist.gov/pfhub/benchmarks/benchmark4.ipynb/> <https://pages.nist.gov/pfhub/benchmarks/benchmark4.ipynb/> <https://pages.nist.gov/pfhub/benchmarks/benchmark4.ipynb/> <https://pages.nist.gov/pfhub/benchmarks/benchmark4.ipynb/> <https://pages.nist.gov/pfhub/benchmarks/benchmark4.ipynb/> <https://pages.nist.gov/pfhub/benchmarks/benchmark4.ipynb/> <https://pages.nist.gov/pfhub/benchmarks/benchmark4.ipynb/> <https://pages.nist.gov/pfhub/benchmarks/benchmark4.ipynb/> <https://pages.nist.gov/pfhub/benchmarks/benchmark5-hackathon.ipynb/> <https://pages.nist.gov/pfhub/benchmarks/benchmark5-hackathon.ipynb/> <https://pages.nist.gov/pfhub/benchmarks/benchmark6-hackathon.ipynb/> <https://pages.nist.gov/pfhub/benchmarks/benchmark6-hackathon.ipynb/> <https://pages.nist.gov/pfhub/benchmarks/benchmark7.ipynb/#Part-(a)> <https://pages.nist.gov/pfhub/benchmarks/benchmark7.ipynb/#Part-(b)> <https://pages.nist.gov/pfhub/benchmarks/benchmark7.ipynb/#Part-(c)> <https://pages.nist.gov/pfhub/benchmarks/benchmark8.ipynb/#Part-(a):-single-seed> <https://pages.nist.gov/pfhub/benchmarks/benchmark8.ipynb/#Part-(b):-multiple-initial-seeds> <https://pages.nist.gov/pfhub/benchmarks/benchmark8.ipynb/#Part-(c):-multiple-seeds-at-random-times> ) ;
+    linkml:permissible_values <https://pages.nist.gov/pfhub/benchmarks/benchmark1.ipynb/#(a)-Square-periodic>,
+        <https://pages.nist.gov/pfhub/benchmarks/benchmark1.ipynb/#(b)-Square-no-flux>,
+        <https://pages.nist.gov/pfhub/benchmarks/benchmark1.ipynb/#(c)-T-shape>,
+        <https://pages.nist.gov/pfhub/benchmarks/benchmark1.ipynb/#(d)-Sphere>,
+        <https://pages.nist.gov/pfhub/benchmarks/benchmark2.ipynb/#(a)-Square-periodic>,
+        <https://pages.nist.gov/pfhub/benchmarks/benchmark2.ipynb/#(b)-Square-no-flux>,
+        <https://pages.nist.gov/pfhub/benchmarks/benchmark2.ipynb/#(c)-T-shape>,
+        <https://pages.nist.gov/pfhub/benchmarks/benchmark2.ipynb/#(d)-Sphere>,
+        <https://pages.nist.gov/pfhub/benchmarks/benchmark3.ipynb/>,
+        <https://pages.nist.gov/pfhub/benchmarks/benchmark4.ipynb/>,
+        <https://pages.nist.gov/pfhub/benchmarks/benchmark5-hackathon.ipynb/>,
+        <https://pages.nist.gov/pfhub/benchmarks/benchmark6-hackathon.ipynb/>,
+        <https://pages.nist.gov/pfhub/benchmarks/benchmark7.ipynb/#Part-(a)>,
+        <https://pages.nist.gov/pfhub/benchmarks/benchmark7.ipynb/#Part-(b)>,
+        <https://pages.nist.gov/pfhub/benchmarks/benchmark7.ipynb/#Part-(c)>,
+        <https://pages.nist.gov/pfhub/benchmarks/benchmark8.ipynb/#Part-(a):-single-seed>,
+        <https://pages.nist.gov/pfhub/benchmarks/benchmark8.ipynb/#Part-(b):-multiple-initial-seeds>,
+        <https://pages.nist.gov/pfhub/benchmarks/benchmark8.ipynb/#Part-(c):-multiple-seeds-at-random-times>,
+        <https://pages.nist.gov/pfhub/hackathons/hackathon1/problems.ipynb/#1.a-Square-Periodic>,
+        <https://pages.nist.gov/pfhub/hackathons/hackathon1/problems.ipynb/#1.b-No-Flux>,
+        <https://pages.nist.gov/pfhub/hackathons/hackathon1/problems.ipynb/#1.c-T-Shape-No-Flux>,
+        <https://pages.nist.gov/pfhub/hackathons/hackathon1/problems.ipynb/#1.d-Sphere>,
+        <https://pages.nist.gov/pfhub/hackathons/hackathon1/problems.ipynb/#2.a-Square-Periodic>,
+        <https://pages.nist.gov/pfhub/hackathons/hackathon1/problems.ipynb/#2.b-No-Flux>,
+        <https://pages.nist.gov/pfhub/hackathons/hackathon1/problems.ipynb/#2.c-T-Shape-No-Flux>,
+        <https://pages.nist.gov/pfhub/hackathons/hackathon1/problems.ipynb/#2.d-Sphere>,
+        <https://pages.nist.gov/pfhub/hackathons/hackathon2/problem1.ipynb/> .
 
 linkml:SlotDefinition a owl:Class ;
     rdfs:label "slot_definition" .
