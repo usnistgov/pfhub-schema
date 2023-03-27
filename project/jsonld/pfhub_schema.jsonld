@@ -1236,9 +1236,9 @@
   ],
   "metamodel_version": "1.7.0",
   "source_file": "pfhub_schema.yaml",
-  "source_file_date": "2023-03-27T15:19:25",
+  "source_file_date": "2023-03-27T15:42:37",
   "source_file_size": 17963,
-  "generation_date": "2023-03-27T15:41:30",
+  "generation_date": "2023-03-27T15:52:30",
   "@type": "SchemaDefinition",
   "@context": [
     "project/jsonld/pfhub_schema.context.jsonld",
