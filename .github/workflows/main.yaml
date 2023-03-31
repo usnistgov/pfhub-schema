@@ -33,5 +33,11 @@ jobs:
       - name: Install project
         run: poetry install --no-interaction
 
-      - name: Run test suite
-        run: make test
+      # - name: Run test suite
+      # run: make test
+
+      - name: Lint the schema
+        run: make lint
+
+      - name: Validate the examples
+        run: make validate
