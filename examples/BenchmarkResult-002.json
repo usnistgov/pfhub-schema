@@ -12,6 +12,33 @@
     }
   ],
   "date_created": "2016-06-28",
+  "implementation": {
+    "url": "https://bitbucket.org/ajokisaari/coral",
+    "commit": "e8fc74f"
+  },
+  "results": {
+    "fictive_time": 935803.78997793,
+    "hardware": {
+      "architecture": "cpu",
+      "cores": 6,
+      "nodes": 1
+    },
+    "memory_in_kb": 815104,
+    "time_in_s": 3720,
+    "dataset_temporal": [
+      {
+        "name": "free_energy_1a.csv",
+        "columns": [
+          "time",
+          "free_energy"
+        ]
+      }
+    ]
+  },
+  "schema": {
+    "url": "https://github.com/usnistgov/pfhub-schema/tree/e0010d9/project"
+  },
+  "summary": "MOOSE, IA solver, periodic domain.",
   "framework": [
     {
       "url": "https://mooseframework.inl.gov/modules/phase_field/index.html",
@@ -20,34 +47,5 @@
       "version": "1.0.0"
     }
   ],
-  "implementation": {
-    "url": "https://bitbucket.org/ajokisaari/coral",
-    "commit": "e8fc74f"
-  },
-  "results": {
-    "file_timeseries": [
-      {
-        "name": "free_energy_1a.csv",
-        "columns": [
-          "time",
-          "free_energy"
-        ]
-      }
-    ],
-    "fictive_time": 935803.78997793,
-    "hardware": [
-      {
-        "architecture": "cpu",
-        "cores": 6,
-        "nodes": 1
-      }
-    ],
-    "memory_in_kb": 815104,
-    "time_in_s": 3720
-  },
-  "schema": {
-    "url": "https://github.com/usnistgov/pfhub-schema/tree/39dc199/project"
-  },
-  "summary": "MOOSE, IA solver, periodic domain.",
   "@type": "BenchmarkResult"
 }
