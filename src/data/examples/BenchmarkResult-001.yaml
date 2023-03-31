@@ -35,15 +35,15 @@ implementation:
     https://github.com/usnistgov/FiPy-spinodal-decomposition-benchmark/tree/master/periodic
 
 results:
-  file_timeseries:
+  dataset_temporal:
     - name: free_energy.csv
       columns:
         - time
         - free_energy
   hardware:
-    - architecture: cpu
-      cores: 1
-      nodes: 1
+    architecture: cpu
+    cores: 1
+    nodes: 1
   fictive_time: 53333.3
   memory_in_kb: 28600
   time_in_s: 157187
