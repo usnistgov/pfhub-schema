@@ -24,7 +24,7 @@ results:
     - time
     - free_energy
 schema:
-  url: https://github.com/usnistgov/pfhub-schema/tree/39dc199/project
+  url: https://github.com/usnistgov/pfhub-schema/tree/e0010d9/project
 summary: MOOSE, IA solver, periodic domain.
 framework:
 - url: https://mooseframework.inl.gov/modules/phase_field/index.html

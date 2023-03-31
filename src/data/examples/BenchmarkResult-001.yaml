@@ -1,12 +1,11 @@
 # Example of a PFHub Benchmark result
 ---
-# id: pfhub:BenchmarkResult
 id: fipy_1a_tkphd_pysparse
 benchmark_problem: 1a.0
 date_created: 2017-01-10
 schema:
   url: >-
-    https://github.com/usnistgov/pfhub-schema/tree/39dc199/project
+    https://github.com/usnistgov/pfhub-schema/tree/e0010d9/project
 summary: >-
   Serial Travis CI benchmark with FiPy, periodic domain
 

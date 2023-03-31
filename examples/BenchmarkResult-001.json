@@ -43,7 +43,7 @@
     ]
   },
   "schema": {
-    "url": "https://github.com/usnistgov/pfhub-schema/tree/39dc199/project"
+    "url": "https://github.com/usnistgov/pfhub-schema/tree/e0010d9/project"
   },
   "summary": "Serial Travis CI benchmark with FiPy, periodic domain",
   "framework": [

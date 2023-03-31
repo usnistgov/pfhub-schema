@@ -5,7 +5,7 @@ benchmark_problem: 1a.0
 date_created: 2016-06-28
 schema:
   url: >-
-    https://github.com/usnistgov/pfhub-schema/tree/39dc199/project
+    https://github.com/usnistgov/pfhub-schema/tree/e0010d9/project
 summary: >-
   MOOSE, IA solver, periodic domain.
 
