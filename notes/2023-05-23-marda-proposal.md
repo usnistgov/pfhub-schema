@@ -1,5 +1,8 @@
 # MaRDA Proposal for Phase Field Schema
 
+[![hackmd-github-sync-badge](https://hackmd.io/i0_rypRqS5WU_I2sI4W2kg/badge)](https://hackmd.io/i0_rypRqS5WU_I2sI4W2kg)
+
+
 Meeting agenda, notes, and minutes for the discussion on 23 May 2023.
 
 Organizer
